@@ -14,7 +14,23 @@
 			$(document).ready(function() {
 				var authenticationSuccess = function() {
 				    console.log("Successful authentication");
+				    
+				    var myList = '5848860065df2e7765bf9900';
+					var creationSuccess = function(data) {
+					  console.log('Card created successfully. Data returned:' + JSON.stringify(data));
+					};
+					var oldCard = Trello.get('/cards/58487efdfdedd23534be018c');
+					console.log(oldCard);
+					var newCard = {
+					  name: 'New Test Card', 
+					  desc: 'This is the description of our new card.',
+					  // Place this card at the top of our list 
+					  idList: myList,
+					  pos: 'top'
+					};
+					Trello.post('/cards/', newCard, creationSuccess);
 				};
+
 				var authenticationFailure = function() {
 				    console.log("Failed authentication");
 				};
