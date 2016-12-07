@@ -20,10 +20,12 @@
 					  console.log('Card created successfully. Data returned:' + JSON.stringify(data));
 					};
 					var oldCard = Trello.get('/cards/58487efdfdedd23534be018c');
-					console.log(oldCard);
+					console.log(oldCard.name);
+					console.log(oldCard.desc);
+					
 					var newCard = {
-					  name: oldCard['name'], 
-					  desc: oldCard['desc'],
+					  name: oldCard.name, 
+					  desc: oldCard.desc,
 					  // Place this card at the top of our list 
 					  idList: myList,
 					  pos: 'top'
