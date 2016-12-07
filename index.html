@@ -22,12 +22,12 @@
 					var oldCard = Trello.get('/cards/58487efdfdedd23534be018c');
 					var json = JSON.parse(oldCard);
 
-					console.log(json.name);
-					console.log(json.desc);
+					console.log(json['name']);
+					console.log(json['desc']);
 					
 					var newCard = {
-					  name: json.name, 
-					  desc: json.desc,
+					  name: json['name'], 
+					  desc: json['desc'],
 					  // Place this card at the top of our list 
 					  idList: myList,
 					  pos: 'top'
