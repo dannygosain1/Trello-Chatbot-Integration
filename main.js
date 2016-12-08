@@ -46,7 +46,7 @@ $(document).ready(function() {
 					//console.log(dataInfo);
 					var listInfo = dataInfo.list;
 					//console.log(listInfo);
-					var listName = listName.name; 
+					var listName = listInfo.name; 
 					var newList = {
 						name: listName,
 						idBoard: UCDBoard,
