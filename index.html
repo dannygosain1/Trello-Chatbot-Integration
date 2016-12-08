@@ -19,19 +19,19 @@
 					var creationSuccess = function(data) {
 					  console.log('Card created successfully. Data returned:' + JSON.stringify(data));
 					};
-					var oldCard = Trello.get('/cards/58487efdfdedd23534be018c');
-					var cardDetails = oldCard.responseText;
+					var oldCard = Trello.cards.get('58487efdfdedd23534be018c',cardDetails,creationSuccess);
+					// var cardDetails = oldCard.responseText;
 					console.log(cardDetails);
 					console.log(JSON.stringify(cardDetails));
 					// console.log(oldCard["name"]);
 					// console.log(oldCard["desc"]);
 					
 					var newCard = {
-					  name: oldCard["name"], 
-					  desc: oldCard["desc"],
-					  // Place this card at the top of our list 
-					  idList: myList,
-					  pos: 'top'
+						name: cardDetails["name"], 
+						desc: cardDetails["desc"],
+						// Place this card at the top of our list 
+						idList: myList,
+						pos: 'top'
 					};
 					Trello.post('/cards/', newCard, creationSuccess);
 				};
