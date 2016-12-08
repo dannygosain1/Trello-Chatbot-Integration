@@ -26,7 +26,7 @@ $(document).ready(function() {
 		}
 
 		var getSuccess = function(data) {
-			console.log(JSON.stringify(data));
+			// console.log(JSON.stringify(data));
 
 			// var data = JSON.parse(data1);
 
@@ -35,15 +35,20 @@ $(document).ready(function() {
 			var allActions = data; //array
 			// var allLists = data.lists;
 
-			console.log(allActions);
+			// console.log(allActions);
 
 
 			for (var i = 0; i < allActions.length; i++){
 				var actionItem = allActions[i].type;
 
 				if(actionItem == "createList"){
+					var dataInfo = allActions[i].data;
+					console.log(dataInfo);
+					var listInfo = dataInfo[0].list;
+					console.log(listInfo);
+					var listName = listName[0].name; 
 					var newList = {
-						name: allActions[i].data[0].board[0].name,
+						name: listName,
 						idBoard: UCDBoard,
 						pos: 'top'
 					}
