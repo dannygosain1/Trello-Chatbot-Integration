@@ -22,12 +22,11 @@
 					};
 					
 					var getSuccess = function(data) {
-						// var cardDetails = JSON.stringify(data);
-					 //  	var cardJson = JSON.parse(cardDetails);
 
 					  	var newCard = {
 							name: data.name, 
 							desc: data.desc,
+							labels: data.labels,
 							// Place this card at the top of our list 
 							idList: myList,
 							pos: 'top'
