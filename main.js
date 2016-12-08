@@ -25,11 +25,11 @@ $(document).ready(function() {
 			addSuccess(data,JenkinsBoard_Triage);
 		}
 
-		var getSuccess = function(data1) {
-			console.log(JSON.stringify(data1));
+		var getSuccess = function(data) {
+			console.log(JSON.stringify(data));
 
-			var data = JSON.parse(data1);
-			
+			// var data = JSON.parse(data1);
+
 			var labelNames = data.labelNames; //json/dictionary
 			var allCards = data.cards; //array
 			var allActions = data.actions; //array
