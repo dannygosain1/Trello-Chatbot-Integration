@@ -20,10 +20,11 @@
 					  console.log('Card created successfully. Data returned:' + JSON.stringify(data));
 					};
 					var oldCard = Trello.get('/cards/58487efdfdedd23534be018c');
-					console.log(oldCard);
-					console.log(JSON.stringify(oldCard))
-					console.log(oldCard["name"]);
-					console.log(oldCard["desc"]);
+					var cardDetails = oldCard.responseText;
+					console.log(cardDetails);
+					console.log(JSON.stringify(cardDetails));
+					// console.log(oldCard["name"]);
+					// console.log(oldCard["desc"]);
 					
 					var newCard = {
 					  name: oldCard["name"], 
