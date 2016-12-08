@@ -21,10 +21,12 @@
 
 					var getSuccess = function(data) {
 						cardDetails = JSON.stringify(data);
-					  	console.log("Card details : " + cardDetails);
+					  	console.log(cardDetails.name);
+					  	console.log(cardDetails.desc);
 
 					  	var creationSuccess = function(data1) {
 							console.log('Card created successfully. Data returned:' + JSON.stringify(data1));
+						
 						};
 
 					  	var newCard = {
