@@ -25,7 +25,7 @@
 						JSON.stringify(data));
 					};
 
-					Trello.cards.get('58487efdfdedd23534be018c',cardDetails,creationSuccess);
+					Trello.cards.get('58487efdfdedd23534be018c',cardDetails);
 					// var cardDetails = oldCard.responseText;
 					// console.log(cardDetails);
 					// console.log(JSON.stringify(cardDetails));
@@ -33,8 +33,8 @@
 					// console.log(oldCard["desc"]);
 					
 					var newCard = {
-						name: cardDetails["name"], 
-						desc: cardDetails["desc"],
+						name: cardDetails.name, 
+						desc: cardDetails.desc,
 						// Place this card at the top of our list 
 						idList: myList,
 						pos: 'top'
