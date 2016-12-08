@@ -19,8 +19,9 @@
 					var creationSuccess = function(data) {
 					  console.log('Card created successfully. Data returned:' + JSON.stringify(data));
 					};
-					var oldCard = Trello.get('/cards/58487efdfdedd23534be018c');
+					var oldCard = Trello.get('/1/cards/58487efdfdedd23534be018c');
 					console.log(oldCard);
+					console.log(JSON.stringify(oldCard))
 					console.log(oldCard["name"]);
 					console.log(oldCard["desc"]);
 					
