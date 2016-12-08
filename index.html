@@ -16,27 +16,24 @@
 				    console.log("Successful authentication");
 				    
 				    var myList = '5848860065df2e7765bf9900';
+
+					var creationSuccess = function(data) {
+					  console.log('Card created successfully. Data returned:' + JSON.stringify(data));
+					};
 					
-					var cardDetails = {};
-
 					var getSuccess = function(data) {
-						cardDetails = JSON.stringify(data);
-					  	console.log(cardDetails.name);
-					  	console.log(cardDetails.desc);
+						var cardDetails = JSON.stringify(data);
+					  	console.log("Card details : " + cardDetails);
 
-					  	var creationSuccess = function(data1) {
-							console.log('Card created successfully. Data returned:' + JSON.stringify(data1));
-						
-						};
+					  	var cardJson = JSON.parse(cardDetails);
 
 					  	var newCard = {
-							name: cardDetails.name, 
-							desc: cardDetails.desc,
+							name: cardJson.name, 
+							desc: cardJson.desc,
 							// Place this card at the top of our list 
 							idList: myList,
 							pos: 'top'
 						};
-						
 						Trello.post('/cards/', newCard, creationSuccess);
 					};
 
