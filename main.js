@@ -43,10 +43,10 @@ $(document).ready(function() {
 
 				if(actionItem == "createList"){
 					var dataInfo = allActions[i].data;
-					console.log(dataInfo);
+					//console.log(dataInfo);
 					var listInfo = dataInfo.list;
-					console.log(listInfo);
-					var listName = listName[0].name; 
+					//console.log(listInfo);
+					var listName = listName.name; 
 					var newList = {
 						name: listName,
 						idBoard: UCDBoard,
