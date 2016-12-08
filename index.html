@@ -21,13 +21,14 @@
 					};
 					
 					var cardDetails=function(data) {
-						console.log("I'm here" + data);
+						console.log("I'm here" +
+						JSON.stringify(data));
 					};
 
 					Trello.cards.get('58487efdfdedd23534be018c',cardDetails,creationSuccess);
 					// var cardDetails = oldCard.responseText;
-					console.log(cardDetails);
-					console.log(JSON.stringify(cardDetails));
+					// console.log(cardDetails);
+					// console.log(JSON.stringify(cardDetails));
 					// console.log(oldCard["name"]);
 					// console.log(oldCard["desc"]);
 					
