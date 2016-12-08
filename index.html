@@ -20,27 +20,16 @@
 					  console.log('Card created successfully. Data returned:' + JSON.stringify(data));
 					};
 					
-					var cardDetails;
+					var cardDetails = {};
 
 					var getSuccess = function(data) {
-						console.log('Getting: ' + JSON.stringify(data));
-					  	cardDetails = JSON.stringify(data);
-
+						cardDetails = JSON.stringify(data);
 					  	console.log("Card details : " + cardDetails);
 					};
 
-					// var cardDetails=function(data) {
-					// 	console.log("I'm here" +
-					// 	JSON.stringify(data));
-					// };
-
-
 					Trello.cards.get('58487efdfdedd23534be018c',getSuccess);
-					// var cardDetails = oldCard.responseText;
+
 					console.log(cardDetails);
-					// console.log(JSON.stringify(cardDetails));
-					// console.log(oldCard["name"]);
-					// console.log(oldCard["desc"]);
 					
 					var newCard = {
 						name: cardDetails.name, 
