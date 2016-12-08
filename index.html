@@ -10,56 +10,8 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script src="https://api.trello.com/1/client.js?key=46474dcbdbdff3ea614b65dfb87ba4bf"></script>
-		<script type="text/javascript">
-			$(document).ready(function() {
-				var authenticationSuccess = function() {
-				    console.log("Successful authentication");
-				    
-				    var UCDBoard = '58487ee330aab261299ef1b1';
-				    var UCDBoard_Triage = '5848860065df2e7765bf9900';
-				    var UCDBoard_Backlog = '584985b734ef65fb7e793e2f';
-				    var UCDBoard_Refined = '584985c3d663dfa63498651d';
-				    var UCDBoard_DoIt = '584985cc095dae3b7f971672';
-				    var UCDBoard_Done = '584985d06e1cd3a9c599a190';
+		<script type="text/javascript" src="main.js">
 
-					var creationSuccess = function(data) {
-					  console.log('Card created successfully. Data returned:' + JSON.stringify(data));
-					};
-					
-					var getSuccess = function(data) {
-						console.log(data.labels);
-					  	var newCard = {
-							name: data.name, 
-							desc: data.desc,
-							labels: data.labels,
-							// Place this card at the top of our list 
-							idList: UCDBoard_Triage,
-							pos: 'top'
-						};
-						Trello.post('/cards/', newCard, creationSuccess);
-					};
-
-					Trello.cards.get('58487efdfdedd23534be018c',getSuccess);
-
-				};
-
-				var authenticationFailure = function() {
-				    console.log("Failed authentication");
-				};
-
-				$('#update').click(function() {
-					Trello.authorize({
-						type: 'popup',
-						name: 'Getting Started Application',
-						scope: {
-							read: 'true',
-							write: 'true' },
-						expiration: 'never',
-						success: authenticationSuccess,
-						error: authenticationFailure
-					});
-				});
-			});
 		</script>
 	</head>
 	<body>
