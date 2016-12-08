@@ -49,7 +49,7 @@ $(document).ready(function() {
 					var listName = listInfo.name; 
 					var newList = {
 						name: listName,
-						idBoard: UCDBoard,
+						idBoard: UCD_Board,
 						pos: 'top'
 					}
 					Trello.post('/lists/',newList,addSuccessUCD);
