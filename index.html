@@ -15,7 +15,12 @@
 				var authenticationSuccess = function() {
 				    console.log("Successful authentication");
 				    
-				    var myList = '5848860065df2e7765bf9900';
+				    var UCDBoard = '58487ee330aab261299ef1b1';
+				    var UCDBoard_Triage = '5848860065df2e7765bf9900';
+				    var UCDBoard_Backlog = '584985b734ef65fb7e793e2f';
+				    var UCDBoard_Refined = '584985c3d663dfa63498651d';
+				    var UCDBoard_DoIt = '584985cc095dae3b7f971672';
+				    var UCDBoard_Done = '584985d06e1cd3a9c599a190';
 
 					var creationSuccess = function(data) {
 					  console.log('Card created successfully. Data returned:' + JSON.stringify(data));
@@ -28,7 +33,7 @@
 							desc: data.desc,
 							labels: data.labels,
 							// Place this card at the top of our list 
-							idList: myList,
+							idList: UCDBoard_Triage,
 							pos: 'top'
 						};
 						Trello.post('/cards/', newCard, creationSuccess);
@@ -74,7 +79,7 @@
 							
 						</header>
 
-						<!-- Content -->
+						<!-- Update Button -->
 							
 
 							<div class="wrapper">
@@ -82,20 +87,7 @@
 								<ul class="actions">
 								<li><input id="update" type="submit" value="Update Boards" /></li>
 								</ul>
-								<h2 class="major">Create a Card</h2>
-							<form method="post" action="#">
-								<div class="field">
-									<label for="name">Name</label>
-									<input type="text" name="name" id="name" />
-								</div>
-								<div class="field">
-									<label for="message">Description</label>
-									<textarea name="message" id="message" rows="4"></textarea>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Create" /></li>
-								</ul>
-							</form>
+							
 								</section>
 
 									</div>
