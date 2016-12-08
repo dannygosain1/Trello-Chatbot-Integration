@@ -43,7 +43,7 @@ $(document).ready(function() {
 
 				if(actionItem == "createList"){
 					var newList = {
-						name: actionItem[i].data[0].board.name,
+						name: allActions[i].data[0].board.name,
 						idBoard: UCDBoard,
 						pos: 'top'
 					}
