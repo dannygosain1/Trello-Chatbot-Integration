@@ -44,7 +44,7 @@ $(document).ready(function() {
 				if(actionItem == "createList"){
 					var dataInfo = allActions[i].data;
 					console.log(dataInfo);
-					var listInfo = dataInfo[0].list;
+					var listInfo = dataInfo.list;
 					console.log(listInfo);
 					var listName = listName[0].name; 
 					var newList = {
