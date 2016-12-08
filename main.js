@@ -30,10 +30,10 @@ $(document).ready(function() {
 
 			// var data = JSON.parse(data1);
 
-			var labelNames = data.labelNames; //json/dictionary
-			var allCards = data.cards; //array
-			var allActions = data.actions; //array
-			var allLists = data.lists;
+			// var labelNames = data.labelNames; //json/dictionary
+			// var allCards = data.cards; //array
+			var allActions = data; //array
+			// var allLists = data.lists;
 
 			console.log(allActions);
 
@@ -70,8 +70,8 @@ $(document).ready(function() {
 			// }
 			
 		};
-
-		Trello.boards.get(kanban,getSuccess,failure);
+		var link = "/boards/"+kanban+"/actions";
+		Trello.get(link,getSuccess,failure);
 
 	};
 
