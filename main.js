@@ -60,6 +60,10 @@ $(document).ready(function() {
 					var dataInfo = allActions[i].data;
 					var oldName = dataInfo.old.name;
 					var listInfo = dataInfo.list;
+					console.log(oldName);
+					console.log("-----------------");
+					console.log(UCDLists);
+					console.log("-----------------");
 					var listId = UCDLists[oldName];
 					var listName = listInfo.name; 
 					var tempLink = '/lists/'+listId;
