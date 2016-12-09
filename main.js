@@ -54,7 +54,9 @@ $(document).ready(function() {
 					Trello.post('/lists/',newList,addSuccessUCD);
 					
 				}
-
+			}
+			
+			for (var i = allActions.length - 1; i >= 0; i--){
 				if(actionItem == "updateList"){
 
 					var dataInfo = allActions[i].data;
