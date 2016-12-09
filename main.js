@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 	    var UCD_Board = '584ac91d9ac72f0102264571';
 
-		var getSucessUCD = function(data,allActions) {
+		var getSuccessUCD = function(data,allActions) {
 			var commonList = data;
 			console.log(commonList);
 			console.log(allActions);
