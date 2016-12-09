@@ -5,7 +5,7 @@ $(document).ready(function() {
 	var authenticationSuccess = function() {
 	    var kanban = '58487edd7b75ece246c80b59';
 
-	    var UCD_Board = '584ac91d9ac72f0102264571';
+	    var UCD_Board = '584acf6043a821eabc4001eb';
 	    
 	    var failure = function() {
 			console.log("Tu chutiya hai");
