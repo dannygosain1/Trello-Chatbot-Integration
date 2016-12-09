@@ -1,10 +1,12 @@
 $(document).ready(function() {
+	var allActions;
+
 	var authenticationSuccess = function() {
 	    var kanban = '58487edd7b75ece246c80b59';
 
 	    var UCD_Board = '584ac91d9ac72f0102264571';
 
-		var getSuccessUCD = function(data,allActions) {
+		var getSuccessUCD = function(data) {
 			var commonList = data;
 			console.log(commonList);
 			console.log(allActions);
@@ -46,40 +48,29 @@ $(document).ready(function() {
 		}
 
 		var getSuccess = function(data) {
-			// console.log(JSON.stringify(data));
 
-			// var data = JSON.parse(data1);
-
-			// var labelNames = data.labelNames; //json/dictionary
-			// var allCards = data.cards; //array
-			var allActions = data; //array
-			// var allLists = data.lists;
-
-			// console.log(allActions);
-
+			allActions = data; //array
 
 			for (var i = allActions.length - 1; i >=0; i--){
 				var actionItem = allActions[i].type;
 
 				if(actionItem == "createList"){
 					var dataInfo = allActions[i].data;
-					//console.log(dataInfo);
 					var listInfo = dataInfo.list;
-					//console.log(listInfo);
-					// var listId = listInfo.id;
 					var listName = listInfo.name; 
+
 					var newList = {
 						name: listName,
 						idBoard:UCD_Board,
 						pos:'bottom'
 					}
-					// var listCall = '/lists/' + listId;
+
 					Trello.post('/lists/',newList,addSuccessUCD);
 				}
 			}
 			
 			var UCDLink = "/boards/"+UCD_Board+"/actions";
-			Trello.get(UCDLink,getSuccessUCD(allActions),failure);
+			Trello.get(UCDLink,getSuccessUCD,failure);
 			
 
 			
