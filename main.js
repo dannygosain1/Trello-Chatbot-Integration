@@ -4,6 +4,26 @@ $(document).ready(function() {
 
 	    var UCD_Board = '584ac91d9ac72f0102264571';
 
+		var getSucessUCD = function(data,allActions) {
+			var commonList = data;
+			console.log(commonList);
+			console.log(allActions);
+
+			for (var j = allActions.length - 1; j>=0; j--){
+				var updateItem = allActions[j].type;
+
+				if(updateItem == "updateList"){
+					var dataInf = allActions[j].data;
+					var listInfo = dataInf.list;
+					var listName = listInfo.name;
+					var updateList = {
+						name:listName
+					}
+					// Trello.put('/lists/',updateList,addSuccessUCD);
+				}
+			}
+		}
+
 		var failure = function() {
 			console.log("Tu chutiya hai");
 		}
@@ -62,25 +82,7 @@ $(document).ready(function() {
 			Trello.get(UCDLink,getSuccessUCD(allActions),failure);
 			
 
-			var getSucessUCD = function(data,allActions) {
-				var commonList = data;
-				console.log(commonList);
-				console.log(allActions);
-
-				for (var j = allActions.length - 1; j>=0; j--){
-					var updateItem = allActions[j].type;
-
-					if(updateItem == "updateList"){
-						var dataInf = allActions[j].data;
-						var listInfo = dataInf.list;
-						var listName = listInfo.name;
-						var updateList = {
-							name:listName
-						}
-						// Trello.put('/lists/',updateList,addSuccessUCD);
-					}
-				}
-			}
+			
 
 			//going through all cards and put it on the right board
 			// for (var i = 0; i < allCards.length; i++){
