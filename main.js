@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var allActions;
-	var UCDLists;
+	var UCDLists={};
 
 	var authenticationSuccess = function() {
 	    var kanban = '58487edd7b75ece246c80b59';
@@ -21,9 +21,9 @@ $(document).ready(function() {
 
 		var addSuccessUCD = function(data) {
 			console.log("List added");
-			console.log(data.name);
-			console.log(data.id);
-			UCDLists[data.name] = data.id;
+			var name = data.name;
+			var id = data.id;
+			UCDLists[name] = id;
 			console.log(UCDLists);
 			// addSuccess(data,UCD_Board);
 		}
