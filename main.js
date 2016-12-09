@@ -13,6 +13,8 @@ $(document).ready(function() {
 			for (var i = allActions.length - 1; i >= 0; i--){
 				var actionItem = allActions[i].type;
 
+				console.log(actionItem);
+
 				if(actionItem == "createList"){
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
@@ -55,6 +57,8 @@ $(document).ready(function() {
 
 		var addSuccessUCD = function(data) {
 			console.log("List added");
+			console.log(data.name);
+			console.log(data.id);
 			UCDLists[data.name] = data.id;
 			console.log(UCDLists);
 			// addSuccess(data,UCD_Board);
