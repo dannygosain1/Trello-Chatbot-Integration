@@ -24,13 +24,13 @@ $(document).ready(function() {
 						pos:'bottom'
 					}
 
-					Trello.put('/lists/',newList,addSuccessUCD);
+					Trello.post('/lists/',newList,addSuccessUCD);
 					
 				}
 
 				if(actionItem == "updateList"){
 
-					var dataInfo = allActions[j].data;
+					var dataInfo = allActions[i].data;
 					var oldName = dataInfo.old.name;
 					var listInfo = dataInfo.list;
 					var listId = UCDLists[oldName];
