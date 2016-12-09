@@ -6,6 +6,31 @@ $(document).ready(function() {
 	    var kanban = '58487edd7b75ece246c80b59';
 
 	    var UCD_Board = '584ac91d9ac72f0102264571';
+	    
+	    var failure = function() {
+			console.log("Tu chutiya hai");
+		}
+
+		var creationSuccess = function(data) {
+		  console.log('Card created successfully.');
+		};
+		
+		var addSuccess = function(data,board){
+			console.log("Blah");
+		}
+
+		var addSuccessUCD = function(data) {
+			console.log("List added");
+			console.log(data.name);
+			console.log(data.id);
+			UCDLists[data.name] = data.id;
+			console.log(UCDLists);
+			// addSuccess(data,UCD_Board);
+		}
+
+		var addSuccessJenkins = function(data){
+			addSuccess(data,JenkinsBoard_Triage);
+		}
 
 		var getSuccess = function(data) {
 			allActions = data;
@@ -41,31 +66,6 @@ $(document).ready(function() {
 					Trello.put(tempLink,listName,addSuccessUCD);
 				}
 			}
-		}
-
-		var failure = function() {
-			console.log("Tu chutiya hai");
-		}
-
-		var creationSuccess = function(data) {
-		  console.log('Card created successfully.');
-		};
-		
-		var addSuccess = function(data,board){
-			console.log("Blah");
-		}
-
-		var addSuccessUCD = function(data) {
-			console.log("List added");
-			console.log(data.name);
-			console.log(data.id);
-			UCDLists[data.name] = data.id;
-			console.log(UCDLists);
-			// addSuccess(data,UCD_Board);
-		}
-
-		var addSuccessJenkins = function(data){
-			addSuccess(data,JenkinsBoard_Triage);
 		}
 
 		var link = "/boards/"+kanban+"/actions";
