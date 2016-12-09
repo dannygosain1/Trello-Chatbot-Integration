@@ -46,16 +46,18 @@ $(document).ready(function() {
 					//console.log(dataInfo);
 					var listInfo = dataInfo.list;
 					//console.log(listInfo);
-					var listId = listInfo.id;
+					// var listId = listInfo.id;
 					var listName = listInfo.name; 
 					var newList = {
-						name: listName
+						name: listName,
+						idBoard:UCD_Board,
+						pos:'bottom'
 					}
-					var listCall = '/lists/' + listId;
-					Trello.put(listCall,newList,addSuccessUCD);
+					// var listCall = '/lists/' + listId;
+					Trello.put('/lists/',newList,addSuccessUCD);
 				}
 			}
-
+			// Trello.get('/lists/');
 			for (var j = allActions.length -1; j>=0; j--){
 				var updateItem = allActions[j].type;
 
@@ -64,9 +66,7 @@ $(document).ready(function() {
 					var listInfo = dataInf.list;
 					var listName = listInfo.name;
 					var newList = {
-						name:listName,
-						idBoard: UCD_Board,
-						pos:'bottom'
+						name:listName
 					}
 
 				}
