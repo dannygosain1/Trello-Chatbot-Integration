@@ -55,7 +55,9 @@ $(document).ready(function() {
 					
 				}
 			}
-
+			console.log("WE ARE DONE WITH CREATING THE LISTS");
+			console.log(UCDLists);
+			console.log("TIME TO UPDATE");
 			for (var i = allActions.length - 1; i >= 0; i--){
 				if(actionItem == "updateList"){
 
