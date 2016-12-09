@@ -55,12 +55,13 @@ $(document).ready(function() {
 					
 				}
 			}
-			
+
 			for (var i = allActions.length - 1; i >= 0; i--){
 				if(actionItem == "updateList"){
 
 					var dataInfo = allActions[i].data;
-					var oldName = dataInfo.old.name;
+					var old = dataInfo.old;
+					var oldName = old.name;
 					var listInfo = dataInfo.list;
 					console.log(oldName);
 					console.log("-----------------");
