@@ -38,7 +38,7 @@ $(document).ready(function() {
 			// console.log(allActions);
 
 
-			for (var i = 0; i < allActions.length; i++){
+			for (var i = allActions.length - 1; i >=0; i--){
 				var actionItem = allActions[i].type;
 
 				if(actionItem == "createList"){
@@ -46,13 +46,29 @@ $(document).ready(function() {
 					//console.log(dataInfo);
 					var listInfo = dataInfo.list;
 					//console.log(listInfo);
+					var listId = listInfo.id;
 					var listName = listInfo.name; 
 					var newList = {
-						name: listName,
-						idBoard: UCD_Board,
-						pos: 'top'
+						name: listName
 					}
-					Trello.post('/lists/',newList,addSuccessUCD);
+					var listCall = '/lists/' + listId;
+					Trello.put(listCall,newList,addSuccessUCD);
+				}
+			}
+
+			for (var j = allActions.length -1; j>=0; j--){
+				var updateItem = allActions[j].type;
+
+				if(updateItem == "updateList"){
+					var dataInf = allActions[j].data;
+					var listInfo = dataInf.list;
+					var listName = listInfo.name;
+					var newList = {
+						name:listName,
+						idBoard: UCD_Board,
+						pos:'bottom'
+					}
+
 				}
 			}
 
