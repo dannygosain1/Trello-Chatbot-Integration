@@ -54,7 +54,9 @@ $(document).ready(function() {
 							pos:'bottom'
 						}
 						// a = a+1;
-						Trello.post('/lists/',newList,addSuccessUCD);
+						setTimeout(function(){
+							Trello.post('/lists/',newList,addSuccessUCD);
+						},5000);
 					// }					
 					// console.log(listArr);
 				}
