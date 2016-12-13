@@ -56,6 +56,7 @@ $(document).ready(function() {
 						a = a+1;
 						Trello.post('/lists/',newList,addSuccessUCD);
 					}					
+					console.log(listArr);
 				}
 			}
 			console.log("WE ARE DONE WITH CREATING THE LISTS");
