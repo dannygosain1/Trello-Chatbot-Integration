@@ -31,6 +31,7 @@ $(document).ready(function() {
 		}
 
 		var updateList = function(allActions){
+			var defer = $.Deferred();
 			for (var i = allActions.length - 1; i >= 0; i--){
 				(function(i) {
 					var actionItem = allActions[i].type;
@@ -56,14 +57,17 @@ $(document).ready(function() {
 					}
 				}(i)); 
 			}
+			setTimeout(function(){
+				defer.resolve();
+			},20000);
+
+			return defer;
 		}
 
 		var createList = function(allActions){
-			for (var i = allActions.length - 1; i >= -1; i--){
+			var defer = $.Deferred();
+			for (var i = allActions.length - 1; i >= 0; i--){
 				(function(i) {
-					if(i == -1){
-						updateList(allActions);
-					}
 					var actionItem = allActions[i].type;
 
 					console.log(actionItem);
@@ -83,11 +87,16 @@ $(document).ready(function() {
 					}
 				}(i)); 
 			}
+			setTimeout(function(){
+				defer.resolve();
+			},20000);
+
+			return defer;
 		}
 
 		var getSuccess = function(data) {
-			allActions = data;
-			createList(data);
+			// allActions = data;
+			createList(data).then(updateList(data));
 		}
 
 		var link = "/boards/"+kanban+"/actions";
