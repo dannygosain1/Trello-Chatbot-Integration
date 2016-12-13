@@ -15,7 +15,7 @@ $(document).ready(function() {
 		  console.log('Card created successfully.');
 		};
 		
-		var addSuccess = function(data,board){
+		var addSuccess = function(data){
 			console.log("Blah");
 		}
 
