@@ -35,7 +35,7 @@ $(document).ready(function() {
 		var getSuccess = function(data) {
 			allActions = data;
 			// var listArr = [];
-			var a = 0;
+			// var a = 0;
 			for (var i = allActions.length - 1; i >= 0; i--){
 				var actionItem = allActions[i].type;
 
@@ -45,18 +45,18 @@ $(document).ready(function() {
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
-					if (listArr.indexOf(listName) == -1){
-						var listArr[a] = listName;
+					// if (listArr.indexOf(listName) == -1){
+					// 	listArr[a] = listName;
 						
 						var newList = {
 							name: listName,
 							idBoard:UCD_Board,
 							pos:'bottom'
 						}
-						a = a+1;
+						// a = a+1;
 						Trello.post('/lists/',newList,addSuccessUCD);
-					}					
-					console.log(listArr);
+					// }					
+					// console.log(listArr);
 				}
 			}
 			console.log("WE ARE DONE WITH CREATING THE LISTS");
