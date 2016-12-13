@@ -34,7 +34,7 @@ $(document).ready(function() {
 
 		var getSuccess = function(data) {
 			allActions = data;
-			var listArr = [];
+			// var listArr = [];
 			var a = 0;
 			for (var i = allActions.length - 1; i >= 0; i--){
 				var actionItem = allActions[i].type;
@@ -46,7 +46,7 @@ $(document).ready(function() {
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
 					if (listArr.indexOf(listName) == -1){
-						listArr[a] = listName;
+						var listArr[a] = listName;
 						
 						var newList = {
 							name: listName,
