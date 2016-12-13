@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var allActions;
-	var UCDLists={};
+	var UCDLists;
 
 	var authenticationSuccess = function() {
 	    var kanban = '58487edd7b75ece246c80b59';
@@ -8,7 +8,7 @@ $(document).ready(function() {
 	    var UCD_Board = '584acf6043a821eabc4001eb';
 	    
 	    var failure = function() {
-			console.log("Tu chutiya hai");
+			console.log("Swapnil chutiya hai");
 		}
 
 		var creationSuccess = function(data) {
@@ -24,7 +24,7 @@ $(document).ready(function() {
 			var name = data.name;
 			var id = data.id;
 			UCDLists[name] = id;
-			console.log(UCDLists);
+			// console.log(UCDLists);
 			// addSuccess(data,UCD_Board);
 		}
 
@@ -34,7 +34,8 @@ $(document).ready(function() {
 
 		var getSuccess = function(data) {
 			allActions = data;
-
+			var listArr = [];
+			var a = 0;
 			for (var i = allActions.length - 1; i >= 0; i--){
 				var actionItem = allActions[i].type;
 
@@ -44,20 +45,23 @@ $(document).ready(function() {
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
-
-					var newList = {
-						name: listName,
-						idBoard:UCD_Board,
-						pos:'bottom'
-					}
-
-					Trello.post('/lists/',newList,addSuccessUCD);
-					
+					if (listArr.indexOf(listName) == -1){
+						listArr[a] = listName;
+						
+						var newList = {
+							name: listName,
+							idBoard:UCD_Board,
+							pos:'bottom'
+						}
+						a = a+1;
+						Trello.post('/lists/',newList,addSuccessUCD);
+					}					
 				}
 			}
 			console.log("WE ARE DONE WITH CREATING THE LISTS");
 			console.log(UCDLists);
 			console.log("TIME TO UPDATE");
+			
 			for (var i = allActions.length - 1; i >= 0; i--){
 				if(actionItem == "updateList"){
 
@@ -72,7 +76,7 @@ $(document).ready(function() {
 					var listId = UCDLists[oldName];
 					var listName = listInfo.name; 
 					var tempLink = '/lists/'+listId;
-					Trello.put(tempLink,listName,addSuccessUCD);
+					Trello.put(tempLink,listName,addSuccess);
 				}
 			}
 		}
