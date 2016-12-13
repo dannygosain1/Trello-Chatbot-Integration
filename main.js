@@ -37,29 +37,31 @@ $(document).ready(function() {
 			// var listArr = [];
 			// var a = 0;
 			for (var i = allActions.length - 1; i >= 0; i--){
-				var actionItem = allActions[i].type;
+				setTimeout(function(){
+					var actionItem = allActions[i].type;
 
-				console.log(actionItem);
+					console.log(actionItem);
 
-				if(actionItem == "createList"){
-					var dataInfo = allActions[i].data;
-					var listInfo = dataInfo.list;
-					var listName = listInfo.name; 
-					// if (listArr.indexOf(listName) == -1){
-					// 	listArr[a] = listName;
-						
+					if(actionItem == "createList"){
+						var dataInfo = allActions[i].data;
+						var listInfo = dataInfo.list;
+						var listName = listInfo.name; 
+						// if (listArr.indexOf(listName) == -1){
+						// 	listArr[a] = listName;
+							
 						var newList = {
 							name: listName,
 							idBoard:UCD_Board,
 							pos:'bottom'
 						}
 						// a = a+1;
-						setTimeout(function(){
-							Trello.post('/lists/',newList,addSuccessUCD);
-						},5000);
+						
+						Trello.post('/lists/',newList,addSuccessUCD);
+					}
+				},5000);
 					// }					
 					// console.log(listArr);
-				}
+				// }
 			}
 			console.log("WE ARE DONE WITH CREATING THE LISTS");
 			console.log(UCDLists);
