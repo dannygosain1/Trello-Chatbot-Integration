@@ -30,62 +30,64 @@ $(document).ready(function() {
 			addSuccess(data,JenkinsBoard_Triage);
 		}
 
+		var updateList = function(allActions){
+			for (var i = allActions.length - 1; i >= 0; i--){
+				(function(i) {
+					var actionItem = allActions[i].type;
+
+					console.log(actionItem);
+
+					if(actionItem == "updateList"){
+
+						var dataInfo = allActions[i].data;
+						var old = dataInfo.old;
+						var oldName = old.name;
+						var listInfo = dataInfo.list;
+
+						console.log(oldName);
+						console.log("-----------------");
+						console.log(UCDLists);
+						console.log("-----------------");
+						
+						var listId = UCDLists[oldName];
+						var listName = listInfo.name; 
+						var tempLink = '/lists/'+listId;
+						Trello.put(tempLink,listName,addSuccess);
+					}
+				}(i)); 
+			}
+		}
+
+		var createList = function(allActions){
+			for (var i = allActions.length - 1; i >= -1; i--){
+				(function(i) {
+					if(i == -1){
+						updateList(allActions);
+					}
+					var actionItem = allActions[i].type;
+
+					console.log(actionItem);
+
+					if(actionItem == "createList"){
+						var dataInfo = allActions[i].data;
+						var listInfo = dataInfo.list;
+						var listName = listInfo.name; 
+							
+						var newList = {
+							name: listName,
+							idBoard:UCD_Board,
+							pos:'bottom'
+						}
+						
+						Trello.post('/lists/', newList, addSuccessUCD);
+					}
+				}(i)); 
+			}
+		}
+
 		var getSuccess = function(data) {
 			allActions = data;
-			for (var j = 0; j < 2; j++){
-				(function(j) {
-					if (j == 0){
-						for (var i = allActions.length - 1; i >= 0; i--){
-							(function(i) {
-								var actionItem = allActions[i].type;
-
-								console.log(actionItem);
-
-								if(actionItem == "createList"){
-									var dataInfo = allActions[i].data;
-									var listInfo = dataInfo.list;
-									var listName = listInfo.name; 
-										
-									var newList = {
-										name: listName,
-										idBoard:UCD_Board,
-										pos:'bottom'
-									}
-									
-									Trello.post('/lists/', newList, addSuccessUCD);
-								}
-							}(i)); 
-						}
-					}
-					else {
-						for (var i = allActions.length - 1; i >= 0; i--){
-							(function(i) {
-								var actionItem = allActions[i].type;
-
-								console.log(actionItem);
-
-								if(actionItem == "updateList"){
-
-									var dataInfo = allActions[i].data;
-									var old = dataInfo.old;
-									var oldName = old.name;
-									var listInfo = dataInfo.list;
-
-									console.log(oldName);
-									console.log("-----------------");
-									console.log(UCDLists);
-									console.log("-----------------");
-									
-									var listId = UCDLists[oldName];
-									var listName = listInfo.name; 
-									var tempLink = '/lists/'+listId;
-									Trello.put(tempLink,listName,addSuccess);
-								}
-							}(i)); 
-						}
-					}
-				}(j));
-			}
+			createList(data);
 		}
 
 		var link = "/boards/"+kanban+"/actions";
