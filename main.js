@@ -34,10 +34,9 @@ $(document).ready(function() {
 
 		var getSuccess = function(data) {
 			allActions = data;
-			// var listArr = [];
-			// var a = 0;
+
 			for (var i = allActions.length - 1; i >= 0; i--){
-				setTimeout(function(){
+				(function(i) {
 					var actionItem = allActions[i].type;
 
 					console.log(actionItem);
@@ -46,44 +45,42 @@ $(document).ready(function() {
 						var dataInfo = allActions[i].data;
 						var listInfo = dataInfo.list;
 						var listName = listInfo.name; 
-						// if (listArr.indexOf(listName) == -1){
-						// 	listArr[a] = listName;
 							
 						var newList = {
 							name: listName,
 							idBoard:UCD_Board,
 							pos:'bottom'
 						}
-						// a = a+1;
 						
-						Trello.post('/lists/',newList,addSuccessUCD);
+						Trello.post('/lists/', newList, addSuccessUCD);
 					}
-				},5000);
-					// }					
-					// console.log(listArr);
-				// }
-			}
-			console.log("WE ARE DONE WITH CREATING THE LISTS");
-			console.log(UCDLists);
-			console.log("TIME TO UPDATE");
-			
-			for (var i = allActions.length - 1; i >= 0; i--){
-				if(actionItem == "updateList"){
 
-					var dataInfo = allActions[i].data;
-					var old = dataInfo.old;
-					var oldName = old.name;
-					var listInfo = dataInfo.list;
-					console.log(oldName);
-					console.log("-----------------");
-					console.log(UCDLists);
-					console.log("-----------------");
-					var listId = UCDLists[oldName];
-					var listName = listInfo.name; 
-					var tempLink = '/lists/'+listId;
-					Trello.put(tempLink,listName,addSuccess);
-				}
+					if(actionItem == "updateList"){
+
+						var dataInfo = allActions[i].data;
+						var old = dataInfo.old;
+						var oldName = old.name;
+						var listInfo = dataInfo.list;
+						console.log(oldName);
+						console.log("-----------------");
+						console.log(UCDLists);
+						console.log("-----------------");
+						var listId = UCDLists[oldName];
+						var listName = listInfo.name; 
+						var tempLink = '/lists/'+listId;
+						Trello.put(tempLink,listName,addSuccess);
+					}
+				}(i)); 
 			}
+
+			// console.log("WE ARE DONE WITH CREATING THE LISTS");
+			// console.log(UCDLists);
+			// console.log("TIME TO UPDATE");
+			
+			// for (var i = allActions.length - 1; i >= 0; i--){
+			// 	var actionItem = allActions[i].type;
+				
+			// }
 		}
 
 		var link = "/boards/"+kanban+"/actions";
