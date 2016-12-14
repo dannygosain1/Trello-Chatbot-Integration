@@ -14,7 +14,10 @@ $(document).ready(function() {
 			pos:'bottom'
 		}
 					
-		var obj = Trello.post('/lists/', newList, function SuccessAdd(data){
+		var obj = Trello.post('/lists/', newList, function SuccessAdd(data, function callBack(error,i){
+			if (error) console.error("ERROR");
+			else console.log(i);
+		}){
 			console.log("Hell o there");
 			return 10;
 		});
