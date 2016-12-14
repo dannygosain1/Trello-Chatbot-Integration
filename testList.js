@@ -26,6 +26,8 @@ $(document).ready(function() {
 
 		console.log(obj);
 		console.log(obj.responseText);
+		console.log(obj.status);
+		console.log(obj.statusText);
 
 	};
 
