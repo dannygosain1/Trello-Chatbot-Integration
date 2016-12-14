@@ -50,9 +50,9 @@ $(document).ready(function() {
 					Trello.post('/lists/', newList, function SuccessAdd(data){
 						arrayList = createList(allActions,i-1);
 						console.log(data);
-						// var name = data.name;
-						// var pid = data.id;
-						// arrayList[name] = pid;
+						var name = data.name;
+						var pid = data.id;
+						arrayList[name] = pid;
 						console.log("SuccessAdd UCD Lists for " + i + " is ");
 						console.log(arrayList);
 						return arrayList;
