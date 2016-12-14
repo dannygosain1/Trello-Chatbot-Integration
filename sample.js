@@ -35,7 +35,7 @@ $(document).ready(function() {
 						var tempName = tempData.name;
 						var tempPid = tempData.id;
 
-						UCDLists.tempName = tempPid;
+						UCDLists[tempName] = tempPid;
 						
 						console.log("SuccessAdd UCD Lists for " + i + " is ");
 						console.log(UCDLists);
