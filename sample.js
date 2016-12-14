@@ -56,6 +56,7 @@ $(document).ready(function() {
 						console.log(tempName);
 						console.log(tempPid);
 						console.log("Danny chutiya hai");
+						arrayList.tempName = "";
 						arrayList.tempName = tempPid;
 						console.log("SuccessAdd UCD Lists for " + i + " is ");
 						console.log(arrayList);
