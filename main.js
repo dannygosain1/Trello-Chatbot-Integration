@@ -58,6 +58,7 @@ $(document).ready(function() {
 			}
 		}
 		var createListDo = function(allActions){
+			var defer = $.Deferred();
 			for (var i = allActions.length - 1; i >= 0; i--){
 				(function(i) {
 					var actionItem = allActions[i].type;
@@ -79,6 +80,8 @@ $(document).ready(function() {
 					}
 				}(i)); 
 			}
+			defer.resolve();
+			return defer;
 		}
 
 		var createList = function(allActions){
@@ -88,7 +91,7 @@ $(document).ready(function() {
 		var getSuccess = function(data) {
 			// allActions = data;
 			// createList(data).then(updateList(data));
-			createList(data,updateList(data));
+			createList(data).then(updateList(data));
 		}
 
 		var link = "/boards/"+kanban+"/actions";
