@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var allActions;
-	var UCDLists={};
+	var UCDLists;
 
 	var authenticationSuccess = function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
@@ -28,20 +28,18 @@ $(document).ready(function() {
 		}
 
 		var createList = function(allActions,i){
-			console.log(i);
 			if (i == -1){
 				console.log("Returning emptiness");
-				return;
+				return {};
 			}
 			else {
-				console.log("Im here");
 				var actionItem = allActions[i].type;
 
 				if(actionItem == "createList"){
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
-						
+					console.log(UCDLists);	
 					var newList = {
 						name: listName,
 						idBoard:UCD_Board,
@@ -49,8 +47,7 @@ $(document).ready(function() {
 					}
 					
 					Trello.post('/lists/', newList, function SuccessAdd(err,data){
-						createList(allActions,i-1);
-						console.log(i);
+						UCDLists = createList(allActions,i-1);
 						var name = data.name;
 						var pid = data.id;
 						UCDLists[name] = pid;
@@ -58,7 +55,8 @@ $(document).ready(function() {
 					});
 				}
 				else {
-					return createList(allActions,i-1);
+					UCDLists = createList(allActions,i-1);
+					return UCDLists;
 				}
 			}
 		}
