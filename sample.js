@@ -30,7 +30,7 @@ $(document).ready(function() {
 		var createList = function(allActions,i){
 			if (i == -1){
 				console.log("Returning emptiness");
-				return {};
+				return null;
 			}
 			else {
 				var actionItem = allActions[i].type;
@@ -39,7 +39,9 @@ $(document).ready(function() {
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
+
 					console.log(UCDLists);	
+
 					var newList = {
 						name: listName,
 						idBoard:UCD_Board,
@@ -51,6 +53,7 @@ $(document).ready(function() {
 						var name = data.name;
 						var pid = data.id;
 						UCDLists[name] = pid;
+						console.log("SuccessAdd UCD Lists for " + i + " is " + UCDLists);
 						return UCDLists;
 					});
 				}
@@ -62,8 +65,9 @@ $(document).ready(function() {
 
 		var getSuccess = function(data) {
 			console.log(data.length);
-			createList(data, data.length-1, function (error, ucd){
-				console.log(ucd);
+			createList(data, data.length-1, function callBackFnc(error, ucd){
+				if (error) console.error('Im stuck', error);
+				else console.log("Im done", ucd);
 			});
 			console.log("recursive call starting");
 		}
