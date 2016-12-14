@@ -13,11 +13,13 @@ $(document).ready(function() {
 			idBoard: UCD_Board,
 			pos:'bottom'
 		}
-					
-		var obj = Trello.post('/lists/', newList, function SuccessAdd(data, function callBack(error,i){
+				
+		function errCall (error, i){
 			if (error) console.error("ERROR");
 			else console.log(i);
-		}){
+		}	
+
+		var obj = Trello.post('/lists/', newList, function SuccessAdd(data, errCall){
 			console.log("Hell o there");
 			return 10;
 		});
