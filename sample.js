@@ -47,7 +47,7 @@ $(document).ready(function() {
 						pos:'bottom'
 					}
 					
-					Trello.post('/lists/', newList, function SuccessAdd(err,data){
+					Trello.post('/lists/', newList, function SuccessAdd(data){
 						arrayList = createList(allActions,i-1);
 						console.log(data);
 						// var name = data.name;
