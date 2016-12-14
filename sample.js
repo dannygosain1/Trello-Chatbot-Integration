@@ -28,7 +28,7 @@ $(document).ready(function() {
 		}
 
 		var createList = function(allActions,i){
-			var arrayList = {};
+			var arrayList = new Object();
 			if (i == -1){
 				console.log("Returning emptiness");
 				return arrayList;
