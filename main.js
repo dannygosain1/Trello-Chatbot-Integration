@@ -80,9 +80,9 @@ $(document).ready(function() {
 					}
 				}(i)); 
 			}
-			setTimeout(){
+			setTimeout(function (){
 				defer.resolve();
-			}
+			},20000);
 			
 			return defer;
 		}
