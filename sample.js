@@ -59,8 +59,10 @@ $(document).ready(function() {
 		}
 
 		var getSuccess = function(data) {
-			var temp = createList(data,data.length-1);
-			console.log(temp);
+			createList(data,data.length-1, function (error, ucd){
+				console.log(ucd);
+			});
+			console.log("recursive call starting");
 		}
 
 		var link = "/boards/"+kanban+"/actions";
