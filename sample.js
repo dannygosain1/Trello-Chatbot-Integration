@@ -23,7 +23,7 @@ $(document).ready(function() {
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
-					if !(listName in UCDLists) {
+					if (!(listName in UCDLists)) {
 						var newList = {
 							name: listName,
 							idBoard: UCD_Board,
