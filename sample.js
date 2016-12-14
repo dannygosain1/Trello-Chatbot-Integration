@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	var allActions;
 	var UCDLists={};
+	var UCDCards={}
 
 	var authenticationSuccess = function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
@@ -19,6 +20,7 @@ $(document).ready(function() {
 				var actionItem = allActions[i].type;
 
 				if(actionItem == "createList"){
+					console.log("Creating List");
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
@@ -43,12 +45,8 @@ $(document).ready(function() {
 						createList(allActions,i-1);
 					}
 				}
-				else if(actionItem == "createBoard"){
-					console.log(i);
-					createList(allActions,i-1);
-				}
 				else if(actionItem == "updateList") {
-					console.log("Updating List Now");
+					console.log("Updating List");
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name;
@@ -84,8 +82,66 @@ $(document).ready(function() {
 						createList(allActions,i-1);
 					}
 				}
+				else if (actionItem == "createCard"){
+					console.log("Creating Card");
+					var dataInfo = allActions[i].data;
+					var cardInfo = dataInfo.card;
+					var cardName = cardInfo.name;
+					var cardList = dataInfo.list;
+					var listName = cardList.name; 
+					
+					if (listName in UCDLists) {
+						var newCard = {
+							name: cardName,
+							idBoard: UCD_Board,
+							idList: UCDLists[listName]
+						}
+						
+						Trello.post('/cards/', newCard, function SuccessAdd(data){
+							console.log("Card added with data: ");
+							console.log(data);
+
+							var tempData = data;
+							var tempName = tempData.name;
+							var tempPid = tempData.id;
+							console.log(tempData);
+							UCDCards[tempName] = tempPid;
+													
+							createList(allActions,i-1);
+						});
+					}
+					else {
+						createList(allActions,i-1);
+					}
+				}
+				else if (actionItem == "updateCard") {
+					console.log("Updating Card");
+					// var dataInfo = allActions[i].data;
+					// var cardInfo = dataInfo.card;
+					// var cardName = cardInfo.name;
+					// var cardList = dataInfo.list;
+					// var listName = cardList.name; 
+					
+					// if (listName in UCDLists) {
+					// 	var newCard = {
+					// 		name: cardName,
+					// 		idBoard: UCD_Board,
+					// 		idList: UCDLists[listName]
+					// 	}
+						
+					// 	Trello.post('/cards/', newCard, function SuccessAdd(data){
+					// 		console.log("Card added with data: ");
+					// 		console.log(data);
+													
+					// 		createList(allActions,i-1);
+					// 	});
+					// }
+					// else {
+						createList(allActions,i-1);
+					// }
+				}
 				else {
-					console.log("Unknown");
+					createList(allActions,i-1);
 				}
 			}
 		}
