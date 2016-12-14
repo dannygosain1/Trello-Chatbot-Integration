@@ -59,7 +59,8 @@ $(document).ready(function() {
 		}
 
 		var getSuccess = function(data) {
-			createList(data,data.length-1, function (error, ucd){
+			console.log(data.length);
+			createList(data, data.length-1, function (error, ucd){
 				console.log(ucd);
 			});
 			console.log("recursive call starting");
