@@ -60,24 +60,25 @@ $(document).ready(function() {
 		var createListDo = function(allActions){
 			for (var i = allActions.length - 1; i >= 0; i--){
 				(function (i) {
-					var actionItem = allActions[i].type;
+					setTimeout(function(){
+						console.log(i); 
+						var actionItem = allActions[i].type;
 
-					console.log(actionItem);
+						console.log(actionItem);
 
-					if(actionItem == "createList"){
-						var dataInfo = allActions[i].data;
-						var listInfo = dataInfo.list;
-						var listName = listInfo.name; 
+						if(actionItem == "createList"){
+							var dataInfo = allActions[i].data;
+							var listInfo = dataInfo.list;
+							var listName = listInfo.name; 
+								
+							var newList = {
+								name: listName,
+								idBoard:UCD_Board,
+								pos:'bottom'
+							}
 							
-						var newList = {
-							name: listName,
-							idBoard:UCD_Board,
-							pos:'bottom'
-						}
-						
-						Trello.post('/lists/', newList, addSuccessUCD);
-					}
-					setTimeout(function(){console.log(i)},5000);
+							Trello.post('/lists/', newList, addSuccessUCD);
+					}},3000);
 				}(i)); 
 			}
 		}
