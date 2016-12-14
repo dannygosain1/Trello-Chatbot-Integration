@@ -14,7 +14,6 @@ $(document).ready(function() {
 		var createList = function(allActions, i){
 			if (i == -1){
 				console.log("Returning emptiness");
-				console.log(UCDLists);
 			}
 			else {
 				var actionItem = allActions[i].type;
@@ -36,10 +35,7 @@ $(document).ready(function() {
 							var tempPid = tempData.id;
 
 							UCDLists[tempName] = tempPid;
-							
-							console.log("SuccessAdd UCD Lists for " + i + " is ");
-							console.log(UCDLists);
-							
+													
 							createList(allActions,i-1);
 						});
 					}
@@ -64,7 +60,7 @@ $(document).ready(function() {
 
 					if (oldName in UCDLists) {
 						var listId = UCDLists[oldName];
-						var tempLink = '/lists/'+listId;
+						var tempLink = '/lists/'+listId+'/name';
 						delete UCDLists[oldName];
 
 						Trello.put(tempLink, listName, function SuccessAdd(data){
