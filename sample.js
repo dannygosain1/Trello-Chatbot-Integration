@@ -34,6 +34,7 @@ $(document).ready(function() {
 				return;
 			}
 			else {
+				console.log("Im here");
 				var actionItem = allActions[i].type;
 
 				if(actionItem == "createList"){
