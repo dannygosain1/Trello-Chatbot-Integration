@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var allActions;
-	var UCDLists;
+	var UCDLists={};
 
 	var authenticationSuccess = function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
@@ -21,9 +21,10 @@ $(document).ready(function() {
 
 		var addSuccessUCD = function(data) {
 			console.log("List added");
+			console.log(data);
 			var name = data.name;
-			var id = data.id;
-			UCDLists[name] = id;
+			var pid = data.id;
+			UCDLists[name] = pid;
 		}
 
 		// var addSuccessJenkins = function(data){
