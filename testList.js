@@ -15,6 +15,7 @@ $(document).ready(function() {
 		}
 					
 		var obj = Trello.post('/lists/', newList, function SuccessAdd(data){
+			console.log("Hell o there");
 			return 10;
 		});
 
