@@ -54,7 +54,8 @@ $(document).ready(function() {
 						var name = data.name;
 						var pid = data.id;
 						arrayList[name] = pid;
-						console.log("SuccessAdd UCD Lists for " + i + " is " + arrayList);
+						console.log("SuccessAdd UCD Lists for " + i + " is ");
+						console.log(arrayList);
 						return arrayList;
 					});
 				}
