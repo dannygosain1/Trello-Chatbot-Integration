@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	var allActions;
-	var UCDLists;
+	var UCDLists={};
 
 	var authenticationSuccess = function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
