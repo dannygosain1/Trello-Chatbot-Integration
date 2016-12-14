@@ -18,8 +18,9 @@ $(document).ready(function() {
 			console.log("Hell o there");
 			return 10;
 		});
-
-		console.log(obj.responseText);
+		
+		console.log(obj);
+		console.log(obj['responseText']);
 
 	};
 
