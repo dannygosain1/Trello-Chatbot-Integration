@@ -21,10 +21,12 @@ $(document).ready(function() {
 
 		var obj = Trello.post('/lists/', newList, function SuccessAdd(data, errCall){
 			console.log("Hell o there");
-			return "HELLO FROM THE OTHER SIDE";
+			UCDLists = data;
+			console.log(UCDLists);
+			return "HAHA";
 		});
 
-		// console.log(obj);
+		console.log(obj);
 		// console.log(obj.responseText);
 		// console.log(obj.status);
 		// console.log(obj.statusText);
