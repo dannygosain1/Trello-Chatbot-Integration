@@ -28,7 +28,7 @@ $(document).ready(function() {
 		}
 
 		var createList = function(allActions,i){
-			var arrayList = new Array(15);
+			var arrayList = [];
 			if (i == -1){
 				console.log("Returning emptiness");
 				return arrayList;
@@ -53,7 +53,7 @@ $(document).ready(function() {
 						var tempName = tempData.name;
 						var tempPid = tempData.id;
 						console.log(tempData);
-						arrayList.push({name: tempName, value: tempPid});
+						arrayList.push(tempName);
 						console.log("SuccessAdd UCD Lists for " + i + " is ");
 						console.log(arrayList);
 						return arrayList;
