@@ -43,7 +43,7 @@ $(document).ready(function() {
 
 					var newList = {
 						name: listName,
-						idBoard:UCD_Board,
+						idBoard: UCD_Board,
 						pos:'bottom'
 					}
 					
@@ -59,9 +59,12 @@ $(document).ready(function() {
 						return arrayList;
 					});
 				}
+				else if(actionItem == "createBoard"){
+					console.log(i);
+					console.log(createList(allActions,i-1));
+				}
 				else {
-					arrayList = createList(allActions,i-1);
-					return arrayList;
+					console.log("Unknown");
 				}
 			}
 		}
@@ -70,7 +73,7 @@ $(document).ready(function() {
 			console.log(data.length);
 			createList(data, data.length-1, function callBackFnc(error, ucd){
 				if (error) console.error('Im stuck', error);
-				else console.log("Im done", ucd);
+				else console.log("I'm done", ucd);
 			});
 			console.log("recursive call starting");
 		}
