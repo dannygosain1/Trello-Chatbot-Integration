@@ -58,6 +58,9 @@ $(document).ready(function() {
 					var listName = listInfo.name;
 					var old = dataInfo.old;
 					var oldName = old.name;
+					
+					console.log(listName);
+					console.log(oldName);
 
 					if (oldName in UCDLists) {
 						var listId = UCDLists[oldName];
