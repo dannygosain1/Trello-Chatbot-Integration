@@ -60,13 +60,13 @@ $(document).ready(function() {
 
 					if (oldName in UCDLists) {
 						var listId = UCDLists[oldName];
-						var tempLink = '/lists/'+listId+'/name';
+						var tempLink = '/lists/'+listId;
 						delete UCDLists[oldName];
 						
 						var upList = {
 							name: listName
 						}
-						
+
 						Trello.put(tempLink, upList, function SuccessAdd(data){
 							var tempData = data;
 							var tempName = tempData.name;
