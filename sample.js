@@ -53,9 +53,7 @@ $(document).ready(function() {
 						var tempName = tempData.name;
 						var tempPid = tempData.id;
 						console.log(tempData);
-						console.log(tempName);
-						console.log(tempPid);
-						arrayList.push({tempName : tempPid});
+						arrayList.push({name: tempName, value: tempPid});
 						console.log("SuccessAdd UCD Lists for " + i + " is ");
 						console.log(arrayList);
 						return arrayList;
