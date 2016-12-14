@@ -52,6 +52,7 @@ $(document).ready(function() {
 					createList(allActions,i-1);
 				}
 				else if(actionItem == "updateList") {
+					console.log("Updating List Now");
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name;
@@ -67,7 +68,7 @@ $(document).ready(function() {
 							var tempData = data;
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
-
+							console.log(tempData);
 							UCDLists[tempName] = tempPid;
 							
 							console.log("SuccessAdd UCD Lists for " + i + " is ");
