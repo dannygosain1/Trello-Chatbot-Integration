@@ -19,11 +19,11 @@ $(document).ready(function() {
 			else console.log(i);
 		}	
 
-		var obj = Trello.post('/lists/', newList, function SuccessAdd(data, errCall){
+		var obj = Trello.post('/lists/', newList, function SuccessAdd(data){
 			console.log("Hell o there");
-			UCDLists[data.name] = data.id;
+			var test = data.name + UCDLists.length;
+			UCDLists[test] = data.id;
 			console.log(UCDLists);
-			return "HAHA";
 		});
 
 		console.log(obj);
