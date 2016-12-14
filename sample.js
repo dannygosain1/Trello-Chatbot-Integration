@@ -28,6 +28,7 @@ $(document).ready(function() {
 		}
 
 		var createList = function(allActions,i){
+			console.log(i);
 			if (i == -1){
 				console.log("Returning emptiness");
 				return;
