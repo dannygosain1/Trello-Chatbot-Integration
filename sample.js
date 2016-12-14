@@ -23,25 +23,29 @@ $(document).ready(function() {
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
+					if !(listName in UCDLists) {
+						var newList = {
+							name: listName,
+							idBoard: UCD_Board,
+							pos:'bottom'
+						}
+						
+						Trello.post('/lists/', newList, function SuccessAdd(data){
+							var tempData = data;
+							var tempName = tempData.name;
+							var tempPid = tempData.id;
 
-					var newList = {
-						name: listName,
-						idBoard: UCD_Board,
-						pos:'bottom'
+							UCDLists[tempName] = tempPid;
+							
+							console.log("SuccessAdd UCD Lists for " + i + " is ");
+							console.log(UCDLists);
+							
+							createList(allActions,i-1);
+						});
 					}
-					
-					Trello.post('/lists/', newList, function SuccessAdd(data){
-						var tempData = data;
-						var tempName = tempData.name;
-						var tempPid = tempData.id;
-
-						UCDLists[tempName] = tempPid;
-						
-						console.log("SuccessAdd UCD Lists for " + i + " is ");
-						console.log(UCDLists);
-						
+					else {
 						createList(allActions,i-1);
-					});
+					}
 				}
 				else if(actionItem == "createBoard"){
 					console.log(i);
