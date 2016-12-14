@@ -28,7 +28,7 @@ $(document).ready(function() {
 		}
 
 		var createList = function(allActions,i){
-			var arrayList = new Object();
+			var arrayList = [];
 			if (i == -1){
 				console.log("Returning emptiness");
 				return arrayList;
@@ -55,9 +55,7 @@ $(document).ready(function() {
 						console.log(tempData);
 						console.log(tempName);
 						console.log(tempPid);
-						console.log("Danny chutiya hai");
-						arrayList.tempName = "";
-						arrayList.tempName = tempPid;
+						arrayList.push({tempName : tempPid});
 						console.log("SuccessAdd UCD Lists for " + i + " is ");
 						console.log(arrayList);
 						return arrayList;
