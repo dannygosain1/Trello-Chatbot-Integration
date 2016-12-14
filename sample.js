@@ -47,7 +47,7 @@ $(document).ready(function() {
 					}
 					
 					Trello.post('/lists/', newList, function SuccessAdd(err,data){
-						UCDLists = createList(allActions,i-1);
+						createList(allActions,i-1);
 						var name = data.name;
 						var pid = data.id;
 						UCDLists[name] = pid;
@@ -55,8 +55,7 @@ $(document).ready(function() {
 					});
 				}
 				else {
-					UCDLists = createList(allActions,i-1);
-					return UCDLists;
+					return createList(allActions,i-1);
 				}
 			}
 		}
