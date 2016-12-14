@@ -28,9 +28,10 @@ $(document).ready(function() {
 		}
 
 		var createList = function(allActions,i){
+			var arrayList = {};
 			if (i == -1){
 				console.log("Returning emptiness");
-				return null;
+				return arrayList;
 			}
 			else {
 				var actionItem = allActions[i].type;
@@ -49,16 +50,17 @@ $(document).ready(function() {
 					}
 					
 					Trello.post('/lists/', newList, function SuccessAdd(err,data){
-						createList(allActions,i-1);
+						arrayList = createList(allActions,i-1);
 						var name = data.name;
 						var pid = data.id;
-						UCDLists[name] = pid;
-						console.log("SuccessAdd UCD Lists for " + i + " is " + UCDLists);
-						return UCDLists;
+						arrayList[name] = pid;
+						console.log("SuccessAdd UCD Lists for " + i + " is " + arrayList);
+						return arrayList;
 					});
 				}
 				else {
-					return createList(allActions,i-1);
+					arrayList = createList(allActions,i-1);
+					return arrayList;
 				}
 			}
 		}
