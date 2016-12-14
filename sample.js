@@ -62,8 +62,12 @@ $(document).ready(function() {
 						var listId = UCDLists[oldName];
 						var tempLink = '/lists/'+listId+'/name';
 						delete UCDLists[oldName];
-
-						Trello.put(tempLink, listName, function SuccessAdd(data){
+						
+						var upList = {
+							name: listName
+						}
+						
+						Trello.put(tempLink, upList, function SuccessAdd(data){
 							var tempData = data;
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
