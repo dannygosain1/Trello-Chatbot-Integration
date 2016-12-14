@@ -27,11 +27,11 @@ $(document).ready(function() {
 			UCDLists[name] = pid;
 		}
 
-		var createList = function(allActions,i){
-			var arrayList = [];
+		var createList = function(allActions, i){
+			//var arrayList = [];
 			if (i == -1){
 				console.log("Returning emptiness");
-				return arrayList;
+				return {};
 			}
 			else {
 				var actionItem = allActions[i].type;
@@ -48,15 +48,15 @@ $(document).ready(function() {
 					}
 					
 					Trello.post('/lists/', newList, function SuccessAdd(data){
-						arrayList = createList(allActions,i-1);
+						UCDLists = createList(allActions,i-1);
 						var tempData = data;
 						var tempName = tempData.name;
 						var tempPid = tempData.id;
 						console.log(tempData);
-						arrayList.push(tempName);
+						UCDLists.tempName = tempPid;
 						console.log("SuccessAdd UCD Lists for " + i + " is ");
-						console.log(arrayList);
-						return arrayList;
+						console.log(UCDLists);
+						return UCDLists;
 					});
 				}
 				else if(actionItem == "createBoard"){
