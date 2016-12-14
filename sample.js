@@ -51,6 +51,35 @@ $(document).ready(function() {
 					console.log(i);
 					createList(allActions,i-1);
 				}
+				else if(actionItem == "updateList") {
+					var dataInfo = allActions[i].data;
+					var listInfo = dataInfo.list;
+					var listName = listInfo.name;
+					var old = dataInfo.old;
+					var oldName = old.name;
+
+					if (oldName in UCDLists) {
+						var listId = UCDLists[oldName];
+						var tempLink = '/lists/'+listId;
+						delete UCDLists[oldName];
+
+						Trello.post(tempLink, listName, function SuccessAdd(data){
+							var tempData = data;
+							var tempName = tempData.name;
+							var tempPid = tempData.id;
+
+							UCDLists[tempName] = tempPid;
+							
+							console.log("SuccessAdd UCD Lists for " + i + " is ");
+							console.log(UCDLists);
+							
+							createList(allActions,i-1);
+						});
+					}
+					else {
+						createList(allActions,i-1);
+					}
+				}
 				else {
 					console.log("Unknown");
 				}
