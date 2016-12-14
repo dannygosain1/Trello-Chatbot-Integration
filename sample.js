@@ -8,30 +8,13 @@ $(document).ready(function() {
 	    var UCD_Board = '584acf6043a821eabc4001eb';
 	    
 	    var failure = function() {
-			console.log("Swapnil chutiya hai");
-		}
-
-		var creationSuccess = function(data) {
-		  console.log('Card created successfully.');
-		};
-		
-		var addSuccess = function(data){
-			console.log("Blah");
-		}
-
-		var addSuccessUCD = function(data) {
-			console.log("List added");
-			console.log(data);
-			var name = data.name;
-			var pid = data.id;
-			UCDLists[name] = pid;
+			console.log("Tu chutiya hai");
 		}
 
 		var createList = function(allActions, i){
-			//var arrayList = [];
 			if (i == -1){
 				console.log("Returning emptiness");
-				return {};
+				console.log(UCDLists);
 			}
 			else {
 				var actionItem = allActions[i].type;
@@ -48,20 +31,21 @@ $(document).ready(function() {
 					}
 					
 					Trello.post('/lists/', newList, function SuccessAdd(data){
-						UCDLists = createList(allActions,i-1);
 						var tempData = data;
 						var tempName = tempData.name;
 						var tempPid = tempData.id;
-						console.log(tempData);
+
 						UCDLists.tempName = tempPid;
+						
 						console.log("SuccessAdd UCD Lists for " + i + " is ");
 						console.log(UCDLists);
-						return UCDLists;
+						
+						createList(allActions,i-1);
 					});
 				}
 				else if(actionItem == "createBoard"){
 					console.log(i);
-					console.log(createList(allActions,i-1));
+					createList(allActions,i-1);
 				}
 				else {
 					console.log("Unknown");
@@ -71,10 +55,7 @@ $(document).ready(function() {
 
 		var getSuccess = function(data) {
 			console.log(data.length);
-			createList(data, data.length-1, function callBackFnc(error, ucd){
-				if (error) console.error('Im stuck', error);
-				else console.log("I'm done", ucd);
-			});
+			createList(data, data.length-1);
 			console.log("recursive call starting");
 		}
 
