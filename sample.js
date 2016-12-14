@@ -57,6 +57,9 @@ $(document).ready(function() {
 						return UCDLists;
 					});
 				}
+				else {
+					return createList(allActions,i-1);
+				}
 			}
 		}
 
