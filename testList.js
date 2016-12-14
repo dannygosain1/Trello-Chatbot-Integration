@@ -21,7 +21,7 @@ $(document).ready(function() {
 
 		var obj = Trello.post('/lists/', newList, function SuccessAdd(data, errCall){
 			console.log("Hell o there");
-			UCDLists = data;
+			UCDLists[data.name] = data.id;
 			console.log(UCDLists);
 			return "HAHA";
 		});
