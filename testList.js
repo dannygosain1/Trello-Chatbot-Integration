@@ -19,7 +19,7 @@ $(document).ready(function() {
 			return 10;
 		});
 
-		console.log(obj);
+		console.log(obj.responseText);
 
 	};
 
