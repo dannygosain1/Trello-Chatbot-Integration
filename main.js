@@ -3,7 +3,7 @@ $(document).ready(function() {
 	var UCDLists;
 
 	var authenticationSuccess = function() {
-	    var kanban = '58487edd7b75ece246c80b59';
+	    var kanban = '58515d76d31bcd0db04fdaf4';
 
 	    var UCD_Board = '584acf6043a821eabc4001eb';
 	    
@@ -80,7 +80,10 @@ $(document).ready(function() {
 					}
 				}(i)); 
 			}
-			defer.resolve();
+			setTimeout(){
+				defer.resolve();
+			}
+			
 			return defer;
 		}
 
