@@ -157,6 +157,10 @@ $(document).ready(function() {
 			for(var i=0; i < allCards.length; i++){
 				cardLabels[allCards[i].name] = allCards[i].labels[0].name;
 			}
+			console.log("-----------------------------------------");
+			console.log(allActions.length);
+			console.log(data.length);
+			console.log("-----------------------------------------");			
 			if(data.length > allActions.length){
 				var newActions=[];
 				for (var i=allActions.length; i < data.length-1; i++){
