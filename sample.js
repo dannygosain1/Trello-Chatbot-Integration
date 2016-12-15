@@ -205,9 +205,9 @@ $(document).ready(function() {
 
 				if(actionData.length > allActions.length){
 					var newActions=[];
-					for (var i=allActions.length; i < data.length-1; i++){
+					for (var i=allActions.length; i < actionData.length-1; i++){
 						console.log("NEW ACTIONS ID NUMBER : "+i);
-						newActions.push(data[i]);
+						newActions.push(actionData[i]);
 						console.log(newActions);
 					}
 					createList(newActions, newActions.length-1);
