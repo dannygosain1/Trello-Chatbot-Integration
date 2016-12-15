@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var allActions;
+	var allActions=[];
 	var UCDLists={};
 	var UCDCards={};
 	var allCards=[];
