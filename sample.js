@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	var allActions;
 	var UCDLists={};
-	var UCDCards={}
+	var UCDCards={};
+	var allCards=[];
+	var cardLabels={};
 
 	var authenticationSuccess = function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
@@ -90,7 +92,7 @@ $(document).ready(function() {
 					var cardList = dataInfo.list;
 					var listName = cardList.name; 
 					
-					if ((listName in UCDLists) && !(cardName in UCDCards)) {
+					if ((listName in UCDLists) && !(cardName in UCDCards) && (cardLabels[cardName] == "UCD")) {
 						var newCard = {
 							name: cardName,
 							idBoard: UCD_Board,
@@ -151,9 +153,12 @@ $(document).ready(function() {
 		}
 
 		var getSuccess = function(data) {
-			console.log(data.length);
+			allCards=data.cards;
+			console.log(allCards);
+			for(var i=0; i < allCards.length; i++){
+				cardLabels[allCards[i].name] = allCards[i].labels.name;
+			}
 			createList(data, data.length-1);
-			console.log("recursive call starting");
 		}
 
 		var link = "/boards/"+kanban+"/actions";
