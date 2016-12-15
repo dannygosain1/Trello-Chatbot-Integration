@@ -15,6 +15,7 @@ $(document).ready(function() {
 		}
 
 		var createList = function(allActions, i){
+			console.log("Creating action item");
 			if (i == -1){
 				console.log("Returning emptiness");
 			}
@@ -156,7 +157,16 @@ $(document).ready(function() {
 			for(var i=0; i < allCards.length; i++){
 				cardLabels[allCards[i].name] = allCards[i].labels[0].name;
 			}
-			createList(data, data.length-1);
+			if(data.length > allActions.length){
+				var newActions=[];
+				for (var i=allActions.length; i < data.length-1; i++){
+					console.log("NEW ACTIONS ID NUMBER : "+i);
+					newActions.append(data[i]);
+					console.log(newActions);
+				}
+				createList(newActions, newActions.length-1);
+			}
+			
 		}
 
 		var getCards = function(data) {
