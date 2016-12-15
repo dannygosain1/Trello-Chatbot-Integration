@@ -161,7 +161,7 @@ $(document).ready(function() {
 				var newActions=[];
 				for (var i=allActions.length; i < data.length-1; i++){
 					console.log("NEW ACTIONS ID NUMBER : "+i);
-					newActions.append(data[i]);
+					newActions.push(data[i]);
 					console.log(newActions);
 				}
 				createList(newActions, newActions.length-1);
