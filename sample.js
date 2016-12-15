@@ -90,7 +90,7 @@ $(document).ready(function() {
 					var cardList = dataInfo.list;
 					var listName = cardList.name; 
 					
-					if (listName in UCDLists) {
+					if ((listName in UCDLists) && !(cardName in UCDCards)) {
 						var newCard = {
 							name: cardName,
 							idBoard: UCD_Board,
