@@ -160,11 +160,11 @@ $(document).ready(function() {
 				for(var i=0; i < j.length; i++){
 					cardLabels[j[i].name] = j[i].labels.name;
 				}
-				createList(data, data.length-1);
+				createList(data.actions, data.actions.length-1);
 			}(allCards));
 		}
 
-		var link = "/boards/"+kanban+"/actions";
+		var link = "/boards/"+kanban;
 		Trello.get(link,getSuccess,failure);
 
 	};
