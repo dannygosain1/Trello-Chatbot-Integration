@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	var allActions=[];
+	var allAction = 0;
 	var UCDLists;
 	var UCDCards;
 	var allCards;
@@ -18,7 +19,7 @@ $(document).ready(function() {
 			console.log("Creating action item");
 			if (i == -1){
 				console.log("Returning emptiness");
-				allActions["previousActionStage"] = allActions["previousActionStage"] + allActions.length;
+				allAction = allAction + allActions.length;
 			}
 			else {
 				var actionItem = allActions[i].type;
@@ -204,9 +205,9 @@ $(document).ready(function() {
 				console.log(actionData.length);
 				console.log("-----------------------------------------");		
 
-				if(actionData.length > allActions["previousActionStage"]){
+				if(actionData.length > allAction){
 					var newActions=[];
-					for (var i=allActions.length; i < actionData.length-1; i++){
+					for (var i=allAction; i < actionData.length-1; i++){
 						console.log("NEW ACTIONS ID NUMBER : "+i);
 						newActions.push(actionData[i]);
 						console.log(newActions);
