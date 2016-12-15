@@ -185,8 +185,10 @@ $(document).ready(function() {
 		}
 
 		var getSuccess = function(actionData) {
+			console.log("getting kanban board");
 			var link2 = "/boards/"+UCD_Board+"/actions";
 			Trello.get(link2, function(data){
+				console.log("getting ucd board");
 				if (cardLabels == null)
 					cardLabels = {};
 
@@ -214,7 +216,7 @@ $(document).ready(function() {
 		}
 
 		var getCards = function(data) {
-			
+			console.log("in getting cards");
 			if(allCards == null)
 				allCards=[];
 
