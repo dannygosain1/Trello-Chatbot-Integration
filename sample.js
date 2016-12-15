@@ -153,6 +153,7 @@ $(document).ready(function() {
 		}
 
 		var getSuccess = function(data) {
+			console.log(data);
 			allCards=data.cards;
 			(function(j){
 				console.log(j);
