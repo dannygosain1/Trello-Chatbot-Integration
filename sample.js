@@ -128,7 +128,7 @@ $(document).ready(function() {
 							var tempLink = '/cards/'+cardId+'/idList';
 
 							var updatedCard = {
-								idList: UCDLists[newListName]
+								value: UCDLists[newListName]
 							}
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
 								console.log("Card updated");
