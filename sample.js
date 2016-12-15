@@ -154,7 +154,7 @@ $(document).ready(function() {
 
 		var getSuccess = function(data) {
 			for(var i=0; i < allCards.length; i++){
-				cardLabels[allCards[i].name] = allCards[i].labels.name;
+				cardLabels[allCards[i].name] = allCards[i].labels[0].name;
 			}
 			createList(data, data.length-1);
 		}
