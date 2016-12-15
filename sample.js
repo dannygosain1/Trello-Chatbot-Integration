@@ -27,6 +27,9 @@ $(document).ready(function() {
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
+					if (UCDLists == null)
+						UCDLists={};
+
 					if (!(listName in UCDLists)) {
 						var newList = {
 							name: listName,
@@ -38,9 +41,6 @@ $(document).ready(function() {
 							var tempData = data;
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
-							
-							if (UCDLists == null)
-								UCDLists={};
 							
 							UCDLists[tempName] = tempPid;
 													
@@ -95,7 +95,9 @@ $(document).ready(function() {
 					var cardName = cardInfo.name;
 					var cardList = dataInfo.list;
 					var listName = cardList.name; 
-					
+					if (UCDCards == null)
+						UCDCards={};
+							
 					if ((listName in UCDLists) && !(cardName in UCDCards) && (cardLabels[cardName] == "UCD")) {
 						var newCard = {
 							name: cardName,
@@ -111,9 +113,6 @@ $(document).ready(function() {
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
 							console.log(tempData);
-							
-							if (UCDCards == null)
-								UCDCards={};
 							
 							UCDCards[tempName] = tempPid;
 													
