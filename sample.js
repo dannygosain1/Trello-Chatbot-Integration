@@ -153,19 +153,21 @@ $(document).ready(function() {
 		}
 
 		var getSuccess = function(data) {
-			console.log(data);
-			allCards=data.cards;
-			(function(j){
-				console.log(j);
-				for(var i=0; i < j.length; i++){
-					cardLabels[j[i].name] = j[i].labels.name;
-				}
-				createList(data.actions, data.actions.length-1);
-			}(allCards));
+			for(var i=0; i < allCards.length; i++){
+				cardLabels[allCards[i].name] = allCards[i].labels.name;
+			}
+			createList(data, data.length-1);
 		}
 
-		var link = "/boards/"+kanban;
+		var getCards = function(data) {
+			allCards = data;
+			console.log(allCards);
+		}
+
+		var link = "/boards/"+kanban+"/actions";
+		var link1 = "/boards/"+kanban+"/cards";
 		Trello.get(link,getSuccess,failure);
+		Trello.get(link1,getCards,failure);
 
 	};
 
