@@ -122,17 +122,25 @@ $(document).ready(function() {
 					// var oldList = dataInfo.listBefore;
 					// var oldListName = oldList.name;
 					var newList = dataInfo.listAfter;
-					var newListName = newList.name;
+					if(newList != null) {
+						var newListName = newList.name;
 
-					if ((newListName in UCDLists) && (cardName in UCDCards)) {
-						var cardId = UCDCards[cardName];
-						var tempLink = '/cards/'+cardId+'/idList';
+						if ((newListName in UCDLists) && (cardName in UCDCards)) {
+							var cardId = UCDCards[cardName];
+							var tempLink = '/cards/'+cardId+'/idList';
 
-						Trello.put(tempLink, UCDLists[newListName], function SuccessAdd(data){
-							console.log("Card updated");
-													
+							Trello.put(tempLink, UCDLists[newListName], function SuccessAdd(data){
+								console.log("Card updated");
+														
+								createList(allActions,i-1);
+							});
+						}
+						else {
 							createList(allActions,i-1);
-						});
+						}
+					}
+					else {
+						createList(allActions,i-1);
 					}
 				}
 				else {
