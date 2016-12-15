@@ -18,6 +18,7 @@ $(document).ready(function() {
 			console.log("Creating action item");
 			if (i == -1){
 				console.log("Returning emptiness");
+				allActions["previousActionStage"] = allActions["previousActionStage"] + allActions.length;
 			}
 			else {
 				var actionItem = allActions[i].type;
@@ -203,7 +204,7 @@ $(document).ready(function() {
 				console.log(actionData.length);
 				console.log("-----------------------------------------");		
 
-				if(actionData.length > allActions.length){
+				if(actionData.length > allActions["previousActionStage"]){
 					var newActions=[];
 					for (var i=allActions.length; i < actionData.length-1; i++){
 						console.log("NEW ACTIONS ID NUMBER : "+i);
