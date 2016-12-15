@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var allActions;
+	var allActions=[];
 	var UCDLists;
 	var UCDCards;
 	var allCards;
@@ -8,7 +8,7 @@ $(document).ready(function() {
 	var authenticationSuccess = function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
 
-	    var UCD_Board = '584acf6043a821eabc4001eb';
+	    var UCD_Board = '58530a7fce99c50b39fe7e69';
 	    
 	    var failure = function() {
 			console.log("Tu chutiya hai");
@@ -159,8 +159,7 @@ $(document).ready(function() {
 				}
 			}
 		}
-
-		var getSuccess = function(data) {
+		var getSuccessUCD = function(data){
 			if (cardLabels == null)
 				cardLabels = {};
 
@@ -183,26 +182,52 @@ $(document).ready(function() {
 				}
 				createList(newActions, newActions.length-1);
 			}
-			
+		}
+
+		var getSuccess = function(actionData) {
+			var link2 = "/boards/"+UCD_Board+"/actions";
+			Trello.get(link2, function(data){
+				if (cardLabels == null)
+					cardLabels = {};
+
+				for(var i=0; i < allCards.length; i++){
+					cardLabels[allCards[i].name] = allCards[i].labels[0].name;
+				}
+
+				allActions = data;
+
+				console.log("-----------------------------------------");
+				console.log(allActions.length);
+				console.log(actionData.length);
+				console.log("-----------------------------------------");		
+
+				if(data.length > allActions.length){
+					var newActions=[];
+					for (var i=allActions.length; i < data.length-1; i++){
+						console.log("NEW ACTIONS ID NUMBER : "+i);
+						newActions.push(data[i]);
+						console.log(newActions);
+					}
+					createList(newActions, newActions.length-1);
+				}
+			},failure);
 		}
 
 		var getCards = function(data) {
+			
 			if(allCards == null)
 				allCards=[];
+
 			allCards = data;
 			console.log(allCards);
+
+			var link = "/boards/"+kanban+"/actions";
+			Trello.get(link,getSuccess,failure);
 		}
 
-		var link = "/boards/"+kanban+"/actions";
-		var link1 = "/boards/"+kanban+"/cards";				
 		
-		while(true){
-			setTimeout(function(){
-				Trello.get(link1,getCards,failure);
-				Trello.get(link,getSuccess,failure);
-			},30000);
-			console.log("hello");
-		}
+		var link1 = "/boards/"+kanban+"/cards";				
+		Trello.get(link1,getCards,failure);
 	};
 
 	var authenticationFailure = function() {
