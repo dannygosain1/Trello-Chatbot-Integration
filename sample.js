@@ -116,29 +116,24 @@ $(document).ready(function() {
 				}
 				else if (actionItem == "updateCard") {
 					console.log("Updating Card");
-					// var dataInfo = allActions[i].data;
-					// var cardInfo = dataInfo.card;
-					// var cardName = cardInfo.name;
-					// var cardList = dataInfo.list;
-					// var listName = cardList.name; 
-					
-					// if (listName in UCDLists) {
-					// 	var newCard = {
-					// 		name: cardName,
-					// 		idBoard: UCD_Board,
-					// 		idList: UCDLists[listName]
-					// 	}
-						
-					// 	Trello.post('/cards/', newCard, function SuccessAdd(data){
-					// 		console.log("Card added with data: ");
-					// 		console.log(data);
+					var dataInfo = allActions[i].data;
+					var cardInfo = dataInfo.card;
+					var cardName = cardInfo.name;
+					// var oldList = dataInfo.listBefore;
+					// var oldListName = oldList.name;
+					var newList = dataInfo.listAfter;
+					var newListName = newList.name;
+
+					if ((newListName in UCDLists) && (cardName in UCDCards)) {
+						var cardId = UCDCards[cardName];
+						var tempLink = '/cards/'+cardId+'/idList';
+
+						Trello.put(tempLink, UCDLists[newListName], function SuccessAdd(data){
+							console.log("Card updated");
 													
-					// 		createList(allActions,i-1);
-					// 	});
-					// }
-					// else {
-						createList(allActions,i-1);
-					// }
+							createList(allActions,i-1);
+						});
+					}
 				}
 				else {
 					createList(allActions,i-1);
