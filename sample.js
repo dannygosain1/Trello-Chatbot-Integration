@@ -1,9 +1,9 @@
 $(document).ready(function() {
-	var allActions=[];
-	var UCDLists={};
-	var UCDCards={};
-	var allCards=[];
-	var cardLabels={};
+	var allActions;
+	var UCDLists;
+	var UCDCards;
+	var allCards;
+	var cardLabels;
 
 	var authenticationSuccess = function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
@@ -38,7 +38,10 @@ $(document).ready(function() {
 							var tempData = data;
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
-
+							
+							if (UCDLists == null)
+								UCDLists={};
+							
 							UCDLists[tempName] = tempPid;
 													
 							createList(allActions,i-1);
@@ -108,6 +111,10 @@ $(document).ready(function() {
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
 							console.log(tempData);
+							
+							if (UCDCards == null)
+								UCDCards={};
+							
 							UCDCards[tempName] = tempPid;
 													
 							createList(allActions,i-1);
@@ -154,9 +161,15 @@ $(document).ready(function() {
 		}
 
 		var getSuccess = function(data) {
+			if (cardLabels == null)
+				cardLabels = {};
+
 			for(var i=0; i < allCards.length; i++){
 				cardLabels[allCards[i].name] = allCards[i].labels[0].name;
 			}
+
+			if (allActions == null)
+				allActions = [];
 			console.log("-----------------------------------------");
 			console.log(allActions.length);
 			console.log(data.length);
@@ -174,15 +187,16 @@ $(document).ready(function() {
 		}
 
 		var getCards = function(data) {
+			if(allCards == null)
+				allCards=[];
 			allCards = data;
 			console.log(allCards);
 		}
 
 		var link = "/boards/"+kanban+"/actions";
-		var link1 = "/boards/"+kanban+"/cards";
-		Trello.get(link,getSuccess,failure);
+		var link1 = "/boards/"+kanban+"/cards";				
 		Trello.get(link1,getCards,failure);
-
+		Trello.get(link,getSuccess,failure);
 	};
 
 	var authenticationFailure = function() {
