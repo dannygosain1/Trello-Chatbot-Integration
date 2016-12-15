@@ -95,9 +95,10 @@ $(document).ready(function() {
 					var cardName = cardInfo.name;
 					var cardList = dataInfo.list;
 					var listName = cardList.name; 
+					
 					if (UCDCards == null)
 						UCDCards={};
-							
+
 					if ((listName in UCDLists) && !(cardName in UCDCards) && (cardLabels[cardName] == "UCD")) {
 						var newCard = {
 							name: cardName,
@@ -194,8 +195,14 @@ $(document).ready(function() {
 
 		var link = "/boards/"+kanban+"/actions";
 		var link1 = "/boards/"+kanban+"/cards";				
-		Trello.get(link1,getCards,failure);
-		Trello.get(link,getSuccess,failure);
+		
+		while(true){
+			setTimeout(function(){
+				Trello.get(link1,getCards,failure);
+				Trello.get(link,getSuccess,failure);
+			},30000);
+			console.log("hello");
+		}
 	};
 
 	var authenticationFailure = function() {
