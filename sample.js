@@ -119,8 +119,6 @@ $(document).ready(function() {
 					var dataInfo = allActions[i].data;
 					var cardInfo = dataInfo.card;
 					var cardName = cardInfo.name;
-					// var oldList = dataInfo.listBefore;
-					// var oldListName = oldList.name;
 					var newList = dataInfo.listAfter;
 					if(newList != null) {
 						var newListName = newList.name;
@@ -129,7 +127,10 @@ $(document).ready(function() {
 							var cardId = UCDCards[cardName];
 							var tempLink = '/cards/'+cardId+'/idList';
 
-							Trello.put(tempLink, UCDLists[newListName], function SuccessAdd(data){
+							var updatedCard = {
+								idList: UCDLists[newListName]
+							}
+							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
 								console.log("Card updated");
 														
 								createList(allActions,i-1);
