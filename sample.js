@@ -154,11 +154,13 @@ $(document).ready(function() {
 
 		var getSuccess = function(data) {
 			allCards=data.cards;
-			console.log(allCards);
-			for(var i=0; i < allCards.length; i++){
-				cardLabels[allCards[i].name] = allCards[i].labels.name;
-			}
-			createList(data, data.length-1);
+			(function(i){
+				console.log(allCards);
+				for(var i=0; i < allCards.length; i++){
+					cardLabels[allCards[i].name] = allCards[i].labels.name;
+				}
+				createList(data, data.length-1);
+			});
 		}
 
 		var link = "/boards/"+kanban+"/actions";
