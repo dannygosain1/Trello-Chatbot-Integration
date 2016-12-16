@@ -37,9 +37,10 @@ $(document).ready(function() {
 					
 					localStorage.setItem("listIdString", listIdString);
 
-					$(document).ready(function() {
-						var listIdString = localStorage.getItem("listIdString");
-					});
+					// $(document).ready(function() {
+
+					var listId = localStorage.getItem("listIdString");
+					// });
 					
 
 					if (UCDLists == null)
