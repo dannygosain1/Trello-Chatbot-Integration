@@ -21,6 +21,10 @@ $(document).ready(function() {
 				console.log("Returning emptiness");
 				allAction = allAction + allActions.length;
 			}
+			else if (i == 4){
+				console.log("Full");
+				allAction = allAction + allActions.length;
+			}
 			else {
 				var actionItem = allActions[i].type;
 
@@ -38,7 +42,7 @@ $(document).ready(function() {
 					localStorage.setItem("listIdString", listIdString);
 
 					$(document).ready(function() {
-						var listId = localStorage.getItem("listIdString");
+					var listId = localStorage.getItem("listIdString");
 					});
 					
 
