@@ -210,8 +210,8 @@ $(document).ready(function() {
 		}
 
 		var getSuccess = function(actionData) {
-			console.log(allLabels);
 			for (var i in allLabels.keys()) {
+				console.log(i);
 				perBoard(actionData, allLabels, i);
 			}
 			
