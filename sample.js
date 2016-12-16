@@ -253,7 +253,11 @@ $(document).ready(function() {
 
 			for (var i in labels){
 				console.log(labels[i]);
-				allLabels[labels[i]] = "";
+				if (labels[i] == ""){
+					continue;
+				}
+				else
+					allLabels[labels[i]] = "";
 			}
 
 			boardCreate(Object.keys(allLabels),Object.keys(allLabels).length-1);
