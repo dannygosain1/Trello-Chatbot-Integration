@@ -35,11 +35,11 @@ $(document).ready(function() {
 					var listIdString = JSON.stringify(listId);
 					
 					
-					// localStorage.setItem("listIdString", listIdString);
+					localStorage.setItem("listIdString", listIdString);
 
-					// $(document).ready(function() {
-					// 	var listIdString = JSON.stringify(listId);
-					// });
+					$(document).ready(function() {
+						var listIdString = JSON.stringify(listId);
+					});
 					
 
 					if (UCDLists == null)
