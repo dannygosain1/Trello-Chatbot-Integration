@@ -6,6 +6,7 @@ $(document).ready(function() {
 	var allCards;
 	var cardLabels;
 	var allLabels=[];
+	var labels={};
 
 	var authenticationSuccess = function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
@@ -209,6 +210,7 @@ $(document).ready(function() {
 		}
 
 		var getSuccess = function(actionData) {
+			console.log(allLabels);
 			for (var i in Object.keys(allLabels)) {
 				console.log("Label name is : " + i);
 				perBoard(actionData, allLabels, i);
@@ -236,7 +238,6 @@ $(document).ready(function() {
 				Trello.get(link1,getCards,failure);
 			}
 			else {
-				console.log(a);
 				var newBoard = {
 					name: a[i]
 				}
@@ -249,7 +250,7 @@ $(document).ready(function() {
 
 		var createBoard = function(data) {
 			console.log("Creating boards");
-			var labels = data.labelNames;
+			labels = data.labelNames;
 
 			for (var i in labels){
 				console.log(labels[i]);
