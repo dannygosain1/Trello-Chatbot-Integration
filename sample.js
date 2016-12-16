@@ -7,7 +7,7 @@ $(document).ready(function() {
 	var cardLabels;
 
 	var authenticationSuccess = function() {
-	    var kanban = '58515d76d31bcd0db04fdaf4';
+	    var kanban = '57d84f63f774e5bcd9893887';
 
 	    var UCD_Board = '5853102d128c6217a1051e6b';
 	    
@@ -101,7 +101,7 @@ $(document).ready(function() {
 					if (UCDCards == null)
 						UCDCards={};
 
-					if ((listName in UCDLists) && !(cardName in UCDCards) && (cardLabels[cardName] == "UCD")) {
+					if ((listName in UCDLists) && !(cardName in UCDCards) && (cardLabels[cardName] == "Defect")) {
 						var newCard = {
 							name: cardName,
 							idBoard: UCD_Board,
