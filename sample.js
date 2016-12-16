@@ -5,25 +5,22 @@ $(document).ready(function() {
 	var UCDCards;
 	var allCards;
 	var cardLabels;
+	var allLabels=[];
 
 	var authenticationSuccess = function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
 
-	    var UCD_Board = '5853102d128c6217a1051e6b';
+	    // var UCD_Board = '5853102d128c6217a1051e6b';
 	    
 	    var failure = function() {
 			console.log("Tu chutiya hai");
 		}
 
-		var createList = function(allActions, i){
+		var createList = function(allActions, i, board, name){
 			console.log("Creating action item");
 			console.log(i);
 			if (i == -1){
 				console.log("Returning emptiness");
-				allAction = allAction + allActions.length;
-			}
-			else if (i == 4){
-				console.log("Full");
 				allAction = allAction + allActions.length;
 			}
 			else {
@@ -38,22 +35,20 @@ $(document).ready(function() {
 
 					console.log("Converting IDs to a string");
 					var listIdString = JSON.stringify(listId);
-					
-					
+										
 					localStorage.setItem("listIdString", listIdString);
 
 					$(document).ready(function() {
 					var listId = localStorage.getItem("listIdString");
 					});
 					
-
 					if (UCDLists == null)
 						UCDLists={};
 
 					if (!(listName in UCDLists) && !(listId in UCDLists)) {
 						var newList = {
 							name: listName,
-							idBoard: UCD_Board,
+							idBoard: board,
 							pos:'bottom'
 						}
 						
@@ -64,11 +59,11 @@ $(document).ready(function() {
 							
 							UCDLists[tempName] = tempPid;
 													
-							createList(allActions,i-1);
+							createList(allActions, i-1, board, name);
 						});
 					}
 					else {
-						createList(allActions,i-1);
+						createList(allActions, i-1, board, name);
 					}
 				}
 				else if(actionItem == "updateList") {
@@ -101,11 +96,11 @@ $(document).ready(function() {
 							console.log("SuccessAdd UCD Lists for " + i + " is ");
 							console.log(UCDLists);
 							
-							createList(allActions,i-1);
+							createList(allActions, i-1, board, name);
 						});
 					}
 					else {
-						createList(allActions,i-1);
+						createList(allActions,i-1, board, name);
 					}
 				}
 				else if (actionItem == "createCard"){
@@ -122,7 +117,7 @@ $(document).ready(function() {
 					if ((listName in UCDLists) && !(cardName in UCDCards) && (cardLabels[cardName] == "UCD")) {
 						var newCard = {
 							name: cardName,
-							idBoard: UCD_Board,
+							idBoard: board,
 							idList: UCDLists[listName]
 						}
 						
@@ -137,11 +132,11 @@ $(document).ready(function() {
 							
 							UCDCards[tempName] = tempPid;
 													
-							createList(allActions,i-1);
+							createList(allActions, i-1, board, name);
 						});
 					}
 					else {
-						createList(allActions,i-1);
+						createList(allActions, i-1, board, name);
 					}
 				}
 				else if (actionItem == "updateCard") {
@@ -163,50 +158,26 @@ $(document).ready(function() {
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
 								console.log("Card updated");
 														
-								createList(allActions,i-1);
+								createList(allActions, i-1, board, name);
 							});
 						}
 						else {
-							createList(allActions,i-1);
+							createList(allActions, i-1, board, name);
 						}
 					}
 					else {
-						createList(allActions,i-1);
+						createList(allActions, i-1, board, name);
 					}
 				}
 				else {
-					createList(allActions,i-1);
+					createList(allActions, i-1, board, name);
 				}
 			}
 		}
-		// var getSuccessUCD = function(data){
-		// 	if (cardLabels == null)
-		// 		cardLabels = {};
-
-		// 	for(var i=0; i < allCards.length; i++){
-		// 		cardLabels[allCards[i].name] = allCards[i].labels[0].name;
-		// 	}
-
-		// 	if (allActions == null)
-		// 		allActions = [];
-		// 	console.log("-----------------------------------------");
-		// 	console.log(allActions.length);
-		// 	console.log(data.length);
-		// 	console.log("-----------------------------------------");			
-		// 	if(data.length > allActions.length){
-		// 		var newActions=[];
-		// 		for (var i=allActions.length; i < data.length-1; i++){
-		// 			console.log("NEW ACTIONS ID NUMBER : "+i);
-		// 			newActions.push(data[i]);
-		// 			console.log(newActions);
-		// 		}
-		// 		createList(newActions, newActions.length-1);
-		// 	}
-		// }
-
+		
 		var getSuccess = function(actionData) {
 			console.log("getting kanban board");
-			var link2 = "/boards/"+UCD_Board+"/actions";
+			var link2 = "/boards/"+allLabels["UCD"]+"/actions";
 			Trello.get(link2, function (data){
 				console.log("getting ucd board");
 				if (cardLabels == null)
@@ -230,7 +201,9 @@ $(document).ready(function() {
 						newActions.push(actionData[i]);
 						console.log(newActions);
 					}
-					createList(newActions, newActions.length-1);
+					setTimeout(function () {
+						createList(newActions, newActions.length-1, allLabels["UCD"],"UCD");					
+					},3000);
 				}
 			},failure);
 		}
@@ -247,9 +220,37 @@ $(document).ready(function() {
 			Trello.get(link,getSuccess,failure);
 		}
 
+		var boardCreate = function(a, i){
+			if (i == -1){
+				console.log("All boards created");
+				// think about calling the cards details here
+				var link1 = "/boards/"+kanban+"/cards";				
+				Trello.get(link1,getCards,failure);
+			}
+			else {
+				var newBoard = {
+					name: a[i]
+				}
+				Trello.post('/boards/',newBoard, function successBoard(data){
+					allLabels[a[i]] = data.id;
+					boardCreate(a,i-1);
+				}, failure);
+			}			
+		}
+
+		var createBoard = function(data) {
+			console.log("Creating boards");
+			var labels = data.labelNames;
+
+			for (var i in labels){
+				allLabels[labels[i]] = "";
+			}
+			setTimeout(function(){
+				boardCreate(Object.keys(allLabels),Object.keys(allLabels).length-1);
+			}, 3000);
+		}
 		
-		var link1 = "/boards/"+kanban+"/cards";				
-		Trello.get(link1,getCards,failure);
+		Trello.get('/boards/'+kanban,createBoard,failure);
 	};
 
 	var authenticationFailure = function() {
