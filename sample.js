@@ -38,7 +38,7 @@ $(document).ready(function() {
 					localStorage.setItem("listIdString", listIdString);
 
 					$(document).ready(function() {
-						var listIdString = JSON.stringify(listId);
+						var listIdString = localStorage.getItem("listIdString");
 					});
 					
 
