@@ -211,7 +211,7 @@ $(document).ready(function() {
 
 		var getSuccess = function(actionData) {
 			console.log(allLabels);
-			for (var i=0; i < allLabels; i++) {
+			for (var i in allLabels.keys()) {
 				perBoard(actionData, allLabels, i);
 			}
 			
