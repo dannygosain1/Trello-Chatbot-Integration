@@ -29,10 +29,11 @@ $(document).ready(function() {
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
+					var listId = listInfo.id;
 					if (UCDLists == null)
 						UCDLists={};
 
-					if (!(listName in UCDLists)) {
+					if (!(listName in UCDLists) && !(listId in UCDLists)) {
 						var newList = {
 							name: listName,
 							idBoard: UCD_Board,
