@@ -33,7 +33,12 @@ $(document).ready(function() {
 
 					console.log("Converting IDs to a string");
 					var listIdString = JSON.stringify(listId);
-					console.log(listIdString);
+					
+					localStorage.setItem("listIdString", listIdString);
+
+					$(document).ready(function() {
+						var listIdString = JSON.stringify(listId);
+					});
 
 					if (UCDLists == null)
 						UCDLists={};
