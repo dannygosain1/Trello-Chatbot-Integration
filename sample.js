@@ -175,11 +175,11 @@ $(document).ready(function() {
 			}
 		}
 		
-		var getSuccess = function(actionData) {
+		var perBoard = function(actionData, allLabels, i){
 			console.log("getting kanban board");
-			var link2 = "/boards/"+allLabels["UCD"]+"/actions";
+			var link2 = "/boards/"+allLabels[i]+"/actions";
 			Trello.get(link2, function (data){
-				console.log("getting ucd board");
+				console.log("getting " + i + " board");
 				if (cardLabels == null)
 					cardLabels = {};
 
@@ -202,10 +202,18 @@ $(document).ready(function() {
 						console.log(newActions);
 					}
 					setTimeout(function () {
-						createList(newActions, newActions.length-1, allLabels["UCD"],"UCD");					
+						createList(newActions, newActions.length-1, allLabels[i],i);					
 					},3000);
 				}
 			},failure);
+		}
+
+		var getSuccess = function(actionData) {
+			for (var i in Object.keys(allLabels)) {
+				console.log("Label name is : " + i);
+				perBoard(actionData, allLabels, i);
+			}
+			
 		}
 
 		var getCards = function(data) {
