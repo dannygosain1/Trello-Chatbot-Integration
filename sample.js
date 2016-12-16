@@ -17,6 +17,7 @@ $(document).ready(function() {
 
 		var createList = function(allActions, i){
 			console.log("Creating action item");
+			console.log(i);
 			if (i == -1){
 				console.log("Returning emptiness");
 				allAction = allAction + allActions.length;
