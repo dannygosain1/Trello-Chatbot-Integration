@@ -251,11 +251,11 @@ $(document).ready(function() {
 			var labels = data.labelNames;
 
 			for (var i in labels){
+				console.log(i)
 				allLabels[labels[i]] = "";
 			}
-			setTimeout(function(){
-				boardCreate(Object.keys(allLabels),Object.keys(allLabels).length-1);
-			}, 3000);
+			
+			boardCreate(Object.keys(allLabels),Object.keys(allLabels).length-1);
 		}
 		
 		Trello.get('/boards/'+kanban,createBoard,failure);
