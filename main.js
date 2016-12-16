@@ -79,7 +79,8 @@ $(document).ready(function() {
 							}
 							
 							Trello.post('/lists/', newList, addSuccessUCD);
-					}},3000);
+						}
+					},3000);
 				}(i)); 
 			}
 		}

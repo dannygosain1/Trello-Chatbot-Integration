@@ -30,6 +30,11 @@ $(document).ready(function() {
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
 					var listId = listInfo.id;
+
+					console.log("Converting IDs to a string");
+					var listIdString = JSON.stringify(listId);
+					console.log(listIdString);
+
 					if (UCDLists == null)
 						UCDLists={};
 
