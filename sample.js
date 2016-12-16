@@ -236,6 +236,7 @@ $(document).ready(function() {
 				Trello.get(link1,getCards,failure);
 			}
 			else {
+				console.log(a);
 				var newBoard = {
 					name: a[i]
 				}
@@ -251,10 +252,10 @@ $(document).ready(function() {
 			var labels = data.labelNames;
 
 			for (var i in labels){
-				console.log(i)
+				console.log(labels[i]);
 				allLabels[labels[i]] = "";
 			}
-			
+
 			boardCreate(Object.keys(allLabels),Object.keys(allLabels).length-1);
 		}
 		
