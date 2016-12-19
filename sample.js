@@ -29,6 +29,7 @@ $(document).ready(function() {
 				localStorage.setItem("lastActionNumber", allActions.length.toString());
 			}
 			else {
+				var actionItem = allActions[i].type;
 				if(actionItem == "createList"){
 					// console.log("Creating List");
 					var dataInfo = allActions[i].data;
@@ -91,13 +92,13 @@ $(document).ready(function() {
 							listToCheck[tempName] = tempPid;
 							
 							setTimeout(function () {
-								updateBoard(allActions, i-1, board, boardname);
+								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 							},1000);
 						});
 					}
 					else {
 						setTimeout(function () {
-							updateBoard(allActions, i-1, board, boardname);
+							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 						},1000);
 					}
 				}
@@ -129,13 +130,13 @@ $(document).ready(function() {
 							cardToUpdate[tempName] = tempPid;
 													
 							setTimeout(function () {
-								updateBoard(allActions, i-1, board, boardname);
+								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 							},1000);
 						});
 					}
 					else {
 						setTimeout(function () {
-							updateBoard(allActions, i-1, board, boardname);
+							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 						},1000);
 					}
 				}
@@ -161,25 +162,25 @@ $(document).ready(function() {
 								console.log("Card updated");
 								console.log(data);						
 								setTimeout(function () {
-									updateBoard(allActions, i-1, board, boardname);
+									updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 								},1000);
 							});
 						}
 						else {
 							setTimeout(function () {
-								updateBoard(allActions, i-1, board, boardname);
+								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 							},1000);
 						}
 					}
 					else {
 						setTimeout(function () {
-							updateBoard(allActions, i-1, board, boardname);
+							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 						},1000);	
 					}
 				}
 				else {
 					setTimeout(function () {
-						updateBoard(allActions, i-1, board, boardname);
+						updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 					},1000);	
 				}
 			}
@@ -188,59 +189,42 @@ $(document).ready(function() {
 		var createList = function(allActions, i, board, boardname){
 			// console.log("Creating action item");
 			// // console.log(i);
-			if (i == -1){
-				// console.log("Returning emptiness");
-				localStorage.setItem("lastActionNumber", allActions.length.toString());
+			if (UCDLists == null){
+				UCDLists={};
 			}
-			else {
-				var actionItem = allActions[i].type;
-				if (UCDLists == null){
-					UCDLists={};
-				}
-				if (JenkinsLists == null){
-					JenkinsLists={};
-				}
-				if (ChatbotLists == null){
-					ChatbotLists={};
-				}
-				if (DockerLists == null){
-					DockerLists={};
-				}
-				if (UCDCards == null){
-					UCDCards={};
-				}
-				if (JenkinsCards == null){
-					JenkinsCards={};
-				}
-				if (ChatbotCards == null){
-					ChatbotCards={};
-				}
-				if (DockerCards == null){
-					DockerCards={};
-				}
-					
-				if (boardname == "UCD"){
-					listToCheck = UCDLists;
-					cardToUpdate = UCDCards;
-					updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-				}
-				if (boardname == "Jenkins"){
-					listToCheck = JenkinsLists;
-					cardToUpdate = JenkinsCards;
-					updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-				}
-				if (boardname == "Chatbot"){
-					listToCheck = ChatbotLists;
-					cardToUpdate = ChatbotCards;
-					updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-				}
-				if (boardname == "Docker"){
-					listToCheck = DockerLists;
-					cardToUpdate = DockerCards;
-					updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-				}
-
+			if (JenkinsLists == null){
+				JenkinsLists={};
+			}
+			if (ChatbotLists == null){
+				ChatbotLists={};
+			}
+			if (DockerLists == null){
+				DockerLists={};
+			}
+			if (UCDCards == null){
+				UCDCards={};
+			}
+			if (JenkinsCards == null){
+				JenkinsCards={};
+			}
+			if (ChatbotCards == null){
+				ChatbotCards={};
+			}
+			if (DockerCards == null){
+				DockerCards={};
+			}
 				
+			if (boardname == "UCD"){
+				updateBoard(allActions, i, board, boardname, UCDLists, UCDCards);
+			}
+			if (boardname == "Jenkins"){
+				updateBoard(allActions, i, board, boardname, JenkinsLists, JenkinsCards);
+			}
+			if (boardname == "Chatbot"){
+				updateBoard(allActions, i, board, boardname, ChatbotLists, ChatbotCards);
+			}
+			if (boardname == "Docker"){
+				updateBoard(allActions, i, board, boardname, DockerLists, DockerCards);
 			}
 		}
 		
