@@ -25,7 +25,7 @@ $(document).ready(function() {
 			if (i == -1){
 				console.log("Returning emptiness");
 
-				localStorage.setItem("lastActionNumber", str(allActions.length));
+				localStorage.setItem("lastActionNumber", allActions.length.toString());
 			}
 			else {
 				var actionItem = allActions[i].type;
@@ -202,9 +202,9 @@ $(document).ready(function() {
 			lastActionNumber = localStorage.getItem('lastActionNumber');
 
 
-			if(actionData.length > int(lastActionNumber)){
+			if(actionData.length > parseInt(lastActionNumber)){
 				var newActions=[];
-				for (var i=int(lastActionNumber); i < actionData.length-1; i++){
+				for (var i=parseInt(lastActionNumber); i < actionData.length-1; i++){
 					console.log("NEW ACTIONS ID NUMBER : "+i);
 					newActions.push(actionData[i]);
 					console.log(newActions);
@@ -278,10 +278,10 @@ $(document).ready(function() {
 		}
 		
 		Trello.get('/boards/'+kanban,createBoard,failure);
-		var testBoard = {
-			name: "Danny"
-		}
-		Trello.post('/boards/',testBoard,authenticationFailure,failure);
+		// var testBoard = {
+		// 	name: "Danny"
+		// }
+		// Trello.post('/boards/',testBoard,authenticationFailure,failure);
 	};
 
 	var authenticationFailure = function() {
