@@ -155,6 +155,7 @@ $(document).ready(function() {
 							console.log("__________________");
 							console.log(listToCheck);
 							console.log(cardToUpdate);
+							console.log(dataInfo);
 							console.log("__________________");
 							var updatedCard = {
 								value: cardToUpdate[newListName]
