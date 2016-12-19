@@ -110,11 +110,15 @@ $(document).ready(function() {
 							}
 							// listToCheck[tempName] = tempPid;
 													
-							createList(allActions, i-1, board, boardname);
+							setTimeout(function () {
+								createList(allActions, i-1, board, boardname);
+							},1000);
 						});
 					}
 					else {
-						createList(allActions, i-1, board, boardname);
+						setTimeout(function () {
+							createList(allActions, i-1, board, boardname);
+						},1000);
 					}
 				}
 				else if(actionItem == "updateList") {
@@ -175,11 +179,15 @@ $(document).ready(function() {
 							// console.log("SuccessAdd UCD Lists for " + i + " is ");
 							// console.log(UCDLists);
 							
-							createList(allActions, i-1, board, boardname);
+							setTimeout(function () {
+								createList(allActions, i-1, board, boardname);
+							},1000);
 						});
 					}
 					else {
-						createList(allActions,i-1, board, boardname);
+						setTimeout(function () {
+							createList(allActions, i-1, board, boardname);
+						},1000);
 					}
 				}
 				else if (actionItem == "createCard"){
@@ -244,11 +252,15 @@ $(document).ready(function() {
 								DockerCards[tempName] = tempPid;
 							}
 													
-							createList(allActions, i-1, board, boardname);
+							setTimeout(function () {
+								createList(allActions, i-1, board, boardname);
+							},1000);
 						});
 					}
 					else {
-						createList(allActions, i-1, board, boardname);
+						setTimeout(function () {
+							createList(allActions, i-1, board, boardname);
+						},1000);
 					}
 				}
 				else if (actionItem == "updateCard") {
@@ -258,6 +270,7 @@ $(document).ready(function() {
 					var cardName = cardInfo.name;
 					var newList = dataInfo.listAfter;
 					if(newList != null) {
+						// console.log("Updating Card");
 						var newListName = newList.name;
 
 						if ((newListName in listToCheck) && (cardName in cardToUpdate)) {
@@ -265,6 +278,7 @@ $(document).ready(function() {
 							var tempLink = '/cards/'+cardId+'/idList';
 
 							var updatedCard={};
+
 							if (boardname == "UCD"){
 								cardId = UCDCards[cardName];
 								updatedCard = {
@@ -291,21 +305,29 @@ $(document).ready(function() {
 							}
 
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
-								// console.log("Card updated");
-														
-								createList(allActions, i-1, board, boardname);
+								console.log("Card updated");
+								console.log(data);						
+								setTimeout(function () {
+									createList(allActions, i-1, board, boardname);
+								},1000);
 							});
 						}
 						else {
-							createList(allActions, i-1, board, boardname);
+							setTimeout(function () {
+								createList(allActions, i-1, board, boardname);
+							},1000);
 						}
 					}
 					else {
-						createList(allActions, i-1, board, boardname);
+						setTimeout(function () {
+							createList(allActions, i-1, board, boardname);
+						},1000);	
 					}
 				}
 				else {
-					createList(allActions, i-1, board, boardname);
+					setTimeout(function () {
+						createList(allActions, i-1, board, boardname);
+					},1000);	
 				}
 			}
 		}
@@ -382,7 +404,9 @@ $(document).ready(function() {
 				Trello.post('/boards/',newBoard, function successBoard(data){
 					//// console.log("Board " + data.name + " has been created with id " + data.id);
 					allLabels[a[i]] = data.id;
-					boardCreate(a,i-1);
+					setTimeout(function () {
+						boardCreate(a,i-1);
+					},1000);
 				}, failure);
 			}			
 		}
