@@ -209,10 +209,11 @@ $(document).ready(function() {
 			
 			console.log(data);
 			var tempCards = data.cards;
+			
 			console.log(tempCards);
-			for (var i in tempCards){
-				console.log("tempCard is "+i);
-				cardLabels[i.name] = i.labels[0].name;
+			for (var i = 0; i < data.length; i++){
+				console.log("tempCard is "+ data[i]);
+				cardLabels[data[i].name] = data[i].labels[0].name;
 			}
 
 			if(allCards == null)
