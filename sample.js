@@ -7,6 +7,8 @@ $(document).ready(function() {
 	var cardLabels;
 	var allLabels=[];
 	var labels={};
+	var lastActionNumber=localStorage.getItem('lastActionNumber') || '-1';
+
 
 	var authenticationSuccess = function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
@@ -22,7 +24,8 @@ $(document).ready(function() {
 			console.log(i);
 			if (i == -1){
 				console.log("Returning emptiness");
-				allAction = allAction + allActions.length;
+
+				localStorage.setItem("lastActionNumber", str(allActions.length));
 			}
 			else {
 				var actionItem = allActions[i].type;
@@ -34,10 +37,10 @@ $(document).ready(function() {
 					var listName = listInfo.name; 
 					var listId = listInfo.id;
 
-					console.log("Converting IDs to a string");
-					var listIdString = JSON.stringify(listId);
+					// console.log("Converting IDs to a string");
+					// var listIdString = JSON.stringify(listId);
 										
-					localStorage.setItem("listIdString", listIdString);
+					// localStorage.setItem("listIdString", listIdString);
 
 					$(document).ready(function() {
 					var listId = localStorage.getItem("listIdString");
@@ -195,9 +198,12 @@ $(document).ready(function() {
 				console.log(actionData.length);
 				console.log("-----------------------------------------");		
 
-				if(actionData.length > allAction){
+				lastActionNumber = localStorage.getItem('lastActionNumber');
+
+
+				if(actionData.length > int(lastActionNumber)){
 					var newActions=[];
-					for (var i=allAction; i < actionData.length-1; i++){
+					for (var i=int(lastActionNumber); i < actionData.length-1; i++){
 						console.log("NEW ACTIONS ID NUMBER : "+i);
 						newActions.push(actionData[i]);
 						console.log(newActions);
