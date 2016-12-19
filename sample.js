@@ -151,7 +151,7 @@ $(document).ready(function() {
 						var newListName = newList.name;
 
 						if ((newListName in listToCheck) && (cardName in cardToUpdate)) {
-							var cardId = listToCheck[cardName];;
+							var cardId = cardToUpdate[cardName];;
 							console.log("__________________");
 							console.log(listToCheck);
 							console.log(cardToUpdate);
@@ -159,7 +159,7 @@ $(document).ready(function() {
 							console.log(cardName);
 							console.log("__________________");
 							var updatedCard = {
-								value: cardToUpdate[newListName]
+								value: listToCheck[newListName]
 							};
 
 							var tempLink = '/cards/'+cardId+'/idList';
