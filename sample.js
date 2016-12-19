@@ -172,11 +172,11 @@ $(document).ready(function() {
 		
 		var perBoard = function(actionData, allLabels, i){
 			console.log("getting individual board");
-			console.log(i);								
-			console.log(allLabels);
+			//console.log(i);								
+			console.log(allLabels[i]);
 			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
-			console.log("lastActionNumber:" + lastActionNumber);
-			console.log("actionData.length:" + actionData.length);
+			// console.log("lastActionNumber:" + lastActionNumber);
+			// console.log("actionData.length:" + actionData.length);
 
 			if(actionData.length > parseInt(lastActionNumber)){
 				var newActions=[];
@@ -197,10 +197,10 @@ $(document).ready(function() {
 
 		var getSuccess = function(actionData) {
 			console.log("Getting success function");
-			console.log(allLabels);
+			//console.log(allLabels);
 
 			for (var i in Object.keys(allLabels)) {
-				console.log(i);
+				console.log("Key name is " + i);
 				perBoard(actionData, allLabels, i);
 			}
 		}
@@ -212,7 +212,7 @@ $(document).ready(function() {
 				allCards=[];
 
 			allCards = data;
-			console.log(allCards);
+			//console.log(allCards);
 
 			var link = "/boards/"+kanban+"/actions";
 			Trello.get(link,getSuccess,failure);
@@ -230,7 +230,7 @@ $(document).ready(function() {
 					name: a[i]
 				}
 				Trello.post('/boards/',newBoard, function successBoard(data){
-					console.log("Board " + data.name + " has been created with id " + data.id);
+					//console.log("Board " + data.name + " has been created with id " + data.id);
 					allLabels[a[i]] = data.id;
 					boardCreate(a,i-1);
 				}, failure);
@@ -242,7 +242,7 @@ $(document).ready(function() {
 			labels = data.labelNames;
 
 			for (var i in labels){
-				console.log(labels[i]);
+				//console.log(labels[i]);
 				if (labels[i] == ""){
 					continue;
 				}
