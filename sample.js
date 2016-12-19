@@ -20,7 +20,7 @@ $(document).ready(function() {
 	    var kanban = '58584818c6622f7b10ad7166';
 
 	    var failure = function() {
-			// console.log("Tu chutiya hai");
+			console.log("Tu chutiya hai");
 		}
 
 		var updateBoard = function(allActions, i, board, boardname, listToCheck, cardToUpdate){
@@ -152,7 +152,10 @@ $(document).ready(function() {
 
 						if ((newListName in listToCheck) && (cardName in cardToUpdate)) {
 							var cardId = listToCheck[cardName];;
-
+							console.log("__________________");
+							console.log(listToCheck);
+							console.log(cardToUpdate);
+							console.log("__________________");
 							var updatedCard = {
 								value: cardToUpdate[newListName]
 							};
@@ -188,7 +191,7 @@ $(document).ready(function() {
 
 		var createList = function(allActions, i, board, boardname){
 			// console.log("Creating action item");
-			// // console.log(i);
+			// console.log(i);
 			if (UCDLists == null){
 				UCDLists={};
 			}
@@ -230,32 +233,32 @@ $(document).ready(function() {
 		
 		var perBoard = function(actionData, allLabels, i){
 			// console.log("getting individual board");
-			// // console.log(i);								
-			// // console.log(allLabels[i]);
+			// console.log(i);								
+			// console.log(allLabels[i]);
 			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
-			// // console.log("lastActionNumber:" + lastActionNumber);
-			// // console.log("actionData.length:" + actionData.length);
+			// console.log("lastActionNumber:" + lastActionNumber);
+			// console.log("actionData.length:" + actionData.length);
 
 			if(actionData.length > parseInt(lastActionNumber)){
 				var newActions=[];
 				for (var j=parseInt(lastActionNumber); j < actionData.length; j++){
-					// // console.log("NEW ACTIONS ID NUMBER : "+i);
+					// console.log("NEW ACTIONS ID NUMBER : "+i);
 					newActions.push(actionData[j]);
-					// // console.log(newActions);
+					// console.log(newActions);
 				}
 				setTimeout(function () {
 					// console.log("Crating lists for id " + i + " AND " + allLabels[i]);
 					createList(newActions, newActions.length-1, allLabels[i],i);					
 				},5000);
 			} else {
-				// console.log("F U");
+				console.log("F U");
 			}
 			// },failure);
 		}
 
 		var getSuccess = function(actionData) {
 			// console.log("Getting success function");
-			// // console.log(allLabels);
+			// console.log(allLabels);
 
 			for (var i in allLabels) {//not getting keys such as UCD, Jenkins
 				// console.log("Key name is " + i );
@@ -266,7 +269,7 @@ $(document).ready(function() {
 		var getCards = function(data) {
 			// console.log("in getting cards");
 			
-			// // console.log(data);
+			// console.log(data);
 			var tempCards = data.cards;
 			
 			// console.log(tempCards);
@@ -280,7 +283,7 @@ $(document).ready(function() {
 				allCards=[];
 
 			allCards = data;
-			//// console.log(allCards);
+			// console.log(allCards);
 
 			var link = "/boards/"+kanban+"/actions";
 			Trello.get(link,getSuccess,failure);
@@ -328,7 +331,7 @@ $(document).ready(function() {
 	};
 
 	var authenticationFailure = function() {
-	    // console.log("Failed authentication");
+	    console.log("Failed authentication");
 	};
 
 	$('#update').click(function() {
