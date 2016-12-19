@@ -207,6 +207,14 @@ $(document).ready(function() {
 		var getCards = function(data) {
 			console.log("in getting cards");
 			
+			console.log(data);
+			var tempCards = data.cards;
+			console.log(tempCards);
+			for (var i in tempCards){
+				console.log("tempCard is "+i);
+				cardLabels[i.name] = i.labels[0].name;
+			}
+
 			if(allCards == null)
 				allCards=[];
 
@@ -239,14 +247,6 @@ $(document).ready(function() {
 		var createBoard = function(data) {
 			console.log("Creating boards");
 			labels = data.labelNames;
-			console.log(data);
-			var tempCards = data.cards;
-			console.log(tempCards);
-			for (var i in tempCards){
-				console.log("tempCard is "+i);
-				cardLabels[i.name] = i.labels[0].name;
-			}
-
 
 			for (var i in labels){
 				//console.log(labels[i]);
