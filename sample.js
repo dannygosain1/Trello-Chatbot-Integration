@@ -172,8 +172,8 @@ $(document).ready(function() {
 		
 		var perBoard = function(actionData, allLabels, i){
 			console.log("getting individual board");
-			//console.log(i);								
-			// console.log(allLabels[i]);
+			console.log(i);								
+			console.log(allLabels[i]);
 			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
 			// console.log("lastActionNumber:" + lastActionNumber);
 			// console.log("actionData.length:" + actionData.length);
@@ -181,7 +181,7 @@ $(document).ready(function() {
 			if(actionData.length > parseInt(lastActionNumber)){
 				var newActions=[];
 				for (var i=parseInt(lastActionNumber); i < actionData.length; i++){
-					console.log("NEW ACTIONS ID NUMBER : "+i);
+					// console.log("NEW ACTIONS ID NUMBER : "+i);
 					newActions.push(actionData[i]);
 					// console.log(newActions);
 				}
@@ -197,7 +197,7 @@ $(document).ready(function() {
 
 		var getSuccess = function(actionData) {
 			console.log("Getting success function");
-			console.log(allLabels);
+			// console.log(allLabels);
 
 			for (var i in allLabels) {//not getting keys such as UCD, Jenkins
 				console.log("Key name is " + i);
