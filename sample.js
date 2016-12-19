@@ -182,6 +182,7 @@ $(document).ready(function() {
 		var perBoard = function(actionData, allLabels, i){
 			console.log("getting individual board");
 			console.log(i);
+			console.log("lastActionNumber:" + lastActionNumber);
 			// var link2 = "/boards/"+allLabels[i]+"/actions";
 			// Trello.get(link2, function (data){
 			// 	console.log("getting " + i + " board");
