@@ -42,9 +42,9 @@ $(document).ready(function() {
 										
 					// localStorage.setItem("listIdString", listIdString);
 
-					$(document).ready(function() {
-					var listId = localStorage.getItem("listIdString");
-					});
+					// $(document).ready(function() {
+					// var listId = localStorage.getItem("listIdString");
+					// });
 					
 					if (UCDLists == null)
 						UCDLists={};
@@ -200,21 +200,21 @@ $(document).ready(function() {
 			// 	console.log(actionData.length);
 			// 	console.log("-----------------------------------------");		
 
-			lastActionNumber = localStorage.getItem('lastActionNumber') || '-1';
+			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
 			console.log("lastActionNumber:" + lastActionNumber);
 			console.log("actionData.length:" + actionData.length);
 
 			if(actionData.length > parseInt(lastActionNumber)){
 				var newActions=[];
-				for (var i=parseInt(lastActionNumber); i < actionData.length-1; i++){
+				for (var i=parseInt(lastActionNumber); i < actionData.length; i++){
 					console.log("NEW ACTIONS ID NUMBER : "+i);
 					newActions.push(actionData[i]);
-					console.log(newActions);
+					// console.log(newActions);
 				}
 				setTimeout(function () {
 					console.log("Crating lists");
 					createList(newActions, newActions.length-1, allLabels[i],i);					
-				},3000);
+				},5000);
 			} else {
 				console.log("F U");
 			}
