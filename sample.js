@@ -239,6 +239,7 @@ $(document).ready(function() {
 		var createBoard = function(data) {
 			console.log("Creating boards");
 			labels = data.labelNames;
+			console.log(data);
 			var tempCards = data.cards;
 			console.log(tempCards);
 			for (var i in tempCards){
