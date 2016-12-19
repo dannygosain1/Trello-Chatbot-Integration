@@ -240,9 +240,9 @@ $(document).ready(function() {
 			console.log("Creating boards");
 			labels = data.labelNames;
 			var tempCards = data.cards;
-			
+			console.log(tempCards);
 			for (var i in tempCards){
-				console.log(i);
+				console.log("tempCard is "+i);
 				cardLabels[i.name] = i.labels[0].name;
 			}
 
