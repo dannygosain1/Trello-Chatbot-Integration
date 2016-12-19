@@ -182,7 +182,7 @@ $(document).ready(function() {
 		var perBoard = function(actionData, allLabels, i){
 			console.log("getting individual board");
 			console.log(i);
-			
+
 			// var link2 = "/boards/"+allLabels[i]+"/actions";
 			// Trello.get(link2, function (data){
 			// 	console.log("getting " + i + " board");
@@ -200,7 +200,7 @@ $(document).ready(function() {
 			// 	console.log(actionData.length);
 			// 	console.log("-----------------------------------------");		
 
-			lastActionNumber = localStorage.getItem('lastActionNumber');
+			lastActionNumber = localStorage.getItem('lastActionNumber') || '-1';
 			console.log("lastActionNumber:" + lastActionNumber);
 			console.log("actionData.length:" + actionData.length);
 
