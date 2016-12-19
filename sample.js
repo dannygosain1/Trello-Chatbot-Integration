@@ -212,7 +212,8 @@ $(document).ready(function() {
 			
 			console.log(tempCards);
 			for (var i = 0; i < data.length; i++){
-				console.log("tempCard is "+ data[i]);
+				console.log("tempCard is ");
+				console.log(data[i]);
 				cardLabels[data[i].name] = data[i].labels[0].name;
 			}
 
