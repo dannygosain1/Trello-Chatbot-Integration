@@ -180,51 +180,56 @@ $(document).ready(function() {
 		}
 		
 		var perBoard = function(actionData, allLabels, i){
-			console.log("getting kanban board");
-			var link2 = "/boards/"+allLabels[i]+"/actions";
-			Trello.get(link2, function (data){
-				console.log("getting " + i + " board");
-				if (cardLabels == null)
-					cardLabels = {};
+			console.log("getting individual board");
+			console.log(i);
+			// var link2 = "/boards/"+allLabels[i]+"/actions";
+			// Trello.get(link2, function (data){
+			// 	console.log("getting " + i + " board");
+			// 	if (cardLabels == null)
+			// 		cardLabels = {};
 
-				for(var i=0; i < allCards.length; i++){
-					cardLabels[allCards[i].name] = allCards[i].labels[0].name;
+			// 	for(var i=0; i < allCards.length; i++){
+			// 		cardLabels[allCards[i].name] = allCards[i].labels[0].name;
+			// 	}
+
+			// 	allActions = data;
+
+			// 	console.log("-----------------------------------------");
+			// 	console.log(allActions.length);
+			// 	console.log(actionData.length);
+			// 	console.log("-----------------------------------------");		
+
+			lastActionNumber = localStorage.getItem('lastActionNumber');
+
+
+			if(actionData.length > int(lastActionNumber)){
+				var newActions=[];
+				for (var i=int(lastActionNumber); i < actionData.length-1; i++){
+					console.log("NEW ACTIONS ID NUMBER : "+i);
+					newActions.push(actionData[i]);
+					console.log(newActions);
 				}
-
-				allActions = data;
-
-				console.log("-----------------------------------------");
-				console.log(allActions.length);
-				console.log(actionData.length);
-				console.log("-----------------------------------------");		
-
-				lastActionNumber = localStorage.getItem('lastActionNumber');
-
-
-				if(actionData.length > int(lastActionNumber)){
-					var newActions=[];
-					for (var i=int(lastActionNumber); i < actionData.length-1; i++){
-						console.log("NEW ACTIONS ID NUMBER : "+i);
-						newActions.push(actionData[i]);
-						console.log(newActions);
-					}
-					setTimeout(function () {
-						createList(newActions, newActions.length-1, allLabels[i],i);					
-					},3000);
-				}
-			},failure);
+				setTimeout(function () {
+					console.log("Crating lists");
+					createList(newActions, newActions.length-1, allLabels[i],i);					
+				},3000);
+			} else {
+				console.log("F U");
+			}
+			// },failure);
 		}
 
 		var getSuccess = function(actionData) {
+			console.log("Getting success function");
 			for (var i in allLabels.keys()) {
 				console.log(i);
 				perBoard(actionData, allLabels, i);
 			}
-			
 		}
 
 		var getCards = function(data) {
 			console.log("in getting cards");
+			
 			if(allCards == null)
 				allCards=[];
 
@@ -247,6 +252,7 @@ $(document).ready(function() {
 					name: a[i]
 				}
 				Trello.post('/boards/',newBoard, function successBoard(data){
+					console.log("Board " + data.name + " has been created with id " + data.id);
 					allLabels[a[i]] = data.id;
 					boardCreate(a,i-1);
 				}, failure);
