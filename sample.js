@@ -173,7 +173,7 @@ $(document).ready(function() {
 		var perBoard = function(actionData, allLabels, i){
 			console.log("getting individual board");
 			//console.log(i);								
-			console.log(allLabels[i]);
+			// console.log(allLabels[i]);
 			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
 			// console.log("lastActionNumber:" + lastActionNumber);
 			// console.log("actionData.length:" + actionData.length);
@@ -197,9 +197,9 @@ $(document).ready(function() {
 
 		var getSuccess = function(actionData) {
 			console.log("Getting success function");
-			//console.log(allLabels);
+			console.log(allLabels);
 
-			for (var i in Object.keys(allLabels)) {
+			for (var i in allLabels) {//not getting keys such as UCD, Jenkins
 				console.log("Key name is " + i);
 				perBoard(actionData, allLabels, i);
 			}
