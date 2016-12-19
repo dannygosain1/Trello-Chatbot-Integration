@@ -281,7 +281,7 @@ $(document).ready(function() {
 							if (boardname == "UCD"){
 								cardId = UCDCards[cardName];
 								updatedCard = {
-									value: UCDLists[newListName]
+									value: UCDCards[newListName]
 								};
 							}
 							if (boardname == "Jenkins"){
@@ -302,7 +302,7 @@ $(document).ready(function() {
 									value: DockerCards[newListName]
 								};
 							}
-							
+
 							var tempLink = '/cards/'+cardId+'/idList';
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
 								console.log("Card updated");
