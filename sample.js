@@ -275,7 +275,6 @@ $(document).ready(function() {
 
 						if ((newListName in listToCheck) && (cardName in cardToUpdate)) {
 							var cardId;
-							var tempLink = '/cards/'+cardId+'/idList';
 
 							var updatedCard={};
 
@@ -303,7 +302,8 @@ $(document).ready(function() {
 									value: DockerCards[newListName]
 								};
 							}
-
+							
+							var tempLink = '/cards/'+cardId+'/idList';
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
 								console.log("Card updated");
 								console.log(data);						
