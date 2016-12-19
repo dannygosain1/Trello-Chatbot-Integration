@@ -19,10 +19,9 @@ $(document).ready(function() {
 
 		var createList = function(allActions, i, board, name){
 			console.log("Creating action item");
-			console.log(i);
+			// console.log(i);
 			if (i == -1){
 				console.log("Returning emptiness");
-
 				localStorage.setItem("lastActionNumber", allActions.length.toString());
 			}
 			else {
@@ -172,8 +171,8 @@ $(document).ready(function() {
 		
 		var perBoard = function(actionData, allLabels, i){
 			console.log("getting individual board");
-			console.log(i);								
-			console.log(allLabels[i]);
+			// console.log(i);								
+			// console.log(allLabels[i]);
 			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
 			// console.log("lastActionNumber:" + lastActionNumber);
 			// console.log("actionData.length:" + actionData.length);
@@ -186,7 +185,7 @@ $(document).ready(function() {
 					// console.log(newActions);
 				}
 				setTimeout(function () {
-					console.log("Crating lists");
+					console.log("Crating lists for id " + i + " AND " + allLabels[i]);
 					createList(newActions, newActions.length-1, allLabels[i],i);					
 				},5000);
 			} else {
@@ -200,7 +199,7 @@ $(document).ready(function() {
 			// console.log(allLabels);
 
 			for (var i in allLabels) {//not getting keys such as UCD, Jenkins
-				console.log("Key name is " + i);
+				console.log("Key name is " + i );
 				perBoard(actionData, allLabels, i);
 			}
 		}
