@@ -2,7 +2,13 @@ $(document).ready(function() {
 	var allActions=[];
 	var allAction = 0;
 	var UCDLists;
+	var JenkinsLists;
+	var DockerLists;
+	var ChatbotLists;
 	var UCDCards;
+	var JenkinsCards;
+	var DockerCards;
+	var ChatbotCards;
 	var allCards;
 	var cardLabels = {};
 	var allLabels=[];
@@ -26,6 +32,49 @@ $(document).ready(function() {
 			}
 			else {
 				var actionItem = allActions[i].type;
+				if (UCDLists == null){
+					UCDLists={};
+				}
+				if (JenkinsLists == null){
+					JenkinsLists={};
+				}
+				if (ChatbotLists == null){
+					ChatbotLists={};
+				}
+				if (DockerLists == null){
+					DockerLists={};
+				}
+				if (UCDCards == null){
+					UCDCards={};
+				}
+				if (JenkinsCards == null){
+					JenkinsCards={};
+				}
+				if (ChatbotCards == null){
+					ChatbotCards={};
+				}
+				if (DockerCards == null){
+					DockerCards={};
+				}
+					
+				var listToCheck;
+				var cardToUpdate;
+				if (boardname == "UCD"){
+					listToCheck = UCDLists;
+					cardToUpdate = UCDCards;
+				}
+				if (boardname == "Jenkins"){
+					listToCheck = JenkinsLists;
+					cardToUpdate = JenkinsCards;
+				}
+				if (boardname == "Chatbot"){
+					listToCheck = ChatbotLists;
+					cardToUpdate = ChatbotCards;
+				}
+				if (boardname == "Docker"){
+					listToCheck = DockerLists;
+					cardToUpdate = DockerCards;
+				}
 
 				if(actionItem == "createList"){
 					// console.log("Creating List");
@@ -33,11 +82,8 @@ $(document).ready(function() {
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
 					var listId = listInfo.id;
-					
-					if (UCDLists == null)
-						UCDLists={};
 
-					if (!(listName in UCDLists) && !(listId in UCDLists)) {
+					if (!(listName in listToCheck) && !(listId in listToCheck)) {
 						// console.log("NEW: Creating List")
 						var newList = {
 							name: listName,
@@ -50,8 +96,19 @@ $(document).ready(function() {
 							var tempData = data;
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
-							
-							UCDLists[tempName] = tempPid;
+							if (boardname == "UCD"){
+								UCDLists[tempName] = tempPid;
+							}
+							if (boardname == "Jenkins"){
+								JenkinsLists[tempName] = tempPid;
+							}
+							if (boardname == "Chatbot"){
+								ChatbotLists[tempName] = tempPid;
+							}
+							if (boardname == "Docker"){
+								DockerLists[tempName] = tempPid;
+							}
+							// listToCheck[tempName] = tempPid;
 													
 							createList(allActions, i-1, board, boardname);
 						});
@@ -71,10 +128,27 @@ $(document).ready(function() {
 					// console.log(listName);
 					// console.log(oldName);
 
-					if (oldName in UCDLists) {
-						var listId = UCDLists[oldName];
+					if (oldName in listToCheck) {
+						var listId;
+						if (boardname == "UCD"){
+							listId = UCDLists[oldName];
+							delete UCDLists[oldName];
+						}
+						if (boardname == "Jenkins"){
+							listId = JenkinsLists[oldName];
+							delete JenkinsLists[oldName];
+						}
+						if (boardname == "Chatbot"){
+							listId = ChatbotLists[oldName];
+							delete ChatbotLists[oldName];
+						}
+						if (boardname == "Docker"){
+							listId = DockerLists[oldName];
+							delete DockerLists[oldName];
+						}
+						// var listId = listToCheck[oldName];
 						var tempLink = '/lists/'+listId;
-						delete UCDLists[oldName];
+						// delete listToCheck[oldName];
 						
 						var upList = {
 							name: listName
@@ -85,7 +159,18 @@ $(document).ready(function() {
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
 							// console.log(tempData);
-							UCDLists[tempName] = tempPid;
+							if (boardname == "UCD"){
+								UCDLists[tempName] = tempPid;
+							}
+							if (boardname == "Jenkins"){
+								JenkinsLists[tempName] = tempPid;
+							}
+							if (boardname == "Chatbot"){
+								ChatbotLists[tempName] = tempPid;
+							}
+							if (boardname == "Docker"){
+								DockerLists[tempName] = tempPid;
+							}
 							
 							// console.log("SuccessAdd UCD Lists for " + i + " is ");
 							// console.log(UCDLists);
@@ -104,23 +189,39 @@ $(document).ready(function() {
 					var cardName = cardInfo.name;
 					var cardList = dataInfo.list;
 					var listName = cardList.name; 
-					
-					if (UCDCards == null)
-						UCDCards={};
-					console.log("_____________________");
-					console.log("Creating card");
-					console.log(cardLabels);
-					console.log("Card Name:" + cardName);
-					console.log("Board Name:" + boardname);
-					console.log("_____________________");
 
-					if ((listName in UCDLists) && !(cardName in UCDCards) && (cardLabels[cardName] == boardname)) {
-						var newCard = {
-							name: cardName,
-							idBoard: board,
-							idList: UCDLists[listName]
-						}
+					if ((listName in listToCheck) && !(cardName in cardToUpdate) && (cardLabels[cardName] == boardname)) {
 						
+						var newCard;
+
+						if (boardname == "UCD"){
+							newCard = {
+								name: cardName,
+								idBoard: board,
+								idList: UCDLists[listName]
+							};
+						}
+						if (boardname == "Jenkins"){
+							newCard = {
+								name: cardName,
+								idBoard: board,
+								idList: JenkinsLists[listName]
+							};
+						}
+						if (boardname == "Chatbot"){
+							newCard = {
+								name: cardName,
+								idBoard: board,
+								idList: ChatbotLists[listName]
+							};
+						}
+						if (boardname == "Docker"){
+							newCard = {
+								name: cardName,
+								idBoard: board,
+								idList: DockerLists[listName]
+							};
+						}
 						Trello.post('/cards/', newCard, function SuccessAdd(data){
 							// console.log("Card added with data: ");
 							// console.log(data);
@@ -130,7 +231,18 @@ $(document).ready(function() {
 							var tempPid = tempData.id;
 							// console.log(tempData);
 							
-							UCDCards[tempName] = tempPid;
+							if (boardname == "UCD"){
+								UCDCards[tempName] = tempPid;
+							}
+							if (boardname == "Jenkins"){
+								JenkinsCards[tempName] = tempPid;
+							}
+							if (boardname == "Chatbot"){
+								ChatbotCards[tempName] = tempPid;
+							}
+							if (boardname == "Docker"){
+								DockerCards[tempName] = tempPid;
+							}
 													
 							createList(allActions, i-1, board, boardname);
 						});
@@ -148,13 +260,36 @@ $(document).ready(function() {
 					if(newList != null) {
 						var newListName = newList.name;
 
-						if ((newListName in UCDLists) && (cardName in UCDCards)) {
-							var cardId = UCDCards[cardName];
+						if ((newListName in listToCheck) && (cardName in cardToUpdate)) {
+							var cardId;
 							var tempLink = '/cards/'+cardId+'/idList';
 
-							var updatedCard = {
-								value: UCDLists[newListName]
+							var updatedCard={};
+							if (boardname == "UCD"){
+								cardId = UCDCards[cardName];
+								updatedCard = {
+									value: UCDLists[newListName]
+								};
 							}
+							if (boardname == "Jenkins"){
+								cardId = JenkinsCards[cardName];
+								updatedCard = {
+									value: JenkinsCards[newListName]
+								};
+							}
+							if (boardname == "Chatbot"){
+								cardId = ChatbotCards[cardName];
+								updatedCard = {
+									value: ChatbotCards[newListName]
+								};
+							}
+							if (boardname == "Docker"){
+								cardId = DockerCards[cardName];
+								updatedCard = {
+									value: DockerCards[newListName]
+								};
+							}
+
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
 								// console.log("Card updated");
 														
