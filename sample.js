@@ -13,8 +13,6 @@ $(document).ready(function() {
 	var authenticationSuccess = function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
 
-	    // var UCD_Board = '5853102d128c6217a1051e6b';
-	    
 	    var failure = function() {
 			console.log("Tu chutiya hai");
 		}
@@ -36,25 +34,18 @@ $(document).ready(function() {
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
 					var listId = listInfo.id;
-
-					// console.log("Converting IDs to a string");
-					// var listIdString = JSON.stringify(listId);
-										
-					// localStorage.setItem("listIdString", listIdString);
-
-					// $(document).ready(function() {
-					// var listId = localStorage.getItem("listIdString");
-					// });
 					
 					if (UCDLists == null)
 						UCDLists={};
 
 					if (!(listName in UCDLists) && !(listId in UCDLists)) {
+						console.log("NEW: Creating List")
 						var newList = {
 							name: listName,
 							idBoard: board,
 							pos:'bottom'
 						}
+						console.log(newList);
 						
 						Trello.post('/lists/', newList, function SuccessAdd(data){
 							var tempData = data;
@@ -183,23 +174,6 @@ $(document).ready(function() {
 			console.log("getting individual board");
 			console.log(i);
 
-			// var link2 = "/boards/"+allLabels[i]+"/actions";
-			// Trello.get(link2, function (data){
-			// 	console.log("getting " + i + " board");
-			// 	if (cardLabels == null)
-			// 		cardLabels = {};
-
-			// 	for(var i=0; i < allCards.length; i++){
-			// 		cardLabels[allCards[i].name] = allCards[i].labels[0].name;
-			// 	}
-
-			// 	allActions = data;
-
-			// 	console.log("-----------------------------------------");
-			// 	console.log(allActions.length);
-			// 	console.log(actionData.length);
-			// 	console.log("-----------------------------------------");		
-
 			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
 			console.log("lastActionNumber:" + lastActionNumber);
 			console.log("actionData.length:" + actionData.length);
@@ -280,10 +254,7 @@ $(document).ready(function() {
 		}
 		
 		Trello.get('/boards/'+kanban,createBoard,failure);
-		// var testBoard = {
-		// 	name: "Danny"
-		// }
-		// Trello.post('/boards/',testBoard,authenticationFailure,failure);
+
 	};
 
 	var authenticationFailure = function() {
