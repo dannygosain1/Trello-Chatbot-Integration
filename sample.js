@@ -276,6 +276,10 @@ $(document).ready(function() {
 		}
 		
 		Trello.get('/boards/'+kanban,createBoard,failure);
+		var testBoard = {
+			name: "Danny"
+		}
+		Trello.post('/boards/',testBoard,authenticationFailure,failure);
 	};
 
 	var authenticationFailure = function() {
