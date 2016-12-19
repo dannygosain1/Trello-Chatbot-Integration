@@ -23,6 +23,168 @@ $(document).ready(function() {
 			// console.log("Tu chutiya hai");
 		}
 
+		var updateBoard = function(allActions, i, board, boardname, listToCheck, cardToUpdate){
+			if (i == -1){
+				// console.log("Returning emptiness");
+				localStorage.setItem("lastActionNumber", allActions.length.toString());
+			}
+			else {
+				if(actionItem == "createList"){
+					// console.log("Creating List");
+					var dataInfo = allActions[i].data;
+					var listInfo = dataInfo.list;
+					var listName = listInfo.name; 
+					var listId = listInfo.id;
+
+					if (!(listName in listToCheck) && !(listId in listToCheck)) {
+						// console.log("NEW: Creating List")
+						var newList = {
+							name: listName,
+							idBoard: board,
+							pos:'bottom'
+						}
+						// console.log(newList);
+						
+						Trello.post('/lists/', newList, function SuccessAdd(data){
+							var tempData = data;
+							var tempName = tempData.name;
+							var tempPid = tempData.id;
+							listToCheck[tempName] = tempPid;
+													
+							setTimeout(function () {
+								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
+							},1000);
+						});
+					}
+					else {
+						setTimeout(function () {
+							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
+						},1000);
+					}
+				}
+				else if(actionItem == "updateList") {
+					// console.log("Updating List");
+					var dataInfo = allActions[i].data;
+					var listInfo = dataInfo.list;
+					var listName = listInfo.name;
+					var old = dataInfo.old;
+					var oldName = old.name;
+					
+					// console.log(listName);
+					// console.log(oldName);
+
+					if (oldName in listToCheck) {
+						var listId = listToCheck[oldName];;
+						delete listToCheck[oldName];
+
+						var tempLink = '/lists/'+listId;
+						// delete listToCheck[oldName];
+						
+						var upList = {
+							name: listName
+						}
+
+						Trello.put(tempLink, upList, function SuccessAdd(data){
+							var tempData = data;
+							var tempName = tempData.name;
+							var tempPid = tempData.id;
+							listToCheck[tempName] = tempPid;
+							
+							setTimeout(function () {
+								updateBoard(allActions, i-1, board, boardname);
+							},1000);
+						});
+					}
+					else {
+						setTimeout(function () {
+							updateBoard(allActions, i-1, board, boardname);
+						},1000);
+					}
+				}
+				else if (actionItem == "createCard"){
+					// console.log("Creating Card");
+					var dataInfo = allActions[i].data;
+					var cardInfo = dataInfo.card;
+					var cardName = cardInfo.name;
+					var cardList = dataInfo.list;
+					var listName = cardList.name; 
+
+					if ((listName in listToCheck) && !(cardName in cardToUpdate) && (cardLabels[cardName] == boardname)) {
+						
+						var newCard;
+						newCard = {
+							name: cardName,
+							idBoard: board,
+							idList: listToCheck[listName]
+						};
+						
+						Trello.post('/cards/', newCard, function SuccessAdd(data){
+							// console.log("Card added with data: ");
+							// console.log(data);
+
+							var tempData = data;
+							var tempName = tempData.name;
+							var tempPid = tempData.id;
+							// console.log(tempData);
+							cardToUpdate[tempName] = tempPid;
+													
+							setTimeout(function () {
+								updateBoard(allActions, i-1, board, boardname);
+							},1000);
+						});
+					}
+					else {
+						setTimeout(function () {
+							updateBoard(allActions, i-1, board, boardname);
+						},1000);
+					}
+				}
+				else if (actionItem == "updateCard") {
+					// console.log("Updating Card");
+					var dataInfo = allActions[i].data;
+					var cardInfo = dataInfo.card;
+					var cardName = cardInfo.name;
+					var newList = dataInfo.listAfter;
+					if(newList != null) {
+						// console.log("Updating Card");
+						var newListName = newList.name;
+
+						if ((newListName in listToCheck) && (cardName in cardToUpdate)) {
+							var cardId = listToCheck[cardName];;
+
+							var updatedCard = {
+								value: cardToUpdate[newListName]
+							};
+
+							var tempLink = '/cards/'+cardId+'/idList';
+							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
+								console.log("Card updated");
+								console.log(data);						
+								setTimeout(function () {
+									updateBoard(allActions, i-1, board, boardname);
+								},1000);
+							});
+						}
+						else {
+							setTimeout(function () {
+								updateBoard(allActions, i-1, board, boardname);
+							},1000);
+						}
+					}
+					else {
+						setTimeout(function () {
+							updateBoard(allActions, i-1, board, boardname);
+						},1000);	
+					}
+				}
+				else {
+					setTimeout(function () {
+						updateBoard(allActions, i-1, board, boardname);
+					},1000);	
+				}
+			}
+		}
+
 		var createList = function(allActions, i, board, boardname){
 			// console.log("Creating action item");
 			// // console.log(i);
@@ -57,278 +219,28 @@ $(document).ready(function() {
 					DockerCards={};
 				}
 					
-				var listToCheck;
-				var cardToUpdate;
 				if (boardname == "UCD"){
 					listToCheck = UCDLists;
 					cardToUpdate = UCDCards;
+					updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 				}
 				if (boardname == "Jenkins"){
 					listToCheck = JenkinsLists;
 					cardToUpdate = JenkinsCards;
+					updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 				}
 				if (boardname == "Chatbot"){
 					listToCheck = ChatbotLists;
 					cardToUpdate = ChatbotCards;
+					updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 				}
 				if (boardname == "Docker"){
 					listToCheck = DockerLists;
 					cardToUpdate = DockerCards;
+					updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 				}
 
-				if(actionItem == "createList"){
-					// console.log("Creating List");
-					var dataInfo = allActions[i].data;
-					var listInfo = dataInfo.list;
-					var listName = listInfo.name; 
-					var listId = listInfo.id;
-
-					if (!(listName in listToCheck) && !(listId in listToCheck)) {
-						// console.log("NEW: Creating List")
-						var newList = {
-							name: listName,
-							idBoard: board,
-							pos:'bottom'
-						}
-						// console.log(newList);
-						
-						Trello.post('/lists/', newList, function SuccessAdd(data){
-							var tempData = data;
-							var tempName = tempData.name;
-							var tempPid = tempData.id;
-							if (boardname == "UCD"){
-								UCDLists[tempName] = tempPid;
-							}
-							if (boardname == "Jenkins"){
-								JenkinsLists[tempName] = tempPid;
-							}
-							if (boardname == "Chatbot"){
-								ChatbotLists[tempName] = tempPid;
-							}
-							if (boardname == "Docker"){
-								DockerLists[tempName] = tempPid;
-							}
-							// listToCheck[tempName] = tempPid;
-													
-							setTimeout(function () {
-								createList(allActions, i-1, board, boardname);
-							},1000);
-						});
-					}
-					else {
-						setTimeout(function () {
-							createList(allActions, i-1, board, boardname);
-						},1000);
-					}
-				}
-				else if(actionItem == "updateList") {
-					// console.log("Updating List");
-					var dataInfo = allActions[i].data;
-					var listInfo = dataInfo.list;
-					var listName = listInfo.name;
-					var old = dataInfo.old;
-					var oldName = old.name;
-					
-					// console.log(listName);
-					// console.log(oldName);
-
-					if (oldName in listToCheck) {
-						var listId;
-						if (boardname == "UCD"){
-							listId = UCDLists[oldName];
-							delete UCDLists[oldName];
-						}
-						if (boardname == "Jenkins"){
-							listId = JenkinsLists[oldName];
-							delete JenkinsLists[oldName];
-						}
-						if (boardname == "Chatbot"){
-							listId = ChatbotLists[oldName];
-							delete ChatbotLists[oldName];
-						}
-						if (boardname == "Docker"){
-							listId = DockerLists[oldName];
-							delete DockerLists[oldName];
-						}
-						// var listId = listToCheck[oldName];
-						var tempLink = '/lists/'+listId;
-						// delete listToCheck[oldName];
-						
-						var upList = {
-							name: listName
-						}
-
-						Trello.put(tempLink, upList, function SuccessAdd(data){
-							var tempData = data;
-							var tempName = tempData.name;
-							var tempPid = tempData.id;
-							// console.log(tempData);
-							if (boardname == "UCD"){
-								UCDLists[tempName] = tempPid;
-							}
-							if (boardname == "Jenkins"){
-								JenkinsLists[tempName] = tempPid;
-							}
-							if (boardname == "Chatbot"){
-								ChatbotLists[tempName] = tempPid;
-							}
-							if (boardname == "Docker"){
-								DockerLists[tempName] = tempPid;
-							}
-							
-							// console.log("SuccessAdd UCD Lists for " + i + " is ");
-							// console.log(UCDLists);
-							
-							setTimeout(function () {
-								createList(allActions, i-1, board, boardname);
-							},1000);
-						});
-					}
-					else {
-						setTimeout(function () {
-							createList(allActions, i-1, board, boardname);
-						},1000);
-					}
-				}
-				else if (actionItem == "createCard"){
-					// console.log("Creating Card");
-					var dataInfo = allActions[i].data;
-					var cardInfo = dataInfo.card;
-					var cardName = cardInfo.name;
-					var cardList = dataInfo.list;
-					var listName = cardList.name; 
-
-					if ((listName in listToCheck) && !(cardName in cardToUpdate) && (cardLabels[cardName] == boardname)) {
-						
-						var newCard;
-
-						if (boardname == "UCD"){
-							newCard = {
-								name: cardName,
-								idBoard: board,
-								idList: UCDLists[listName]
-							};
-						}
-						if (boardname == "Jenkins"){
-							newCard = {
-								name: cardName,
-								idBoard: board,
-								idList: JenkinsLists[listName]
-							};
-						}
-						if (boardname == "Chatbot"){
-							newCard = {
-								name: cardName,
-								idBoard: board,
-								idList: ChatbotLists[listName]
-							};
-						}
-						if (boardname == "Docker"){
-							newCard = {
-								name: cardName,
-								idBoard: board,
-								idList: DockerLists[listName]
-							};
-						}
-						Trello.post('/cards/', newCard, function SuccessAdd(data){
-							// console.log("Card added with data: ");
-							// console.log(data);
-
-							var tempData = data;
-							var tempName = tempData.name;
-							var tempPid = tempData.id;
-							// console.log(tempData);
-							
-							if (boardname == "UCD"){
-								UCDCards[tempName] = tempPid;
-							}
-							if (boardname == "Jenkins"){
-								JenkinsCards[tempName] = tempPid;
-							}
-							if (boardname == "Chatbot"){
-								ChatbotCards[tempName] = tempPid;
-							}
-							if (boardname == "Docker"){
-								DockerCards[tempName] = tempPid;
-							}
-													
-							setTimeout(function () {
-								createList(allActions, i-1, board, boardname);
-							},1000);
-						});
-					}
-					else {
-						setTimeout(function () {
-							createList(allActions, i-1, board, boardname);
-						},1000);
-					}
-				}
-				else if (actionItem == "updateCard") {
-					// console.log("Updating Card");
-					var dataInfo = allActions[i].data;
-					var cardInfo = dataInfo.card;
-					var cardName = cardInfo.name;
-					var newList = dataInfo.listAfter;
-					if(newList != null) {
-						// console.log("Updating Card");
-						var newListName = newList.name;
-
-						if ((newListName in listToCheck) && (cardName in cardToUpdate)) {
-							var cardId;
-
-							var updatedCard={};
-
-							if (boardname == "UCD"){
-								cardId = UCDCards[cardName];
-								updatedCard = {
-									value: UCDCards[newListName]
-								};
-							}
-							if (boardname == "Jenkins"){
-								cardId = JenkinsCards[cardName];
-								updatedCard = {
-									value: JenkinsCards[newListName]
-								};
-							}
-							if (boardname == "Chatbot"){
-								cardId = ChatbotCards[cardName];
-								updatedCard = {
-									value: ChatbotCards[newListName]
-								};
-							}
-							if (boardname == "Docker"){
-								cardId = DockerCards[cardName];
-								updatedCard = {
-									value: DockerCards[newListName]
-								};
-							}
-
-							var tempLink = '/cards/'+cardId+'/idList';
-							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
-								console.log("Card updated");
-								console.log(data);						
-								setTimeout(function () {
-									createList(allActions, i-1, board, boardname);
-								},1000);
-							});
-						}
-						else {
-							setTimeout(function () {
-								createList(allActions, i-1, board, boardname);
-							},1000);
-						}
-					}
-					else {
-						setTimeout(function () {
-							createList(allActions, i-1, board, boardname);
-						},1000);	
-					}
-				}
-				else {
-					setTimeout(function () {
-						createList(allActions, i-1, board, boardname);
-					},1000);	
-				}
+				
 			}
 		}
 		
