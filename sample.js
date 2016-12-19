@@ -90,11 +90,11 @@ $(document).ready(function() {
 							// console.log("SuccessAdd UCD Lists for " + i + " is ");
 							// console.log(UCDLists);
 							
-							createList(allActions, i-1, board, name);
+							createList(allActions, i-1, board, boardname);
 						});
 					}
 					else {
-						createList(allActions,i-1, board, name);
+						createList(allActions,i-1, board, boardname);
 					}
 				}
 				else if (actionItem == "createCard"){
