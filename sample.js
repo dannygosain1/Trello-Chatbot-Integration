@@ -4,7 +4,7 @@ $(document).ready(function() {
 	var UCDLists;
 	var UCDCards;
 	var allCards;
-	var cardLabels;
+	var cardLabels = {};
 	var allLabels=[];
 	var labels={};
 	var lastActionNumber=localStorage.getItem('lastActionNumber') || '-1';
@@ -17,7 +17,7 @@ $(document).ready(function() {
 			console.log("Tu chutiya hai");
 		}
 
-		var createList = function(allActions, i, board, name){
+		var createList = function(allActions, i, board, boardname){
 			console.log("Creating action item");
 			// console.log(i);
 			if (i == -1){
@@ -53,11 +53,11 @@ $(document).ready(function() {
 							
 							UCDLists[tempName] = tempPid;
 													
-							createList(allActions, i-1, board, name);
+							createList(allActions, i-1, board, boardname);
 						});
 					}
 					else {
-						createList(allActions, i-1, board, name);
+						createList(allActions, i-1, board, boardname);
 					}
 				}
 				else if(actionItem == "updateList") {
@@ -108,7 +108,7 @@ $(document).ready(function() {
 					if (UCDCards == null)
 						UCDCards={};
 
-					if ((listName in UCDLists) && !(cardName in UCDCards) && (cardLabels[cardName] == "UCD")) {
+					if ((listName in UCDLists) && !(cardName in UCDCards) && (cardLabels[cardName] == boardname)) {
 						var newCard = {
 							name: cardName,
 							idBoard: board,
@@ -126,11 +126,11 @@ $(document).ready(function() {
 							
 							UCDCards[tempName] = tempPid;
 													
-							createList(allActions, i-1, board, name);
+							createList(allActions, i-1, board, boardname);
 						});
 					}
 					else {
-						createList(allActions, i-1, board, name);
+						createList(allActions, i-1, board, boardname);
 					}
 				}
 				else if (actionItem == "updateCard") {
@@ -152,19 +152,19 @@ $(document).ready(function() {
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
 								console.log("Card updated");
 														
-								createList(allActions, i-1, board, name);
+								createList(allActions, i-1, board, boardname);
 							});
 						}
 						else {
-							createList(allActions, i-1, board, name);
+							createList(allActions, i-1, board, boardname);
 						}
 					}
 					else {
-						createList(allActions, i-1, board, name);
+						createList(allActions, i-1, board, boardname);
 					}
 				}
 				else {
-					createList(allActions, i-1, board, name);
+					createList(allActions, i-1, board, boardname);
 				}
 			}
 		}
@@ -239,6 +239,13 @@ $(document).ready(function() {
 		var createBoard = function(data) {
 			console.log("Creating boards");
 			labels = data.labelNames;
+			var tempCards = data.cards;
+			
+			for (var i in tempCards){
+				console.log(i);
+				cardLabels[i.name] = i.labels[0].name;
+			}
+
 
 			for (var i in labels){
 				//console.log(labels[i]);
