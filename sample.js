@@ -172,8 +172,8 @@ $(document).ready(function() {
 		
 		var perBoard = function(actionData, allLabels, i){
 			console.log("getting individual board");
-			console.log(i);
-
+			console.log(i);								
+			console.log(allLabels);
 			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
 			console.log("lastActionNumber:" + lastActionNumber);
 			console.log("actionData.length:" + actionData.length);
