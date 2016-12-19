@@ -14,21 +14,21 @@ $(document).ready(function() {
 	    var kanban = '58515d76d31bcd0db04fdaf4';
 
 	    var failure = function() {
-			console.log("Tu chutiya hai");
+			// console.log("Tu chutiya hai");
 		}
 
 		var createList = function(allActions, i, board, boardname){
-			console.log("Creating action item");
-			// console.log(i);
+			// console.log("Creating action item");
+			// // console.log(i);
 			if (i == -1){
-				console.log("Returning emptiness");
+				// console.log("Returning emptiness");
 				localStorage.setItem("lastActionNumber", allActions.length.toString());
 			}
 			else {
 				var actionItem = allActions[i].type;
 
 				if(actionItem == "createList"){
-					console.log("Creating List");
+					// console.log("Creating List");
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
@@ -38,13 +38,13 @@ $(document).ready(function() {
 						UCDLists={};
 
 					if (!(listName in UCDLists) && !(listId in UCDLists)) {
-						console.log("NEW: Creating List")
+						// console.log("NEW: Creating List")
 						var newList = {
 							name: listName,
 							idBoard: board,
 							pos:'bottom'
 						}
-						console.log(newList);
+						// console.log(newList);
 						
 						Trello.post('/lists/', newList, function SuccessAdd(data){
 							var tempData = data;
@@ -61,15 +61,15 @@ $(document).ready(function() {
 					}
 				}
 				else if(actionItem == "updateList") {
-					console.log("Updating List");
+					// console.log("Updating List");
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name;
 					var old = dataInfo.old;
 					var oldName = old.name;
 					
-					console.log(listName);
-					console.log(oldName);
+					// console.log(listName);
+					// console.log(oldName);
 
 					if (oldName in UCDLists) {
 						var listId = UCDLists[oldName];
@@ -84,11 +84,11 @@ $(document).ready(function() {
 							var tempData = data;
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
-							console.log(tempData);
+							// console.log(tempData);
 							UCDLists[tempName] = tempPid;
 							
-							console.log("SuccessAdd UCD Lists for " + i + " is ");
-							console.log(UCDLists);
+							// console.log("SuccessAdd UCD Lists for " + i + " is ");
+							// console.log(UCDLists);
 							
 							createList(allActions, i-1, board, name);
 						});
@@ -98,7 +98,7 @@ $(document).ready(function() {
 					}
 				}
 				else if (actionItem == "createCard"){
-					console.log("Creating Card");
+					// console.log("Creating Card");
 					var dataInfo = allActions[i].data;
 					var cardInfo = dataInfo.card;
 					var cardName = cardInfo.name;
@@ -107,6 +107,12 @@ $(document).ready(function() {
 					
 					if (UCDCards == null)
 						UCDCards={};
+					console.log("_____________________");
+					console.log("Creating card");
+					console.log(cardLabels);
+					console.log("Card Name:" + cardName);
+					console.log("Board Name:" + boardname);
+					console.log("_____________________");
 
 					if ((listName in UCDLists) && !(cardName in UCDCards) && (cardLabels[cardName] == boardname)) {
 						var newCard = {
@@ -116,13 +122,13 @@ $(document).ready(function() {
 						}
 						
 						Trello.post('/cards/', newCard, function SuccessAdd(data){
-							console.log("Card added with data: ");
-							console.log(data);
+							// console.log("Card added with data: ");
+							// console.log(data);
 
 							var tempData = data;
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
-							console.log(tempData);
+							// console.log(tempData);
 							
 							UCDCards[tempName] = tempPid;
 													
@@ -134,7 +140,7 @@ $(document).ready(function() {
 					}
 				}
 				else if (actionItem == "updateCard") {
-					console.log("Updating Card");
+					// console.log("Updating Card");
 					var dataInfo = allActions[i].data;
 					var cardInfo = dataInfo.card;
 					var cardName = cardInfo.name;
@@ -150,7 +156,7 @@ $(document).ready(function() {
 								value: UCDLists[newListName]
 							}
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
-								console.log("Card updated");
+								// console.log("Card updated");
 														
 								createList(allActions, i-1, board, boardname);
 							});
@@ -170,58 +176,58 @@ $(document).ready(function() {
 		}
 		
 		var perBoard = function(actionData, allLabels, i){
-			console.log("getting individual board");
-			// console.log(i);								
-			// console.log(allLabels[i]);
+			// console.log("getting individual board");
+			// // console.log(i);								
+			// // console.log(allLabels[i]);
 			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
-			// console.log("lastActionNumber:" + lastActionNumber);
-			// console.log("actionData.length:" + actionData.length);
+			// // console.log("lastActionNumber:" + lastActionNumber);
+			// // console.log("actionData.length:" + actionData.length);
 
 			if(actionData.length > parseInt(lastActionNumber)){
 				var newActions=[];
 				for (var j=parseInt(lastActionNumber); j < actionData.length; j++){
-					// console.log("NEW ACTIONS ID NUMBER : "+i);
+					// // console.log("NEW ACTIONS ID NUMBER : "+i);
 					newActions.push(actionData[j]);
-					// console.log(newActions);
+					// // console.log(newActions);
 				}
 				setTimeout(function () {
-					console.log("Crating lists for id " + i + " AND " + allLabels[i]);
+					// console.log("Crating lists for id " + i + " AND " + allLabels[i]);
 					createList(newActions, newActions.length-1, allLabels[i],i);					
 				},5000);
 			} else {
-				console.log("F U");
+				// console.log("F U");
 			}
 			// },failure);
 		}
 
 		var getSuccess = function(actionData) {
-			console.log("Getting success function");
-			// console.log(allLabels);
+			// console.log("Getting success function");
+			// // console.log(allLabels);
 
 			for (var i in allLabels) {//not getting keys such as UCD, Jenkins
-				console.log("Key name is " + i );
+				// console.log("Key name is " + i );
 				perBoard(actionData, allLabels, i);
 			}
 		}
 
 		var getCards = function(data) {
-			console.log("in getting cards");
+			// console.log("in getting cards");
 			
-			console.log(data);
+			// // console.log(data);
 			var tempCards = data.cards;
 			
-			console.log(tempCards);
+			// console.log(tempCards);
 			for (var i = 0; i < data.length; i++){
-				console.log("tempCard is ");
-				console.log(data[i]);
+				// console.log("tempCard is ");
+				// console.log(data[i]);
 				cardLabels[data[i].name] = data[i].labels[0].name;
 			}
-
+			console.log(cardLabels);
 			if(allCards == null)
 				allCards=[];
 
 			allCards = data;
-			//console.log(allCards);
+			//// console.log(allCards);
 
 			var link = "/boards/"+kanban+"/actions";
 			Trello.get(link,getSuccess,failure);
@@ -229,7 +235,7 @@ $(document).ready(function() {
 
 		var boardCreate = function(a, i){
 			if (i == -1){
-				console.log("All boards created");
+				// console.log("All boards created");
 				// think about calling the cards details here
 				var link1 = "/boards/"+kanban+"/cards";				
 				Trello.get(link1,getCards,failure);
@@ -239,7 +245,7 @@ $(document).ready(function() {
 					name: a[i]
 				}
 				Trello.post('/boards/',newBoard, function successBoard(data){
-					//console.log("Board " + data.name + " has been created with id " + data.id);
+					//// console.log("Board " + data.name + " has been created with id " + data.id);
 					allLabels[a[i]] = data.id;
 					boardCreate(a,i-1);
 				}, failure);
@@ -247,11 +253,11 @@ $(document).ready(function() {
 		}
 
 		var createBoard = function(data) {
-			console.log("Creating boards");
+			// console.log("Creating boards");
 			labels = data.labelNames;
 
 			for (var i in labels){
-				//console.log(labels[i]);
+				//// console.log(labels[i]);
 				if (labels[i] == ""){
 					continue;
 				}
@@ -267,7 +273,7 @@ $(document).ready(function() {
 	};
 
 	var authenticationFailure = function() {
-	    console.log("Failed authentication");
+	    // console.log("Failed authentication");
 	};
 
 	$('#update').click(function() {
