@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 
 	var authenticationSuccess = function() {
-	    var kanban = '58515d76d31bcd0db04fdaf4';
+	    var kanban = '58584818c6622f7b10ad7166';
 
 	    var failure = function() {
 			// console.log("Tu chutiya hai");
