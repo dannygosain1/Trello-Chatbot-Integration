@@ -179,9 +179,9 @@ $(document).ready(function() {
 
 			if(actionData.length > parseInt(lastActionNumber)){
 				var newActions=[];
-				for (var i=parseInt(lastActionNumber); i < actionData.length; i++){
+				for (var j=parseInt(lastActionNumber); j < actionData.length; j++){
 					// console.log("NEW ACTIONS ID NUMBER : "+i);
-					newActions.push(actionData[i]);
+					newActions.push(actionData[j]);
 					// console.log(newActions);
 				}
 				setTimeout(function () {
