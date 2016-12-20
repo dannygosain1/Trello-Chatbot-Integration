@@ -1,14 +1,6 @@
 $(document).ready(function() {
 	var allActions=[];
 	var allAction = 0;
-	// var UCDLists;
-	// var JenkinsLists;
-	// var DockerLists;
-	// var ChatbotLists;
-	// var UCDCards;
-	// var JenkinsCards;
-	// var DockerCards;
-	// var ChatbotCards;
 	var origCards;
 	var cardLabels = {};
 	var allLabels=JSON.parse(localStorage.getItem('allLabels')) || [];
@@ -27,7 +19,6 @@ $(document).ready(function() {
 
 		var updateBoard = function(allActions, i, board, boardname, listToCheck, cardToUpdate){
 			if (i == -1){
-				// console.log("Returning emptiness");
 				var strLabels = JSON.stringify(allLabels);
 				localStorage.setItem("allLabels", strLabels);
 				var strCards = JSON.stringify(allCards);
@@ -36,26 +27,23 @@ $(document).ready(function() {
 				localStorage.setItem("allLists", strLists);
 				var strFlags = JSON.stringify(allFlags);
 				localStorage.setItem("allFlags", strFlags);
+				console.log("Boards updated!");
 			}
 			else {
 				var actionItem = allActions[i].type;
 				if(actionItem == "createList"){
-					// console.log("Creating List");
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name; 
 					var listId = listInfo.id;
 
 					if (!(listName in listToCheck) && !(listId in listToCheck)) {
-						// console.log("NEW: Creating List")
 						var newList = {
 							name: listName,
 							idBoard: board,
 							pos:'bottom'
 						}
 
-						// console.log(newList);
-						
 						Trello.post('/lists/', newList, function SuccessAdd(data){
 							var tempData = data;
 							var tempName = tempData.name;
@@ -80,16 +68,12 @@ $(document).ready(function() {
 					var listName = listInfo.name;
 					var old = dataInfo.old;
 					var oldName = old.name;
-					
-					// console.log(listName);
-					// console.log(oldName);
 
 					if (oldName in listToCheck) {
 						var listId = listToCheck[oldName];;
 						delete listToCheck[oldName];
 
 						var tempLink = '/lists/'+listId;
-						// delete listToCheck[oldName];
 						
 						var upList = {
 							name: listName
@@ -113,7 +97,6 @@ $(document).ready(function() {
 					}
 				}
 				else if (actionItem == "createCard"){
-					// console.log("Creating Card");
 					var dataInfo = allActions[i].data;
 					var cardInfo = dataInfo.card;
 					var cardName = cardInfo.name;
@@ -133,7 +116,6 @@ $(document).ready(function() {
 							var tempData = data;
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
-							// console.log(tempData);
 							cardToUpdate[tempName] = tempPid;
 													
 							setTimeout(function () {
@@ -148,13 +130,11 @@ $(document).ready(function() {
 					}
 				}
 				else if (actionItem == "updateCard") {
-					// console.log("Updating Card");
 					var dataInfo = allActions[i].data;
 					var cardInfo = dataInfo.card;
 					var cardName = cardInfo.name;
 					var newList = dataInfo.listAfter;
 					if(newList != null) {
-						console.log("Updating Card");
 						var newListName = newList.name;
 
 						if ((newListName in listToCheck) && (cardName in cardToUpdate)) {
@@ -165,9 +145,7 @@ $(document).ready(function() {
 							};
 
 							var tempLink = '/cards/'+cardId+'/idList';
-							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
-								// console.log("Card updated");
-								// console.log(data);						
+							Trello.put(tempLink, updatedCard, function SuccessAdd(data){			
 								setTimeout(function () {
 									updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 								},1000);
@@ -194,11 +172,8 @@ $(document).ready(function() {
 		}
 
 		var perBoard = function(actionData, a, i, flag, l, c){			
-			// console.log(lastActionNumber);
 			if (flag) {
-
 				updateBoard(actionData, actionData.length-1, a, i, l, c);
-
 			} else if (actionData.length > parseInt(lastActionNumber)) {
 
 				var newActions=[];
@@ -217,8 +192,6 @@ $(document).ready(function() {
 		}
 
 		var boardCreate = function(a, i, l, c, flag){
-			console.log("GETTING BOARDS for " + a[i]);
-			console.log("Flag value is " + flag[a[i]]);
 			if (i == -1){
 				var link1 = "/boards/"+kanban+"/cards";				
 				Trello.get(link1, function getCards(data){
@@ -228,9 +201,7 @@ $(document).ready(function() {
 					for (var i = 0; i < data.length; i++){
 						if(data[i].labels != null){
 							cardLabels[data[i].name] = "";
-							console.log(data[i]);
 							for (var xyz=0; xyz < data[i].labels.length; xyz++){
-								console.log(xyz.name);
 								cardLabels[data[i].name] += data[i].labels[xyz].name;
 							}
 						}
@@ -321,4 +292,16 @@ $(document).ready(function() {
 			error: authenticationFailure
 		});
 	});
+
+	$('#test').click(function() {
+		console.log('#test Clicked');
+	});
+
+	var dan = 0;
+	while( dan < 10){
+		setTimeout(function() {
+			$('#test').trigger('click');
+			dan++;
+		},1000);
+	}
 });
