@@ -14,9 +14,9 @@ $(document).ready(function() {
 	var allLabels=JSON.parse(localStorage.getItem('allLabels')) || [];
 	var labels={};
 	var lastActionNumber=localStorage.getItem('lastActionNumber') || '0';
-	var allCards = [];
-	var allLists = [];
-	var allFlags = [];
+	var allCards = JSON.parse(localStorage.getItem('allCards')) || [];
+	var allLists = JSON.parse(localStorage.getItem('allLists')) || [];
+	var allFlags = JSON.parse(localStorage.getItem('allFlags')) || [];
 
 	var authenticationSuccess = function() {
 	    var kanban = '58584818c6622f7b10ad7166';
@@ -30,6 +30,12 @@ $(document).ready(function() {
 				// console.log("Returning emptiness");
 				var strLabels = JSON.stringify(allLabels);
 				localStorage.setItem("allLabels", strLabels);
+				var strCards = JSON.stringify(allCards);
+				localStorage.setItem("allCards", strCards);
+				var strLists = JSON.stringify(allLists);
+				localStorage.setItem("allLists", strLists);
+				var strFlags = JSON.stringify(allFlags);
+				localStorage.setItem("allFlags", strFlags);
 			}
 			else {
 				var actionItem = allActions[i].type;
@@ -270,6 +276,9 @@ $(document).ready(function() {
 			console.log("GETTING LABELS");
 			labels = data.labelNames;
 			allLabels = JSON.parse(localStorage.getItem('allLabels')) || {};
+			allCards = JSON.parse(localStorage.getItem('allCards')) || {};
+			allLists = JSON.parse(localStorage.getItem('allLists')) || {};
+			allFlags = JSON.parse(localStorage.getItem('allFlags')) || {};
 			for (var i in labels){
 				if (labels[i] == ""){
 					continue;
