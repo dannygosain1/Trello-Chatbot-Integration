@@ -1,20 +1,22 @@
 $(document).ready(function() {
 	var allActions=[];
 	var allAction = 0;
-	var UCDLists;
-	var JenkinsLists;
-	var DockerLists;
-	var ChatbotLists;
-	var UCDCards;
-	var JenkinsCards;
-	var DockerCards;
-	var ChatbotCards;
-	var allCards;
+	// var UCDLists;
+	// var JenkinsLists;
+	// var DockerLists;
+	// var ChatbotLists;
+	// var UCDCards;
+	// var JenkinsCards;
+	// var DockerCards;
+	// var ChatbotCards;
+	var origCards;
 	var cardLabels = {};
-	var allLabels=[];
+	var allLabels=JSON.parse(localStorage.getItem('allLabels')) || [];
 	var labels={};
-	var lastActionNumber=localStorage.getItem('lastActionNumber') || '-1';
-
+	var lastActionNumber=localStorage.getItem('lastActionNumber') || '0';
+	var allCards = [];
+	var allLists = [];
+	var allFlags = [];
 
 	var authenticationSuccess = function() {
 	    var kanban = '58584818c6622f7b10ad7166';
@@ -27,6 +29,8 @@ $(document).ready(function() {
 			if (i == -1){
 				// console.log("Returning emptiness");
 				localStorage.setItem("lastActionNumber", allActions.length.toString());
+				var strLabels = JSON.stringify(allLabels);
+				localStorage.setItem("allLabels", strLabels);
 			}
 			else {
 				var actionItem = allActions[i].type;
@@ -191,141 +195,140 @@ $(document).ready(function() {
 			}
 		}
 
-		var createList = function(allActions, i, board, boardname){
-			// console.log("Creating action item");
-			// console.log(i);
-			if (UCDLists == null){
-				UCDLists={};
-			}
-			if (JenkinsLists == null){
-				JenkinsLists={};
-			}
-			if (ChatbotLists == null){
-				ChatbotLists={};
-			}
-			if (DockerLists == null){
-				DockerLists={};
-			}
-			if (UCDCards == null){
-				UCDCards={};
-			}
-			if (JenkinsCards == null){
-				JenkinsCards={};
-			}
-			if (ChatbotCards == null){
-				ChatbotCards={};
-			}
-			if (DockerCards == null){
-				DockerCards={};
-			}
-				
-			if (boardname == "UCD"){
-				updateBoard(allActions, i, board, boardname, UCDLists, UCDCards);
-			}
-			if (boardname == "Jenkins"){
-				updateBoard(allActions, i, board, boardname, JenkinsLists, JenkinsCards);
-			}
-			if (boardname == "Chatbot"){
-				updateBoard(allActions, i, board, boardname, ChatbotLists, ChatbotCards);
-			}
-			if (boardname == "Docker"){
-				updateBoard(allActions, i, board, boardname, DockerLists, DockerCards);
-			}
-		}
-		
-		var perBoard = function(actionData, allLabels, i){
-			// console.log("getting individual board");
-			// console.log(i);								
-			// console.log(allLabels[i]);
-			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
-			// console.log("lastActionNumber:" + lastActionNumber);
-			// console.log("actionData.length:" + actionData.length);
+		// var createList = function(allActions, i, board, boardname){
+		// 	if (UCDLists == null){
+		// 		UCDLists={};
+		// 	}
+		// 	if (JenkinsLists == null){
+		// 		JenkinsLists={};
+		// 	}
+		// 	if (ChatbotLists == null){
+		// 		ChatbotLists={};
+		// 	}
+		// 	if (DockerLists == null){
+		// 		DockerLists={};
+		// 	}
+		// 	if (UCDCards == null){
+		// 		UCDCards={};
+		// 	}
+		// 	if (JenkinsCards == null){
+		// 		JenkinsCards={};
+		// 	}
+		// 	if (ChatbotCards == null){
+		// 		ChatbotCards={};
+		// 	}
+		// 	if (DockerCards == null){
+		// 		DockerCards={};
+		// 	}
 
-			if(actionData.length > parseInt(lastActionNumber)){
+		// 	updateBoard(allActions, i, board, boardname, , );
+				
+		// 	if (boardname == "UCD"){
+		// 		updateBoard(allActions, i, board, boardname, UCDLists, UCDCards);
+		// 	}
+		// 	if (boardname == "Jenkins"){
+		// 		updateBoard(allActions, i, board, boardname, JenkinsLists, JenkinsCards);
+		// 	}
+		// 	if (boardname == "Chatbot"){
+		// 		updateBoard(allActions, i, board, boardname, ChatbotLists, ChatbotCards);
+		// 	}
+		// 	if (boardname == "Docker"){
+		// 		updateBoard(allActions, i, board, boardname, DockerLists, DockerCards);
+		// 	}
+		// }
+		
+		var perBoard = function(actionData, a, i, flag, l, c){
+			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
+			
+			if (flag) {
+
+				updateBoard(actionData, actionData.length-1, a, i, l, c);
+
+			} else if (actionData.length > parseInt(lastActionNumber)) {
+
 				var newActions=[];
+
 				for (var j=parseInt(lastActionNumber); j < actionData.length; j++){
-					// console.log("NEW ACTIONS ID NUMBER : "+i);
 					newActions.push(actionData[j]);
-					// console.log(newActions);
 				}
+
 				setTimeout(function () {
-					// console.log("Crating lists for id " + i + " AND " + allLabels[i]);
-					createList(newActions, newActions.length-1, allLabels[i],i);					
+					updateBoard(newActions, newActions.length-1, a, i, l, c);					
 				},5000);
+
 			} else {
 				console.log("F U");
 			}
-			// },failure);
 		}
 
-		var getSuccess = function(actionData) {
-			// console.log("Getting success function");
-			// console.log(allLabels);
-
-			for (var i in allLabels) {//not getting keys such as UCD, Jenkins
-				// console.log("Key name is " + i );
-				perBoard(actionData, allLabels, i);
-			}
-		}
-
-		var getCards = function(data) {
-			// console.log("in getting cards");
-			
-			// console.log(data);
-			var tempCards = data.cards;
-			
-			// console.log(tempCards);
-			for (var i = 0; i < data.length; i++){
-				// console.log("tempCard is ");
-				// console.log(data[i]);
-				cardLabels[data[i].name] = data[i].labels[0].name;
-			}
-			console.log(cardLabels);
-			if(allCards == null)
-				allCards=[];
-
-			allCards = data;
-			// console.log(allCards);
-
-			var link = "/boards/"+kanban+"/actions";
-			Trello.get(link,getSuccess,failure);
-		}
-
-		var boardCreate = function(a, i){
+		var boardCreate = function(a, i, l, c, flag){
 			if (i == -1){
-				// console.log("All boards created");
-				// think about calling the cards details here
 				var link1 = "/boards/"+kanban+"/cards";				
-				Trello.get(link1,getCards,failure);
+				Trello.get(link1, function getCards(data){
+					
+					var tempCards = data.cards;
+
+					for (var i = 0; i < data.length; i++){
+						cardLabels[data[i].name] = data[i].labels[0].name;
+					}
+
+					if(origCards == null)
+						origCards=[];
+
+					origCards = data;
+
+					var link = "/boards/"+kanban+"/actions";
+
+					Trello.get(link, function getSuccess(actionData){
+						for (var i in allLabels) {
+							perBoard(actionData, allLabels[i], i, flag[i], l[i], c[i]);
+						}
+					}, failure);
+
+				}, failure);
 			}
 			else {
-				var newBoard = {
-					name: a[i]
-				}
-				Trello.post('/boards/',newBoard, function successBoard(data){
-					//// console.log("Board " + data.name + " has been created with id " + data.id);
-					allLabels[a[i]] = data.id;
+				if (flag[i]){
+					var newBoard = {
+						name: a[i]
+					}
+					Trello.post('/boards/', newBoard, function successBoard(data){
+						
+						allLabels[a[i]] = data.id;
+						
+						setTimeout(function () {
+							boardCreate(a, i-1, l, c, flag);
+						},1000);
+
+					}, failure);
+				} else {
 					setTimeout(function () {
-						boardCreate(a,i-1);
+						boardCreate(a, i-1, l, c, flag);
 					},1000);
-				}, failure);
+				}
 			}			
 		}
 
 		var createBoard = function(data) {
-			// console.log("Creating boards");
 			labels = data.labelNames;
-
+			allLabels = JSON.parse(localStorage.getItem('allLabels')) || {};
 			for (var i in labels){
-				//// console.log(labels[i]);
 				if (labels[i] == ""){
 					continue;
 				}
-				else
+				else if !(labels[i] in allLabels){
 					allLabels[labels[i]] = "";
+					allLists[labels[i]] = {};
+					allCards[labels[i]] = {};
+					allFlags[labels[i]] = true;
+				} else {
+					allFlags[labels[i]] = false;
+				}
 			}
 
-			boardCreate(Object.keys(allLabels),Object.keys(allLabels).length-1);
+			setTimeout(function () {
+				boardCreate(Object.keys(allLabels), Object.keys(allLabels).length-1, allLists, allCards, allFlags);
+			},1000);
 		}
 		
 		Trello.get('/boards/'+kanban,createBoard,failure);
