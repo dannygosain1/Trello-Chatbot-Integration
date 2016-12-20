@@ -10,7 +10,9 @@ $(document).ready(function() {
 	var allLists = JSON.parse(localStorage.getItem('allLists')) || [];
 	var allFlags = JSON.parse(localStorage.getItem('allFlags')) || [];
 	
-	$('#update').trigger('click');
+	setTimeout(function() {
+		$('#update').trigger('click');
+	},1000);
 
 	var authenticationSuccess = function() {
 	    var kanban = '58584818c6622f7b10ad7166';
@@ -299,13 +301,4 @@ $(document).ready(function() {
 			$('#update').trigger('click');
 		},300000);
 	});
-
-	
-	// var dan = 0;
-	// while( dan < 10){
-	// 	setTimeout(function() {
-	// 		$('#test').trigger('click');
-	// 		dan++;
-	// 	},1000);
-	// }
 });
