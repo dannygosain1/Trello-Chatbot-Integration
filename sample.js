@@ -229,9 +229,9 @@ $(document).ready(function() {
 						if(data[i].labels != null){
 							cardLabels[data[i].name] = "";
 							console.log(data[i]);
-							for (var xyz in data[i].labels){
-								console.log(xyz);
-								cardLabels[data[i].name] += xyz.name;
+							for (var xyz=0; xyz < data[i].labels.length; xyz++){
+								console.log(xyz.name);
+								cardLabels[data[i].name] += data[i].labels[xyz].name;
 							}
 						}
 					}
