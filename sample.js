@@ -293,10 +293,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#test').click(function() {
-		console.log('#test Clicked');
-	});
-
+	
 	// var dan = 0;
 	// while( dan < 10){
 	// 	setTimeout(function() {
