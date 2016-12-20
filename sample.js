@@ -28,7 +28,6 @@ $(document).ready(function() {
 		var updateBoard = function(allActions, i, board, boardname, listToCheck, cardToUpdate){
 			if (i == -1){
 				// console.log("Returning emptiness");
-				localStorage.setItem("lastActionNumber", allActions.length.toString());
 				var strLabels = JSON.stringify(allLabels);
 				localStorage.setItem("allLabels", strLabels);
 			}
@@ -125,9 +124,6 @@ $(document).ready(function() {
 						};
 						
 						Trello.post('/cards/', newCard, function SuccessAdd(data){
-							// console.log("Card added with data: ");
-							// console.log(data);
-
 							var tempData = data;
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
@@ -156,13 +152,8 @@ $(document).ready(function() {
 						var newListName = newList.name;
 
 						if ((newListName in listToCheck) && (cardName in cardToUpdate)) {
-							var cardId = cardToUpdate[cardName];;
-							// console.log("__________________");
-							// console.log(listToCheck);
-							// console.log(cardToUpdate);
-							// console.log(newList);
-							// console.log(cardName);
-							// console.log("__________________");
+							var cardId = cardToUpdate[cardName];
+
 							var updatedCard = {
 								value: listToCheck[newListName]
 							};
@@ -196,51 +187,7 @@ $(document).ready(function() {
 			}
 		}
 
-		// var createList = function(allActions, i, board, boardname){
-		// 	if (UCDLists == null){
-		// 		UCDLists={};
-		// 	}
-		// 	if (JenkinsLists == null){
-		// 		JenkinsLists={};
-		// 	}
-		// 	if (ChatbotLists == null){
-		// 		ChatbotLists={};
-		// 	}
-		// 	if (DockerLists == null){
-		// 		DockerLists={};
-		// 	}
-		// 	if (UCDCards == null){
-		// 		UCDCards={};
-		// 	}
-		// 	if (JenkinsCards == null){
-		// 		JenkinsCards={};
-		// 	}
-		// 	if (ChatbotCards == null){
-		// 		ChatbotCards={};
-		// 	}
-		// 	if (DockerCards == null){
-		// 		DockerCards={};
-		// 	}
-
-		// 	updateBoard(allActions, i, board, boardname, , );
-				
-		// 	if (boardname == "UCD"){
-		// 		updateBoard(allActions, i, board, boardname, UCDLists, UCDCards);
-		// 	}
-		// 	if (boardname == "Jenkins"){
-		// 		updateBoard(allActions, i, board, boardname, JenkinsLists, JenkinsCards);
-		// 	}
-		// 	if (boardname == "Chatbot"){
-		// 		updateBoard(allActions, i, board, boardname, ChatbotLists, ChatbotCards);
-		// 	}
-		// 	if (boardname == "Docker"){
-		// 		updateBoard(allActions, i, board, boardname, DockerLists, DockerCards);
-		// 	}
-		// }
-		
-		var perBoard = function(actionData, a, i, flag, l, c){
-			lastActionNumber = localStorage.getItem('lastActionNumber') || '0';
-			
+		var perBoard = function(actionData, a, i, flag, l, c){			
 			if (flag) {
 
 				updateBoard(actionData, actionData.length-1, a, i, l, c);
@@ -252,7 +199,9 @@ $(document).ready(function() {
 				for (var j=parseInt(lastActionNumber); j < actionData.length; j++){
 					newActions.push(actionData[j]);
 				}
-
+				// var LAN = lastActionNumber
+				// DO SAME STUFF
+				// las
 				setTimeout(function () {
 					updateBoard(newActions, newActions.length-1, a, i, l, c);					
 				},5000);
@@ -263,14 +212,9 @@ $(document).ready(function() {
 		}
 
 		var boardCreate = function(a, i, l, c, flag){
-			console.log("GETTING BOARDS for " + i);
+			console.log("GETTING BOARDS for " + a[i]);
 			console.log("Flag value is " + flag[a[i]]);
 			if (i == -1){
-				console.log(a);
-				console.log(l);
-				console.log(c);
-				console.log(flag);
-
 				var link1 = "/boards/"+kanban+"/cards";				
 				Trello.get(link1, function getCards(data){
 					
@@ -288,6 +232,7 @@ $(document).ready(function() {
 					var link = "/boards/"+kanban+"/actions";
 
 					Trello.get(link, function getSuccess(actionData){
+						localStorage.setItem("lastActionNumber", actionData.length.toString());
 						for (var i in allLabels) {
 							perBoard(actionData, allLabels[i], i, flag[i], l[i], c[i]);
 						}
@@ -322,7 +267,6 @@ $(document).ready(function() {
 			labels = data.labelNames;
 			allLabels = JSON.parse(localStorage.getItem('allLabels')) || {};
 			for (var i in labels){
-				console.log(labels[i]);
 				if (labels[i] == ""){
 					continue;
 				}
@@ -333,8 +277,6 @@ $(document).ready(function() {
 					allFlags[labels[i]] = true;
 				} else {
 					allFlags[labels[i]] = false;
-					console.log("Set flag to false");
-
 				}
 			}
 
