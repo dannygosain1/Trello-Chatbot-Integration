@@ -265,6 +265,11 @@ $(document).ready(function() {
 		var boardCreate = function(a, i, l, c, flag){
 			console.log("GETTING BOARDS");
 			if (i == -1){
+				console.log(a);
+				console.log(l);
+				console.log(c);
+				console.log(flag);
+
 				var link1 = "/boards/"+kanban+"/cards";				
 				Trello.get(link1, function getCards(data){
 					
@@ -331,10 +336,6 @@ $(document).ready(function() {
 
 				}
 			}
-			console.log(allLabels);
-			console.log(allLists);
-			console.log(allCards);
-			console.log(allFlags);
 
 			setTimeout(function () {
 				boardCreate(Object.keys(allLabels), Object.keys(allLabels).length-1, allLists, allCards, allFlags);
