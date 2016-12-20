@@ -263,7 +263,8 @@ $(document).ready(function() {
 		}
 
 		var boardCreate = function(a, i, l, c, flag){
-			console.log("GETTING BOARDS");
+			console.log("GETTING BOARDS for " + i);
+			console.log("Flag value is " + flag[i]);
 			if (i == -1){
 				console.log(a);
 				console.log(l);
