@@ -316,7 +316,7 @@ $(document).ready(function() {
 				if (labels[i] == ""){
 					continue;
 				}
-				else if !(labels[i] in allLabels){
+				else if (!(labels[i] in allLabels)){
 					allLabels[labels[i]] = "";
 					allLists[labels[i]] = {};
 					allCards[labels[i]] = {};
