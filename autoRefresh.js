@@ -1,6 +1,6 @@
 $(document).ready(function() {
-	var limit = 0;
-
+	$('#test').trigger('click');
+	
 	$('#test').click(function() {
 		console.log("90CM!!!!");
 		setTimeout(function() {

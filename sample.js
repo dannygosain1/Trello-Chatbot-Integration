@@ -9,6 +9,8 @@ $(document).ready(function() {
 	var allCards = JSON.parse(localStorage.getItem('allCards')) || [];
 	var allLists = JSON.parse(localStorage.getItem('allLists')) || [];
 	var allFlags = JSON.parse(localStorage.getItem('allFlags')) || [];
+	
+	$('#update').trigger('click');
 
 	var authenticationSuccess = function() {
 	    var kanban = '58584818c6622f7b10ad7166';
@@ -281,6 +283,7 @@ $(document).ready(function() {
 
 	$('#update').click(function() {
 		lastActionNumber=localStorage.getItem('lastActionNumber') || '0';
+	
 		Trello.authorize({
 			type: 'popup',
 			name: 'Getting Started Application',
@@ -291,6 +294,10 @@ $(document).ready(function() {
 			success: authenticationSuccess,
 			error: authenticationFailure
 		});
+
+		setTimeout(function() {
+			$('#update').trigger('click');
+		},300000);
 	});
 
 	
