@@ -264,7 +264,7 @@ $(document).ready(function() {
 
 		var boardCreate = function(a, i, l, c, flag){
 			console.log("GETTING BOARDS for " + i);
-			console.log("Flag value is " + flag[labels[i]]);
+			console.log("Flag value is " + labels);
 			if (i == -1){
 				console.log(a);
 				console.log(l);
