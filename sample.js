@@ -114,7 +114,7 @@ $(document).ready(function() {
 					var cardList = dataInfo.list;
 					var listName = cardList.name; 
 
-					if ((listName in listToCheck) && !(cardName in cardToUpdate) && (cardLabels[cardName] == boardname)) {
+					if ((listName in listToCheck) && !(cardName in cardToUpdate) && (cardLabels[cardName].indexOf(boardname) >= 0)) {
 						
 						var newCard;
 						newCard = {
@@ -220,7 +220,12 @@ $(document).ready(function() {
 					var tempCards = data.cards;
 
 					for (var i = 0; i < data.length; i++){
-						cardLabels[data[i].name] = data[i].labels[0].name;
+						if(data[i].labels != null){
+							cardLabels[data[i].name] = "";
+							for (var xyz in data[i].labels){
+								cardLabels[data[i].name] += xyz.name;
+							}
+						}
 					}
 
 					if(origCards == null)
