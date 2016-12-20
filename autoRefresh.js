@@ -3,7 +3,7 @@ $(document).ready(function() {
 	while(limit < 20){
 		setTimeout(function() {
 			$('#test').trigger('click');
+			limit++;
 		},5000);
-	limit++;
 	}
 });
