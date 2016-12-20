@@ -328,9 +328,13 @@ $(document).ready(function() {
 				} else {
 					allFlags[labels[i]] = false;
 					console.log("Set flag to false");
+
 				}
 			}
 			console.log(allLabels);
+			console.log(allLists);
+			console.log(allCards);
+			console.log(allFlags);
 
 			setTimeout(function () {
 				boardCreate(Object.keys(allLabels), Object.keys(allLabels).length-1, allLists, allCards, allFlags);
