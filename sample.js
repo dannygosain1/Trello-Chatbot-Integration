@@ -315,7 +315,6 @@ $(document).ready(function() {
 			console.log("GETTING LABELS");
 			labels = data.labelNames;
 			allLabels = JSON.parse(localStorage.getItem('allLabels')) || {};
-			console.log(allLabels);
 			for (var i in labels){
 				console.log(labels[i]);
 				if (labels[i] == ""){
@@ -331,6 +330,7 @@ $(document).ready(function() {
 					console.log("Set flag to false");
 				}
 			}
+			console.log(allLabels);
 
 			setTimeout(function () {
 				boardCreate(Object.keys(allLabels), Object.keys(allLabels).length-1, allLists, allCards, allFlags);
