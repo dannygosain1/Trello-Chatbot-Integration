@@ -293,15 +293,15 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#test').click(function() {
-		console.log('#test Clicked');
-	});
+	// $('#test').click(function() {
+	// 	console.log('#test Clicked');
+	// });
 
-	var dan = 0;
-	while( dan < 10){
-		setTimeout(function() {
-			$('#test').trigger('click');
-			dan++;
-		},1000);
-	}
+	// var dan = 0;
+	// while( dan < 10){
+	// 	setTimeout(function() {
+	// 		$('#test').trigger('click');
+	// 		dan++;
+	// 	},1000);
+	// }
 });
