@@ -312,6 +312,6 @@ $(document).ready(function() {
 	$('#test').click(function() {
 		Trello.get('/boards/', function(data){
 			console.log(data);
-		}, failure);
+		}, authenticationFailure);
 	});
 });
