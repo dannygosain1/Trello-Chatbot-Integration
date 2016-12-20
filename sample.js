@@ -12,7 +12,7 @@ $(document).ready(function() {
 	
 	setTimeout(function() {
 		$('#update').trigger('click');
-	},1000);
+	},10000);
 
 	var authenticationSuccess = function() {
 	    var kanban = '58584818c6622f7b10ad7166';
@@ -285,7 +285,7 @@ $(document).ready(function() {
 
 	$('#update').click(function() {
 		lastActionNumber=localStorage.getItem('lastActionNumber') || '0';
-	
+		console.log("Boards updating if needed");
 		Trello.authorize({
 			type: 'popup',
 			name: 'Getting Started Application',
