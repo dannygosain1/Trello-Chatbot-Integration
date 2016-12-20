@@ -308,4 +308,10 @@ $(document).ready(function() {
 			$('#update').trigger('click');
 		},120000);
 	});
+
+	$('#test').click(function() {
+		Trello.get('/boards/', function(data){
+			console.log(data);
+		}, failure);
+	});
 });
