@@ -48,7 +48,8 @@ $(document).ready(function() {
 							idBoard: board,
 							pos:'bottom'
 						}
-						// console.log(newList);
+
+						console.log(newList);
 						
 						Trello.post('/lists/', newList, function SuccessAdd(data){
 							var tempData = data;
@@ -151,17 +152,17 @@ $(document).ready(function() {
 					var cardName = cardInfo.name;
 					var newList = dataInfo.listAfter;
 					if(newList != null) {
-						// console.log("Updating Card");
+						console.log("Updating Card");
 						var newListName = newList.name;
 
 						if ((newListName in listToCheck) && (cardName in cardToUpdate)) {
 							var cardId = cardToUpdate[cardName];;
-							console.log("__________________");
-							console.log(listToCheck);
-							console.log(cardToUpdate);
-							console.log(newList);
-							console.log(cardName);
-							console.log("__________________");
+							// console.log("__________________");
+							// console.log(listToCheck);
+							// console.log(cardToUpdate);
+							// console.log(newList);
+							// console.log(cardName);
+							// console.log("__________________");
 							var updatedCard = {
 								value: listToCheck[newListName]
 							};
@@ -262,6 +263,7 @@ $(document).ready(function() {
 		}
 
 		var boardCreate = function(a, i, l, c, flag){
+			console.log("GETTING BOARDS");
 			if (i == -1){
 				var link1 = "/boards/"+kanban+"/cards";				
 				Trello.get(link1, function getCards(data){
@@ -310,9 +312,12 @@ $(document).ready(function() {
 		}
 
 		var createBoard = function(data) {
+			console.log("GETTING LABELS");
 			labels = data.labelNames;
 			allLabels = JSON.parse(localStorage.getItem('allLabels')) || {};
+			console.log(allLabels);
 			for (var i in labels){
+				console.log(labels[i]);
 				if (labels[i] == ""){
 					continue;
 				}
@@ -323,6 +328,7 @@ $(document).ready(function() {
 					allFlags[labels[i]] = true;
 				} else {
 					allFlags[labels[i]] = false;
+					console.log("Set flag to false");
 				}
 			}
 
