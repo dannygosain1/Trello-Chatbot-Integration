@@ -54,7 +54,7 @@ $(document).ready(function() {
 							pos:'bottom'
 						}
 
-						console.log(newList);
+						// console.log(newList);
 						
 						Trello.post('/lists/', newList, function SuccessAdd(data){
 							var tempData = data;
@@ -166,8 +166,8 @@ $(document).ready(function() {
 
 							var tempLink = '/cards/'+cardId+'/idList';
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){
-								console.log("Card updated");
-								console.log(data);						
+								// console.log("Card updated");
+								// console.log(data);						
 								setTimeout(function () {
 									updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 								},1000);
@@ -194,7 +194,7 @@ $(document).ready(function() {
 		}
 
 		var perBoard = function(actionData, a, i, flag, l, c){			
-			console.log(lastActionNumber);
+			// console.log(lastActionNumber);
 			if (flag) {
 
 				updateBoard(actionData, actionData.length-1, a, i, l, c);
@@ -228,6 +228,7 @@ $(document).ready(function() {
 					for (var i = 0; i < data.length; i++){
 						if(data[i].labels != null){
 							cardLabels[data[i].name] = "";
+							console.log(data[i]);
 							for (var xyz in data[i].labels){
 								console.log(xyz);
 								cardLabels[data[i].name] += xyz.name;
