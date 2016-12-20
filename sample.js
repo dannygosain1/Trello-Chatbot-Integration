@@ -188,6 +188,7 @@ $(document).ready(function() {
 		}
 
 		var perBoard = function(actionData, a, i, flag, l, c){			
+			console.log(lastActionNumber);
 			if (flag) {
 
 				updateBoard(actionData, actionData.length-1, a, i, l, c);
@@ -199,9 +200,7 @@ $(document).ready(function() {
 				for (var j=parseInt(lastActionNumber); j < actionData.length; j++){
 					newActions.push(actionData[j]);
 				}
-				// var LAN = lastActionNumber
-				// DO SAME STUFF
-				// las
+
 				setTimeout(function () {
 					updateBoard(newActions, newActions.length-1, a, i, l, c);					
 				},5000);
@@ -294,6 +293,7 @@ $(document).ready(function() {
 	};
 
 	$('#update').click(function() {
+		lastActionNumber=localStorage.getItem('lastActionNumber') || '0';
 		Trello.authorize({
 			type: 'popup',
 			name: 'Getting Started Application',
