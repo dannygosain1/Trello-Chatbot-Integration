@@ -229,6 +229,7 @@ $(document).ready(function() {
 						if(data[i].labels != null){
 							cardLabels[data[i].name] = "";
 							for (var xyz in data[i].labels){
+								console.log(xyz);
 								cardLabels[data[i].name] += xyz.name;
 							}
 						}
