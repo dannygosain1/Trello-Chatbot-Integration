@@ -1,54 +1,60 @@
 $(document).ready(function() {
-	var allActions=[];
+	var allActions=[]; //list of actions in the kanban(master) board [example - "createCard", "updateCard"]
 	var allAction = 0;
 	var origCards;
 	var cardLabels = {};
-	var allLabels=JSON.parse(localStorage.getItem('allLabels')) || [];
+	var allLabels=JSON.parse(localStorage.getItem('allLabels')) || []; //list of labels on the kanban board
 	var labels={};
-	var lastActionNumber=localStorage.getItem('lastActionNumber') || '0';
+	var lastActionNumber=localStorage.getItem('lastActionNumber') || '0'; //storing the last action number to avoid duplicate commands upon page reload
 	var allCards = JSON.parse(localStorage.getItem('allCards')) || [];
 	var allLists = JSON.parse(localStorage.getItem('allLists')) || [];
 	var allFlags = JSON.parse(localStorage.getItem('allFlags')) || [];
 	
+	//The page will automatically trigger updating boards after 10 seconds of load
 	setTimeout(function() {
 		$('#update').trigger('click');
-	},10000);
+	},5000);
 
 	var authenticationSuccess = function() {
-	    var kanban = '58584818c6622f7b10ad7166';
+	    var kanban = '58584818c6622f7b10ad7166'; // id of the master board (board to make changes from)
 
 	    var failure = function() {
-			console.log("Tu chutiya hai");
+			console.log("Failed!"); // Generic failure message for now (CHANGE ME!)
 		}
 
+		// Updates the boards with the changes in the master board
 		var updateBoard = function(allActions, i, board, boardname, listToCheck, cardToUpdate){
+			//  saves all the changes on the browser when completed
 			if (i == -1){
 				var strLabels = JSON.stringify(allLabels);
-				localStorage.setItem("allLabels", strLabels);
+				localStorage.setItem("allLabels", strLabels); // storing labels to avoid duplications
 				var strCards = JSON.stringify(allCards);
-				localStorage.setItem("allCards", strCards);
+				localStorage.setItem("allCards", strCards); // storing cards to avoid duplications
 				var strLists = JSON.stringify(allLists);
-				localStorage.setItem("allLists", strLists);
+				localStorage.setItem("allLists", strLists); // storing lists to avoid duplications
 				var strFlags = JSON.stringify(allFlags);
-				localStorage.setItem("allFlags", strFlags);
+				localStorage.setItem("allFlags", strFlags); // storing flags to avoid duplications
 				console.log("Boards updated!");
 			}
 			else {
 				var actionItem = allActions[i].type;
+				// Creating list on a board
 				if(actionItem == "createList"){
+					console.log(allActions[i]);
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
-					var listName = listInfo.name; 
-					var listId = listInfo.id;
+					var listName = listInfo.name; // name of the list in the master board
+					var listId = listInfo.id; //id of the list in the master board
 
+					// creating new list
 					if (!(listName in listToCheck) && !(listId in listToCheck)) {
 						var newList = {
 							name: listName,
 							idBoard: board,
 							pos:'bottom'
 						}
-
 						Trello.post('/lists/', newList, function SuccessAdd(data){
+							// Avoiding dublicate creation of lists
 							var tempData = data;
 							var tempName = tempData.name;
 							var tempPid = tempData.id;
@@ -56,17 +62,18 @@ $(document).ready(function() {
 													
 							setTimeout(function () {
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-							},1000);
+							},50);
 						});
 					}
 					else {
 						setTimeout(function () {
 							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-						},1000);
+						},50);
 					}
 				}
+
+				// Updating to see any changes to the list
 				else if(actionItem == "updateList") {
-					// console.log("Updating List");
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name;
@@ -91,13 +98,13 @@ $(document).ready(function() {
 							
 							setTimeout(function () {
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-							},1000);
+							},50);
 						});
 					}
 					else {
 						setTimeout(function () {
 							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-						},1000);
+						},50);
 					}
 				}
 				else if (actionItem == "createCard"){
@@ -124,13 +131,13 @@ $(document).ready(function() {
 													
 							setTimeout(function () {
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-							},1000);
+							},50);
 						});
 					}
 					else {
 						setTimeout(function () {
 							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-						},1000);
+						},50);
 					}
 				}
 				else if (actionItem == "updateCard") {
@@ -152,25 +159,25 @@ $(document).ready(function() {
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){			
 								setTimeout(function () {
 									updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-								},1000);
+								},50);
 							});
 						}
 						else {
 							setTimeout(function () {
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-							},1000);
+							},50);
 						}
 					}
 					else {
 						setTimeout(function () {
 							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-						},1000);	
+						},50);	
 					}
 				}
 				else {
 					setTimeout(function () {
 						updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-					},1000);	
+					},50);	
 				}
 			}
 		}
@@ -188,10 +195,10 @@ $(document).ready(function() {
 
 				setTimeout(function () {
 					updateBoard(newActions, newActions.length-1, a, i, l, c);					
-				},5000);
+				},1000);
 
 			} else {
-				console.log("F U");
+				console.log("Nothing to update");
 			}
 		}
 
@@ -238,13 +245,13 @@ $(document).ready(function() {
 						
 						setTimeout(function () {
 							boardCreate(a, i-1, l, c, flag);
-						},1000);
+						},50);
 
 					}, failure);
 				} else {
 					setTimeout(function () {
 						boardCreate(a, i-1, l, c, flag);
-					},1000);
+					},50);
 				}
 			}			
 		}
@@ -272,7 +279,7 @@ $(document).ready(function() {
 
 			setTimeout(function () {
 				boardCreate(Object.keys(allLabels), Object.keys(allLabels).length-1, allLists, allCards, allFlags);
-			},1000);
+			},50);
 		}
 		
 		Trello.get('/boards/'+kanban,createBoard,failure);
@@ -299,6 +306,6 @@ $(document).ready(function() {
 
 		setTimeout(function() {
 			$('#update').trigger('click');
-		},300000);
+		},120000);
 	});
 });
