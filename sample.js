@@ -335,9 +335,7 @@ $(document).ready(function() {
 		// },300000);
 	});
 
-
-	// DELETE ME!!! TEST
-	$('#test').click(function() {
+	var test = function() {
 		Trello.get('/members/me', function(data){
 			localStorage.clear();
 			var boardToDel = data.idBoards;
@@ -351,5 +349,21 @@ $(document).ready(function() {
 					},authenticationFailure);
 			}
 		}, authenticationFailure);
+	}
+
+	// DELETE ME!!! TEST
+	$('#test').click(function() {
+		Trello.authorize({
+			type: 'popup',
+			name: 'Getting Started Application',
+			scope: {
+				read: 'true',
+				write: 'true' },
+			expiration: 'never',
+			success: test,
+			error: authenticationFailure
+		});
+
 	});
+
 });
