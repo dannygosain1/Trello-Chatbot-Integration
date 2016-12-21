@@ -107,22 +107,26 @@ $(document).ready(function() {
 						},50);
 					}
 				}
-				else if (actionItem == "createCard"){
-					var dataInfo = allActions[i].data;
-					var cardInfo = dataInfo.card;
-					var cardName = cardInfo.name;
-					var cardList = dataInfo.list;
-					var listName = cardList.name; 
 
+				// Creating cards on the list
+				else if (actionItem == "createCard"){
+					var dataInfo = allActions[i].data; 
+					var cardInfo = dataInfo.card; // all data about the card in JSON format
+					var cardName = cardInfo.name; // card name
+					var cardList = dataInfo.list; 
+					var listName = cardList.name; // list name the card belongs too 
+
+					// ensuring the card already doesn't exist in the list
 					if ((listName in listToCheck) && !(cardName in cardToUpdate) && (cardLabels[cardName].indexOf(boardname) >= 0)) {
 						
+						// adding the card onto the list
 						var newCard;
 						newCard = {
 							name: cardName,
 							idBoard: board,
 							idList: listToCheck[listName]
 						};
-						
+
 						Trello.post('/cards/', newCard, function SuccessAdd(data){
 							var tempData = data;
 							var tempName = tempData.name;
@@ -140,17 +144,20 @@ $(document).ready(function() {
 						},50);
 					}
 				}
+
+				// Updating card (card movement)
 				else if (actionItem == "updateCard") {
 					var dataInfo = allActions[i].data;
 					var cardInfo = dataInfo.card;
 					var cardName = cardInfo.name;
-					var newList = dataInfo.listAfter;
+					var newList = dataInfo.listAfter; // the new list of the card
 					if(newList != null) {
 						var newListName = newList.name;
 
 						if ((newListName in listToCheck) && (cardName in cardToUpdate)) {
 							var cardId = cardToUpdate[cardName];
 
+							// moving the card to the new list
 							var updatedCard = {
 								value: listToCheck[newListName]
 							};
@@ -162,18 +169,21 @@ $(document).ready(function() {
 								},50);
 							});
 						}
+						// callback to update the board
 						else {
 							setTimeout(function () {
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 							},50);
 						}
 					}
+					// callback to update the board
 					else {
 						setTimeout(function () {
 							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 						},50);	
 					}
 				}
+				// callback to update the board
 				else {
 					setTimeout(function () {
 						updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
@@ -182,6 +192,7 @@ $(document).ready(function() {
 			}
 		}
 
+		// checking if any new labels were created
 		var perBoard = function(actionData, a, i, flag, l, c){			
 			if (flag) {
 				updateBoard(actionData, actionData.length-1, a, i, l, c);
@@ -202,13 +213,15 @@ $(document).ready(function() {
 			}
 		}
 
+		// function to create boards
 		var boardCreate = function(a, i, l, c, flag){
+			// exits once traversed through the list
 			if (i == -1){
 				var link1 = "/boards/"+kanban+"/cards";				
 				Trello.get(link1, function getCards(data){
 					
 					var tempCards = data.cards;
-
+					// putting each card from the master board on their respective boards
 					for (var i = 0; i < data.length; i++){
 						if(data[i].labels != null){
 							cardLabels[data[i].name] = "";
@@ -218,6 +231,7 @@ $(document).ready(function() {
 						}
 					}
 
+					// avoiding duplication
 					if(origCards == null)
 						origCards=[];
 
@@ -256,14 +270,20 @@ $(document).ready(function() {
 			}			
 		}
 
-		var createBoard = function(data) {
+		// function to get all the label values for board creation
+		var createBoardbyLabels = function(data) {
 			console.log("GETTING LABELS");
 			labels = data.labelNames;
+
+			// parsing JSON stringified data as JSON Objects
 			allLabels = JSON.parse(localStorage.getItem('allLabels')) || {};
 			allCards = JSON.parse(localStorage.getItem('allCards')) || {};
 			allLists = JSON.parse(localStorage.getItem('allLists')) || {};
 			allFlags = JSON.parse(localStorage.getItem('allFlags')) || {};
+			
+			// traversing through all the labels with values and creating boards
 			for (var i in labels){
+				// ignores the labels colours with no values
 				if (labels[i] == ""){
 					continue;
 				}
@@ -277,19 +297,22 @@ $(document).ready(function() {
 				}
 			}
 
+			// calling function to create board			
 			setTimeout(function () {
 				boardCreate(Object.keys(allLabels), Object.keys(allLabels).length-1, allLists, allCards, allFlags);
 			},50);
 		}
 		
-		Trello.get('/boards/'+kanban,createBoard,failure);
+		Trello.get('/boards/'+kanban,createBoardbyLabels,failure);
 
 	};
 
+	// Message when failed on authentication
 	var authenticationFailure = function() {
 	    console.log("Failed authentication");
 	};
 
+	// sets up authentication upon click of update button (automated)
 	$('#update').click(function() {
 		lastActionNumber=localStorage.getItem('lastActionNumber') || '0';
 		console.log("Boards updating if needed");
@@ -304,14 +327,27 @@ $(document).ready(function() {
 			error: authenticationFailure
 		});
 
+		// triggers the click to the update button every 2 minutes
 		setTimeout(function() {
 			$('#update').trigger('click');
 		},120000);
 	});
 
+
+	// DELETE ME!!! TEST
 	$('#test').click(function() {
-		Trello.get('/boards/', function(data){
+		Trello.get('/members/me', function(data){
 			console.log(data);
+			var boardToDel = data.boards;
+			for (var i = 0; i < boardToDel.length; i++){
+				if(boardToDel[i].name == "kanban")
+					continue;
+				else
+					Trello.put('/boards/'+boardToDel[i].id,function(data){
+						console.log(data);
+						console.log("Board deleted");
+					},authenticationFailure);
+			}
 		}, authenticationFailure);
 	});
 });
