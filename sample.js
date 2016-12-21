@@ -1,19 +1,19 @@
 $(document).ready(function() {
-	var allActions=[]; //list of actions in the kanban(master) board [example - "createCard", "updateCard"]
+	var allActions=[]; //list of actions in the master(master) board [example - "createCard", "updateCard"]
 	var cardLabels = {};
-	var allLabels=JSON.parse(localStorage.getItem('allLabels')) || []; //list of labels on the kanban board
+	var allLabels=JSON.parse(localStorage.getItem('allLabels')) || []; //list of labels on the master board
 	var labels={};
 	var lastActionNumber=localStorage.getItem('lastActionNumber') || '0'; //storing the last action number to avoid duplicate commands upon page reload
 	var allCards = JSON.parse(localStorage.getItem('allCards')) || [];
 	var allLists = JSON.parse(localStorage.getItem('allLists')) || [];
 	var allFlags = JSON.parse(localStorage.getItem('allFlags')) || [];
 
-    var kanban = '58584818c6622f7b10ad7166'; // id of the master board (board to make changes from)
+    var master = '58584818c6622f7b10ad7166'; // id of the master board (board to make changes from)
 
 	//The page will automatically trigger updating boards after 10 seconds of load
-	// setTimeout(function() {
-	// 	$('#update').trigger('click');
-	// },5000);
+	setTimeout(function() {
+		$('#update').trigger('click');
+	},5000);
 
 	var authenticationSuccess = function() {
 	    document.getElementById('update').style.visibility='hidden';
@@ -226,7 +226,7 @@ $(document).ready(function() {
 		var boardCreate = function(a, i, l, c, flag){
 			// exits once traversed through the list
 			if (i == -1){
-				var link1 = "/boards/"+kanban+"/cards";				
+				var link1 = "/boards/"+master+"/cards";				
 				Trello.get(link1, function getCards(data){
 					
 					var tempCards = data.cards;
@@ -240,7 +240,7 @@ $(document).ready(function() {
 						}
 					}
 
-					var link = "/boards/"+kanban+"/actions";
+					var link = "/boards/"+master+"/actions";
 
 					Trello.get(link, {limit: 1000}, function getSuccess(actionData){
 						localStorage.setItem("lastActionNumber", actionData.length.toString());
@@ -306,7 +306,7 @@ $(document).ready(function() {
 			},500);
 		}
 		
-		Trello.get('/boards/'+kanban,createBoardbyLabels,labelsFailure);
+		Trello.get('/boards/'+master,createBoardbyLabels,labelsFailure);
 
 	};
 
@@ -331,40 +331,42 @@ $(document).ready(function() {
 			error: authenticationFailure
 		});
 		// triggers the click to the update button every 5 minutes
-		// setTimeout(function() {
-		// 	$('#update').trigger('click');
-		// },300000);
+		setTimeout(function() {
+			$('#update').trigger('click');
+		},300000);
 	});
 
-	var test = function() {
-		Trello.get('/members/me', function(data){
-			localStorage.clear();
-			var boardToDel = data.idBoards;
-			for (var i = 0; i < boardToDel.length; i++){
-				if(boardToDel[i] == kanban)
-					continue;
-				else
-					Trello.put('/boards/'+boardToDel[i]+'/closed',{value: true},function(data){
-						console.log(data);
-						console.log("Board deleted");
-					},authenticationFailure);
-			}
-		}, authenticationFailure);
-	}
+	// DELETE ALL BOARDS EXCEPT MASTER
 
-	// DELETE ME!!! TEST
-	$('#test').click(function() {
-		Trello.authorize({
-			type: 'popup',
-			name: 'Getting Started Application',
-			scope: {
-				read: 'true',
-				write: 'true' },
-			expiration: 'never',
-			success: test,
-			error: authenticationFailure
-		});
+	// var test = function() {
+	// 	Trello.get('/members/me', function(data){
+	// 		localStorage.clear();
+	// 		var boardToDel = data.idBoards;
+	// 		for (var i = 0; i < boardToDel.length; i++){
+	// 			if(boardToDel[i] == master)
+	// 				continue;
+	// 			else
+	// 				Trello.put('/boards/'+boardToDel[i]+'/closed',{value: true},function(data){
+	// 					console.log(data);
+	// 					console.log("Board deleted");
+	// 				},authenticationFailure);
+	// 		}
+	// 	}, authenticationFailure);
+	// }
 
-	});
+	// // DELETE ME!!! TEST
+	// $('#test').click(function() {
+	// 	Trello.authorize({
+	// 		type: 'popup',
+	// 		name: 'Getting Started Application',
+	// 		scope: {
+	// 			read: 'true',
+	// 			write: 'true' },
+	// 		expiration: 'never',
+	// 		success: test,
+	// 		error: authenticationFailure
+	// 	});
+
+	// });
 
 });
