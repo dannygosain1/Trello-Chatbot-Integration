@@ -9,15 +9,14 @@ $(document).ready(function() {
 	var allCards = JSON.parse(localStorage.getItem('allCards')) || [];
 	var allLists = JSON.parse(localStorage.getItem('allLists')) || [];
 	var allFlags = JSON.parse(localStorage.getItem('allFlags')) || [];
-	
+    var kanban = '58584818c6622f7b10ad7166'; // id of the master board (board to make changes from)
+
 	//The page will automatically trigger updating boards after 10 seconds of load
 	setTimeout(function() {
 		$('#update').trigger('click');
 	},5000);
 
 	var authenticationSuccess = function() {
-	    var kanban = '58584818c6622f7b10ad7166'; // id of the master board (board to make changes from)
-
 	    var failure = function() {
 			console.log("Failed!"); // Generic failure message for now (CHANGE ME!)
 		}
@@ -338,12 +337,12 @@ $(document).ready(function() {
 	$('#test').click(function() {
 		Trello.get('/members/me', function(data){
 			console.log(data);
-			var boardToDel = data.boards;
+			var boardToDel = data.idBoards;
 			for (var i = 0; i < boardToDel.length; i++){
-				if(boardToDel[i].name == "kanban")
+				if(boardToDel[i] == kanban)
 					continue;
 				else
-					Trello.put('/boards/'+boardToDel[i].id,function(data){
+					Trello.put('/boards/'+boardToDel[i],function(data){
 						console.log(data);
 						console.log("Board deleted");
 					},authenticationFailure);
