@@ -16,7 +16,7 @@ $(document).ready(function() {
 	// },5000);
 
 	var authenticationSuccess = function() {
-	    document.getElementById('#update').style.visibility='hidden';
+	    document.getElementById('update').style.visibility='hidden';
 	    var failure = function() {
 			console.log("Unknown error"); // Generic failure message for now (CHANGE ME!)
 		}
