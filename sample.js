@@ -11,13 +11,22 @@ $(document).ready(function() {
     var kanban = '58584818c6622f7b10ad7166'; // id of the master board (board to make changes from)
 
 	//The page will automatically trigger updating boards after 10 seconds of load
-	setTimeout(function() {
-		$('#update').trigger('click');
-	},5000);
+	// setTimeout(function() {
+	// 	$('#update').trigger('click');
+	// },5000);
 
 	var authenticationSuccess = function() {
+	    document.getElementById('#update').style.visibility='hidden';
 	    var failure = function() {
-			console.log("Failed!"); // Generic failure message for now (CHANGE ME!)
+			console.log("Unknown error"); // Generic failure message for now (CHANGE ME!)
+		}
+
+		var boardCreationFailure = function() {
+			console.log("Error in creating the boards!");
+		}
+
+		var labelsFailure = function() {
+			console.log("Error in getting the names of the labels");
 		}
 
 		// Updates the boards with the changes in the master board
@@ -240,7 +249,7 @@ $(document).ready(function() {
 						}
 					}, failure);
 
-				}, failure);
+				}, boardCreationFailure);
 			}
 			else {
 				if (flag[a[i]]){
@@ -296,7 +305,7 @@ $(document).ready(function() {
 			},50);
 		}
 		
-		Trello.get('/boards/'+kanban,createBoardbyLabels,failure);
+		Trello.get('/boards/'+kanban,createBoardbyLabels,labelsFailure);
 
 	};
 
@@ -320,11 +329,10 @@ $(document).ready(function() {
 			success: authenticationSuccess,
 			error: authenticationFailure
 		});
-
 		// triggers the click to the update button every 5 minutes
-		setTimeout(function() {
-			$('#update').trigger('click');
-		},300000);
+		// setTimeout(function() {
+		// 	$('#update').trigger('click');
+		// },300000);
 	});
 
 
