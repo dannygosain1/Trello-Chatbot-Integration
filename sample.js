@@ -342,7 +342,7 @@ $(document).ready(function() {
 				if(boardToDel[i] == kanban)
 					continue;
 				else
-					Trello.put('/boards/'+boardToDel[i],function(data){
+					Trello.put('/boards/'+boardToDel[i]+'/closed',{value: true},function(data){
 						console.log(data);
 						console.log("Board deleted");
 					},authenticationFailure);
