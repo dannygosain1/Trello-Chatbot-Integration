@@ -232,7 +232,7 @@ $(document).ready(function() {
 
 					var link = "/boards/"+kanban+"/actions";
 
-					Trello.get(link, function getSuccess(actionData){
+					Trello.get(link, {limit: 1000}, function getSuccess(actionData){
 						localStorage.setItem("lastActionNumber", actionData.length.toString());
 						console.log(actionData);
 						for (var i in allLabels) {
