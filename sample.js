@@ -47,6 +47,7 @@ $(document).ready(function() {
 				var actionItem = allActions[i].type;
 				// Creating list on a board
 				if(actionItem == "createList"){
+					console.log("Creating List");
 					console.log(allActions[i]);
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
@@ -68,6 +69,7 @@ $(document).ready(function() {
 							listToCheck[tempName] = tempPid;
 													
 							setTimeout(function () {
+								console.log("Updating Board with new list creations");
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 							},500);
 						});
@@ -81,6 +83,7 @@ $(document).ready(function() {
 
 				// Updating to see any changes to the list
 				else if(actionItem == "updateList") {
+					console.log("Updating List");
 					var dataInfo = allActions[i].data;
 					var listInfo = dataInfo.list;
 					var listName = listInfo.name;
@@ -104,6 +107,7 @@ $(document).ready(function() {
 							listToCheck[tempName] = tempPid;
 							
 							setTimeout(function () {
+								console.log("Updating Board with new list updates");
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 							},500);
 						});
@@ -117,6 +121,7 @@ $(document).ready(function() {
 
 				// Creating cards on the list
 				else if (actionItem == "createCard"){
+					console.log("Creating card");
 					var dataInfo = allActions[i].data; 
 					var cardInfo = dataInfo.card; // all data about the card in JSON format
 					var cardName = cardInfo.name; // card name
@@ -141,6 +146,7 @@ $(document).ready(function() {
 							cardToUpdate[tempName] = tempPid;
 													
 							setTimeout(function () {
+								console.log("Updating Board with new card creations");
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 							},500);
 						});
@@ -154,6 +160,7 @@ $(document).ready(function() {
 
 				// Updating card (card movement)
 				else if (actionItem == "updateCard") {
+					console.log("Updating cards");
 					var dataInfo = allActions[i].data;
 					var cardInfo = dataInfo.card;
 					var cardName = cardInfo.name;
@@ -173,6 +180,7 @@ $(document).ready(function() {
 							var tempLink = '/cards/'+cardId+'/idList';
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){			
 								setTimeout(function () {
+									console.log("Updating Board with new list updates");
 									updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
 								},500);
 							});
@@ -225,6 +233,7 @@ $(document).ready(function() {
 		// function to create boards
 		var boardCreate = function(a, i, l, c, flag){
 			// exits once traversed through the list
+			console.log("Board creation");
 			if (i == -1){
 				var link1 = "/boards/"+master+"/cards";				
 				Trello.get(link1, function getCards(data){
@@ -276,6 +285,7 @@ $(document).ready(function() {
 
 		// function to get all the label values for board creation
 		var createBoardbyLabels = function(data) {
+			console.log("Creating boards by label");
 			labels = data.labelNames;
 
 			// parsing JSON stringified data as JSON Objects
@@ -338,35 +348,33 @@ $(document).ready(function() {
 
 	// DELETE ALL BOARDS EXCEPT MASTER
 
-	// var test = function() {
-	// 	Trello.get('/members/me', function(data){
-	// 		localStorage.clear();
-	// 		var boardToDel = data.idBoards;
-	// 		for (var i = 0; i < boardToDel.length; i++){
-	// 			if(boardToDel[i] == master)
-	// 				continue;
-	// 			else
-	// 				Trello.put('/boards/'+boardToDel[i]+'/closed',{value: true},function(data){
-	// 					console.log(data);
-	// 					console.log("Board deleted");
-	// 				},authenticationFailure);
-	// 		}
-	// 	}, authenticationFailure);
-	// }
-
-	// // DELETE ME!!! TEST
-	// $('#test').click(function() {
-	// 	Trello.authorize({
-	// 		type: 'popup',
-	// 		name: 'Getting Started Application',
-	// 		scope: {
-	// 			read: 'true',
-	// 			write: 'true' },
-	// 		expiration: 'never',
-	// 		success: test,
-	// 		error: authenticationFailure
-	// 	});
-
-	// });
+	/* var test = function() {
+		Trello.get('/members/me', function(data){
+			localStorage.clear();
+			var boardToDel = data.idBoards;
+			for (var i = 0; i < boardToDel.length; i++){
+				if(boardToDel[i] == master)
+					continue;
+				else
+					Trello.put('/boards/'+boardToDel[i]+'/closed',{value: true},function(data){
+						console.log(data);
+						console.log("Board deleted");
+					},authenticationFailure);
+			}
+		}, authenticationFailure);
+	}
+	
+	$('#test').click(function() {
+		Trello.authorize({
+			type: 'popup',
+			name: 'Getting Started Application',
+			scope: {
+				read: 'true',
+				write: 'true' },
+			expiration: 'never',
+			success: test,
+			error: authenticationFailure
+	 	});
+	}); */
 
 });
