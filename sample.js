@@ -1,7 +1,5 @@
 $(document).ready(function() {
 	var allActions=[]; //list of actions in the kanban(master) board [example - "createCard", "updateCard"]
-	var allAction = 0;
-	var origCards;
 	var cardLabels = {};
 	var allLabels=JSON.parse(localStorage.getItem('allLabels')) || []; //list of labels on the kanban board
 	var labels={};
@@ -9,6 +7,7 @@ $(document).ready(function() {
 	var allCards = JSON.parse(localStorage.getItem('allCards')) || [];
 	var allLists = JSON.parse(localStorage.getItem('allLists')) || [];
 	var allFlags = JSON.parse(localStorage.getItem('allFlags')) || [];
+	
     var kanban = '58584818c6622f7b10ad7166'; // id of the master board (board to make changes from)
 
 	//The page will automatically trigger updating boards after 10 seconds of load
@@ -192,7 +191,8 @@ $(document).ready(function() {
 		}
 
 		// checking if any new labels were created
-		var perBoard = function(actionData, a, i, flag, l, c){			
+		var perBoard = function(actionData, a, i, flag, l, c){
+			console.log("Per board function : " + lastActionNumber);			
 			if (flag) {
 				updateBoard(actionData, actionData.length-1, a, i, l, c);
 			} else if (actionData.length > parseInt(lastActionNumber)) {
@@ -230,12 +230,6 @@ $(document).ready(function() {
 						}
 					}
 
-					// avoiding duplication
-					if(origCards == null)
-						origCards=[];
-
-					origCards = data;
-
 					var link = "/boards/"+kanban+"/actions";
 
 					Trello.get(link, function getSuccess(actionData){
@@ -271,7 +265,6 @@ $(document).ready(function() {
 
 		// function to get all the label values for board creation
 		var createBoardbyLabels = function(data) {
-			console.log("GETTING LABELS");
 			labels = data.labelNames;
 
 			// parsing JSON stringified data as JSON Objects
@@ -314,6 +307,7 @@ $(document).ready(function() {
 	// sets up authentication upon click of update button (automated)
 	$('#update').click(function() {
 		lastActionNumber=localStorage.getItem('lastActionNumber') || '0';
+		console.log("Initial lastActionNumber : " + lastActionNumber);
 		console.log("Boards updating if needed");
 		Trello.authorize({
 			type: 'popup',
@@ -326,17 +320,17 @@ $(document).ready(function() {
 			error: authenticationFailure
 		});
 
-		// triggers the click to the update button every 2 minutes
+		// triggers the click to the update button every 5 minutes
 		setTimeout(function() {
 			$('#update').trigger('click');
-		},120000);
+		},300000);
 	});
 
 
 	// DELETE ME!!! TEST
 	$('#test').click(function() {
 		Trello.get('/members/me', function(data){
-			console.log(data);
+			localStorage.clear();
 			var boardToDel = data.idBoards;
 			for (var i = 0; i < boardToDel.length; i++){
 				if(boardToDel[i] == kanban)
