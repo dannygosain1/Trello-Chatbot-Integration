@@ -7,7 +7,7 @@ $(document).ready(function() {
 	var allCards = JSON.parse(localStorage.getItem('allCards')) || [];
 	var allLists = JSON.parse(localStorage.getItem('allLists')) || [];
 	var allFlags = JSON.parse(localStorage.getItem('allFlags')) || [];
-	
+
     var kanban = '58584818c6622f7b10ad7166'; // id of the master board (board to make changes from)
 
 	//The page will automatically trigger updating boards after 10 seconds of load
@@ -234,6 +234,7 @@ $(document).ready(function() {
 
 					Trello.get(link, function getSuccess(actionData){
 						localStorage.setItem("lastActionNumber", actionData.length.toString());
+						console.log(actionData);
 						for (var i in allLabels) {
 							perBoard(actionData, allLabels[i], i, flag[i], l[i], c[i]);
 						}
