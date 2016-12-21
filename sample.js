@@ -69,13 +69,13 @@ $(document).ready(function() {
 													
 							setTimeout(function () {
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-							},50);
+							},500);
 						});
 					}
 					else {
 						setTimeout(function () {
 							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-						},50);
+						},500);
 					}
 				}
 
@@ -105,13 +105,13 @@ $(document).ready(function() {
 							
 							setTimeout(function () {
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-							},50);
+							},500);
 						});
 					}
 					else {
 						setTimeout(function () {
 							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-						},50);
+						},500);
 					}
 				}
 
@@ -142,13 +142,13 @@ $(document).ready(function() {
 													
 							setTimeout(function () {
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-							},50);
+							},500);
 						});
 					}
 					else {
 						setTimeout(function () {
 							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-						},50);
+						},500);
 					}
 				}
 
@@ -158,6 +158,7 @@ $(document).ready(function() {
 					var cardInfo = dataInfo.card;
 					var cardName = cardInfo.name;
 					var newList = dataInfo.listAfter; // the new list of the card
+					console.log("Updating card")
 					if(newList != null) {
 						var newListName = newList.name;
 
@@ -168,33 +169,33 @@ $(document).ready(function() {
 							var updatedCard = {
 								value: listToCheck[newListName]
 							};
-
+							console.log(cardId);
 							var tempLink = '/cards/'+cardId+'/idList';
 							Trello.put(tempLink, updatedCard, function SuccessAdd(data){			
 								setTimeout(function () {
 									updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-								},50);
+								},500);
 							});
 						}
 						// callback to update the board
 						else {
 							setTimeout(function () {
 								updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-							},50);
+							},500);
 						}
 					}
 					// callback to update the board
 					else {
 						setTimeout(function () {
 							updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-						},50);	
+						},500);	
 					}
 				}
 				// callback to update the board
 				else {
 					setTimeout(function () {
 						updateBoard(allActions, i-1, board, boardname, listToCheck, cardToUpdate);
-					},50);	
+					},500);	
 				}
 			}
 		}
@@ -262,13 +263,13 @@ $(document).ready(function() {
 						
 						setTimeout(function () {
 							boardCreate(a, i-1, l, c, flag);
-						},50);
+						},500);
 
 					}, failure);
 				} else {
 					setTimeout(function () {
 						boardCreate(a, i-1, l, c, flag);
-					},50);
+					},500);
 				}
 			}			
 		}
@@ -302,7 +303,7 @@ $(document).ready(function() {
 			// calling function to create board			
 			setTimeout(function () {
 				boardCreate(Object.keys(allLabels), Object.keys(allLabels).length-1, allLists, allCards, allFlags);
-			},50);
+			},500);
 		}
 		
 		Trello.get('/boards/'+kanban,createBoardbyLabels,labelsFailure);
