@@ -348,7 +348,7 @@ $(document).ready(function() {
 
 	// DELETE ALL BOARDS EXCEPT MASTER
 
-	/* var test = function() {
+	 var test = function() {
 		Trello.get('/members/me', function(data){
 			localStorage.clear();
 			var boardToDel = data.idBoards;
@@ -375,6 +375,6 @@ $(document).ready(function() {
 			success: test,
 			error: authenticationFailure
 	 	});
-	}); */
+	}); 
 
 });
