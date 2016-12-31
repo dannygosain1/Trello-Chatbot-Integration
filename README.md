@@ -5,6 +5,3 @@ The purpose of this project to give Trello users the ability to be able to isola
 
 ## Status
 In Progress
-
-### TO DO
-* Create a Node.Js module and publish to npm
