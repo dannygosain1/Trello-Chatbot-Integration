@@ -8,7 +8,7 @@ $(document).ready(function() {
 	var allLists = JSON.parse(localStorage.getItem('allLists')) || [];
 	var allFlags = JSON.parse(localStorage.getItem('allFlags')) || [];
 
-    var master = '58584818c6622f7b10ad7166'; // id of the master board (board to make changes from)
+    var master = ''; // id of the master board (board to make changes from)
 
 	//The page will automatically trigger updating boards after 10 seconds of load
 	setTimeout(function() {
